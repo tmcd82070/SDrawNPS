@@ -46,3 +46,5 @@ Temporary Items
 OLDGIT
 .RData
 .Rhistory
+.Rproj.user
+*.Rproj
