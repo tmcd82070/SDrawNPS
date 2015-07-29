@@ -13,7 +13,7 @@ analysis.GUI <- function()   {
   vbox1 <- gtkVBoxNew(FALSE, 8)
   vbox1$setBorderWidth(8)
   win$add(vbox1)
-  
+  # test
 #   # ================= Sample type frame ============================
 #   samp.types <- c("HAL - Halton Lattice Sampling", 
 #                   "BAS - Balanced Acceptance Sampling", 
