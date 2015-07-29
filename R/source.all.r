@@ -48,3 +48,8 @@ source(  "stratified.GUI.R"  )
 source(  "unequal.GUI.R"  )
 source(  "view.sample.R"  )
 source(  "zzz.r"  )
+
+source(  "analysis.GUI.R")
+
+
+
