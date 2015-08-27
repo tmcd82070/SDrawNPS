@@ -1,7 +1,7 @@
 
 
 
-setwd('//LAR-FILE-SRV/Data/NPS/SDraw/R/')
+setwd('//LAR-FILE-SRV/Data/NPS/SDrawGUI/R/')
 
 require(sp)
 require(rgdal)
@@ -48,3 +48,8 @@ source(  "stratified.GUI.R"  )
 source(  "unequal.GUI.R"  )
 source(  "view.sample.R"  )
 source(  "zzz.r"  )
+
+source(  "analysis.GUI.R"  )
+source(  "analysisCont.R"  )
+source(  "getDataFrame.R"  )
+source(  "readButtonActionCSV.r"  )

@@ -13,7 +13,7 @@ analysis.GUI <- function()   {
   vbox1 <- gtkVBoxNew(FALSE, 8)
   vbox1$setBorderWidth(8)
   win$add(vbox1)
-  # test
+
 #   # ================= Sample type frame ============================
 #   samp.types <- c("HAL - Halton Lattice Sampling", 
 #                   "BAS - Balanced Acceptance Sampling", 
@@ -148,7 +148,7 @@ analysis.GUI <- function()   {
   
   
   #   ---- Define table of boxes so everything aligns
-  tbl <- gtkTable(7,4,FALSE) #3 rows, 2 columns, FALSE for nonhomogeneous
+  tbl <- gtkTable(18,2,FALSE) #3 rows, 2 columns, FALSE for nonhomogeneous
   gtkTableSetRowSpacings(tbl,1) #1 pixel between rows
   gtkTableSetColSpacings(tbl,5) #5 pixels between columns
   
@@ -191,129 +191,63 @@ analysis.GUI <- function()   {
   gtkTableAttach(tbl,shape.file.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
   gtkTableAttach(tbl,shape.file.box, 1, 2, 1, 2, xpadding=5, ypadding=5)
   
-  # #   ---- needed analysis variables
+  # ---- needed analysis variables
 
-seed.entry <- gtkEntryNew()
-#   seed.entry$setText( "" )
-#   seed.label <- gtkLabel("Random number seed:")
-#   
-#   gtkTableAttach(opt.tbl,seed.label, 0, 1, 0, 1, xpadding=5, ypadding=5)
-#   gtkTableAttach(opt.tbl,seed.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
+# siteID
+siteID.entry <- gtkEntryNew()
+siteID.entry$setText( "siteID" )
+siteID.label <- gtkLabel("Site-ID Variable:")
+gtkTableAttach(tbl,siteID.label, 0, 1, 5, 6, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,siteID.entry, 1, 2, 5, 6, xpadding=5, ypadding=5)
+
+# EvalStatus
+evalStatus.entry <- gtkEntryNew()
+evalStatus.entry$setText( "EvalStatus" )
+evalStatus.label <- gtkLabel("Evaluation Status Variable:")
+gtkTableAttach(tbl,evalStatus.label, 0, 1, 7, 8, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,evalStatus.entry, 1, 2, 7, 8, xpadding=5, ypadding=5)
+
+# Target_Sampled
+evalStatusYes.entry <- gtkEntryNew()
+evalStatusYes.entry$setText( "Include=Y" )
+evalStatusYes.label <- gtkLabel("Inclusion Identifier:")
+gtkTableAttach(tbl,evalStatusYes.label, 0, 1, 9, 10, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,evalStatusYes.entry, 1, 2, 9, 10, xpadding=5, ypadding=5)
+
+# wgt
+wgt.entry <- gtkEntryNew()
+wgt.entry$setText( "wgt" )
+wgt.label <- gtkLabel("Weight Variable:")
+gtkTableAttach(tbl,wgt.label, 0, 1, 11, 12, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,wgt.entry, 1, 2, 11, 12, xpadding=5, ypadding=5)
+
+# xcoord
+xcoord.entry <- gtkEntryNew()
+xcoord.entry$setText( "xcoord" )
+xcoord.label <- gtkLabel("X-Coordinate Variable:")
+gtkTableAttach(tbl,xcoord.label, 0, 1, 13, 14, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,xcoord.entry, 1, 2, 13, 14, xpadding=5, ypadding=5)
+
+# ycoord
+ycoord.entry <- gtkEntryNew()
+ycoord.entry$setText( "ycoord" )
+ycoord.label <- gtkLabel("Y-Coordinate Variable:")
+gtkTableAttach(tbl,ycoord.label, 0, 1, 15, 16, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,ycoord.entry, 1, 2, 15, 16, xpadding=5, ypadding=5)
+
+# continuous analysis variable
+cont.var.entry <- gtkEntryNew()
+cont.var.entry$setText( "contvar" )
+cont.var.label <- gtkLabel("Continuous Variable:")
+gtkTableAttach(tbl,cont.var.label, 0, 1, 17, 18, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,cont.var.entry, 1, 2, 17, 18, xpadding=5, ypadding=5)
 
 
-# test
-
-
-
-  unequal.var.entry <- gtkEntry()
-  unequal.var.entry$setText( "" )
-  
-  
-  # jason add 6/16/2015
-  f.write.var.label <- function(x,dat){
-    prop.active <- cont.rb$getActive()
-    const.active <- const.rb$getActive()
-    
-    if(prop.active){
-      unequal.var.label$setText("Name of Continuous Variable:")
-    } else if( const.active ){
-      unequal.var.label$setText("Name of Categorical Variable:")
-    } else {
-      # Note, because the three buttons are in a group, you don't need signal for the last one
-      unequal.var.label$setText("Name of Categorical Variable:")
-    }
-  }
-  
-  unequal.var.label <- gtkLabel("Name of Continuous Variable:")   # basically the default display when first opened
-
- 
-  gtkTableAttach(tbl,unequal.var.label, 0, 1, 2, 3, xpadding=5, ypadding=5)
-  gtkTableAttach(tbl,unequal.var.entry, 1, 2, 2, 3, xpadding=5, ypadding=5)
-  
-  
-  
-  
-  # ============================ Sample Allocation frame ===========
-  #hbox1 <- gtkHBoxNew(FALSE, 8) #sets up another horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
-  #hbox1$setBorderWidth(8)
-  #vbox1$add(hbox1)
-  
-#   samp.alloc.frame <- gtkFrameNew("Sample Allocation")
-#   hbox1$add(samp.alloc.frame)
-#   
-#   #  Radio Buttons to Specify Sample Allocation 
-#   stype.box <- gtkVBoxNew(TRUE, 2)
-#   stype.box$setBorderWidth(8)
-#   samp.alloc.frame$add( stype.box )
-#   
-#   cont.rb <- gtkRadioButtonNewWithLabel(label="Continuous")
-#   const.rb <- gtkRadioButtonNewWithLabelFromWidget(cont.rb,"Constant")
-#   uneqprop.rb <- gtkRadioButtonNewWithLabelFromWidget(cont.rb,"Unequal Proportion")
-#   #user.entry <-gtkEntry()
-#   #user.entry$setText( "" ) #keep box blank
-#   
-#   stype.box$packStart(cont.rb, TRUE, TRUE, 2)
-#   stype.box$packStart(const.rb, TRUE, TRUE, 2)
-#   stype.box$packStart(uneqprop.rb, TRUE, TRUE, 2)
-#   #stype.box$packStart(user.entry, TRUE, TRUE, 2) 
-#   #this creates a box next to the user-specified button
-#   #it would be nice to only have this box pop up if the user-specified button is clicked
-#   
-#   f.write.sample.label <- function(x,dat){
-#     prop.active <- cont.rb$getActive()
-#     const.active <- const.rb$getActive()
-#     
-#     if(prop.active){
-#       n.label$setText("Specify: total n across\n\tcontinous variable range")
-#     } else if( const.active ){
-#       n.label$setText("Specify: total n across\n\tall categories")
-#     } else {
-#       # Note, because the three buttons are in a group, you don't need signal for the last one
-#       n.label$setText("Specify: a comma delimited\n\tlist of n, in alphabetized\n\tcategorical order")
-#     }
-#   }
-#   
-#   
-#   gSignalConnect(cont.rb, "toggled", f.write.sample.label )
-#   gSignalConnect(const.rb, "toggled", f.write.sample.label )
-#   
-#   # jason 6/16/2015 - do stuff in the left box when radio buttons toggled.
-#   gSignalConnect(cont.rb, "toggled", f.write.var.label )
-#   gSignalConnect(const.rb, "toggled", f.write.var.label )
-#   
-#   #   ---- Sample sizes
-#   
-#   n.frame <- gtkFrameNew( "Sample Size")
-#   
-#   # n.tbl <- gtkTableNew(7,4,homogeneous=FALSE) #Bigger than we need. FALSE for nonhomogeneous
-#   # gtkTableSetRowSpacings(n.tbl,1) #1 pixel between rows
-#   # gtkTableSetColSpacings(n.tbl,5) #5 pixels between column
-#   
-#   hbox1$add(n.frame)
-#   
-#   n.vbox <- gtkVBoxNew(TRUE, 2)
-#   n.vbox$setBorderWidth(8)
-#   n.frame$add( n.vbox )
-#   
-#   n.entry <- gtkEntry()
-#   n.entry$setText( "" )
-#   
-#   n.label <- gtkLabel("Specify: total n across all\n\tcategories") 
-#   n.label2 <- gtkLabel(" ")
-#   
-#   n.vbox$packStart(n.label)
-#   n.vbox$packStart(n.entry)
-#   n.vbox$packStart(n.label2)
-#   
-#   # gtkTableAttach(n.tbl,tot.size.label, 0, 1, 0, 1, xpadding=5, ypadding=5)
-#   # gtkTableAttach(n.tbl,n.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
-  
   
   # =========================== Frame information area ==================================
   
   #   ---- Separator
   vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
-  
   
   finfo.vbox <- gtkHBoxNew(FALSE,2)
   finfo.vbox$setBorderWidth(8)
@@ -382,7 +316,6 @@ seed.entry <- gtkEntryNew()
   
   
   
-  # Bottom row of buttons ---------------------------------------------------
   # =========================== Bottom row of buttons ==================================
   
   
@@ -397,7 +330,7 @@ seed.entry <- gtkEntryNew()
   
   #   ---- Read frame button, but do not draw sample, this displays variables in shapefile
   read.b <- gtkButton("Inspect\n Frame ")
-  gSignalConnect(read.b, "clicked", readButtonAction, 
+  gSignalConnect(read.b, "clicked", readButtonActionCSV, 
                  data=list(
                    shape.in.entry=shape.in.entry,
                    shape.in.dir=shape.in.dir,
@@ -409,58 +342,43 @@ seed.entry <- gtkEntryNew()
   )
   bbox$packEnd(read.b, expand=FALSE)
   
+
   #   ---- Run button
   run.b <- gtkButton("Run")
-  gSignalConnect(run.b, "clicked", run.unequal.sample, data=list( 
-    samp.type.combo=samp.type.combo,
-    n.entry=n.entry,
-    shape.in.entry=shape.in.entry,
-    shape.in.dir=shape.in.dir,
-    unequal.var.entry=unequal.var.entry,
-    out.r.entry=out.r.entry,
-    over.entry=over.entry,
-    seed.entry=seed.entry, 
-    cont.rb=cont.rb,
-    const.rb=const.rb, 
-    uneqprop.rb=uneqprop.rb
+  gSignalConnect(run.b, "clicked", analysisCont, data=list( 
+    siteID.entry=siteID.entry,
+    evalStatus.entry=evalStatus.entry,
+    evalStatusYes.entry=evalStatusYes.entry,
+    wgt.entry=wgt.entry,
+    xcoord.entry=xcoord.entry,
+    ycoord.entry=ycoord.entry,
+    cont.var.entry=cont.var.entry
   )
   ) 
   bbox$packEnd(run.b, expand=FALSE)
-  
-  #   ---- Read frame button, but do not draw sample, this displays variables in shapefile
-  plot.b <- gtkButton("  Plot\nSample")
-  gSignalConnect(plot.b, "clicked", readButtonAction, 
-                 data=list(
-                   shape.in.entry=shape.in.entry,
-                   shape.in.dir=shape.in.dir,
-                   out.r.entry=out.r.entry,
-                   name.labs=names.labs,
-                   type.labs=vtypes.labs, 
-                   finfo.title=finfo.title
-                 )
-  )
-  bbox$packEnd(plot.b, expand=FALSE)  
+
+  #   ---- Read frame button, but do not draw sample, this plots resulting CDF
+#   plot.b <- gtkButton("  Plot\nCDF")
+#   gSignalConnect(plot.b, "clicked", analysisPlotCDF, 
+#                  data=list(
+#                  )
+#   )
+#   bbox$packEnd(plot.b, expand=FALSE)  
   
   #   ---- View button
   view.b <- gtkButton("Tabulate\n Sample")
   gSignalConnect(view.b, "clicked", view.sample, data=list(
-    out.r.entry = out.r.entry
+#     out.r.entry = out.r.entry
   ))
   bbox$packEnd( view.b, expand=FALSE)
   
   
-  # ???   #   ---- Write to csv button
-  #    write.csv.b <- gtkButton("Write CSV")
-  #    gSignalConnect(write.csv.b, "clicked", SDraw::my.write.csv, data=list(
-  #            out.r.entry = out.r.entry
-  #    ))
-  #    bbox$packEnd( write.csv.b, expand=FALSE)
   
-  #   ---- Write to Shapefile button
+  #   ---- Write to csv button
   write.shp.b <- gtkButton("Export")
   gSignalConnect(write.shp.b, "clicked", my.write.shp, data=list(
-    out.r.entry = out.r.entry, 
-    parent.window = win            
+#     out.r.entry = out.r.entry, 
+#     parent.window = win            
   ))
   bbox$packEnd( write.shp.b, expand=FALSE)
   
