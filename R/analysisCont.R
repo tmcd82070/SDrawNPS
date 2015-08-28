@@ -17,6 +17,7 @@ analysisCont <- function(button, dat){
   fn <- dat$shape.in.entry$getText()
   dir <- dat$shape.in.dir$getText()
   
+  outobj <- dat$out.r.entry$getText()
   siteID <- dat$siteID.entry$getText()
   evalStatus <- dat$evalStatus.entry$getText()
   evalStatusYes <- dat$evalStatusYes.entry$getText()
@@ -60,6 +61,8 @@ analysisCont <- function(button, dat){
   ycoord.pretty <- paste0("df","$",ycoord)
   cont.var.pretty <- paste0("df","$",cont.var)
   the.pretty <- c(siteID.pretty,evalStatus.pretty,evalStatusYes,pop2.pretty,pop3.pretty,wgt.pretty,xcoord.pretty,ycoord.pretty,cont.var.pretty)
+  
+  the.pretty <<- the.pretty
 
   # define 'df' for the console window
   options(useFancyQuotes = FALSE)
@@ -96,42 +99,24 @@ the.data.cont <- data.frame(siteID=",siteID.pretty,", Ind=",cont.var.pretty,")\n
                        data.cont=the.data.cont,
                        total=TRUE)\n\n")
 
-  the.sites <<- the.sites
-  the.subpop <<- the.subpop
-  the.design <<- the.design
-  the.data.cont <<- the.data.cont
-
-
   # do the analysis
-  ans <- cont.analysis(sites=the.sites,
+#   ans <- cont.analysis(sites=the.sites,
+#                        subpop=the.subpop,
+#                        design=the.design,
+#                        data.cont=the.data.cont,
+#                        total=TRUE)
+  
+  ans <- assign(outobj,cont.analysis(sites=the.sites,
                        subpop=the.subpop,
                        design=the.design,
                        data.cont=the.data.cont,
-                       total=TRUE)
+                       total=TRUE),pos=.GlobalEnv)
   
-  cont.cdfplot(paste0(dir,"/",fn," - CDF Plots.pdf"),ans$CDF)
-  makeAnalysisLog(dat,the.pretty)
+ # outobj2 <<- outobj
+#   ans2 <<- ans
+#   assign(outobj2,ans2)
+  
+  cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - CDF Plots.pdf"),ans$CDF)
+  makeAnalysisLog(fn,dir,the.pretty)
   options(useFancyQuotes = TRUE)
 }
-
-
-
-
-# colVec <- c('red','green','blue')
-# uniqueSubpop <- as.character(droplevels(unique(ans$CDF$Subpopulation)))
-# uniqueSubpop[uniqueSubpop == "1"] <- "All"
-# xMin <- min(ans$CDF$Value)
-# xMax <- max(ans$CDF$Value)
-# for(i in 1:length(uniqueSubpop)){
-#   if(i == 1){
-#     plot(ans$CDF$Value[ans$CDF$Subpopulation == "1"],ans$CDF$Estimate.P[ans$CDF$Subpopulation == "1"],xaxt='n',yaxt='n',xlab="",ylab="",col=colVec[i],xlim=c(xMin,xMax),ylim=c(0,100),type='l')
-#   } else {
-#     par(new=TRUE)
-#     plot(ans$CDF$Value[ans$CDF$Subpopulation == uniqueSubpop[i]],ans$CDF$Estimate.P[ans$CDF$Subpopulation == uniqueSubpop[i]],xaxt='n',yaxt='n',xlab="",ylab="",col=colVec[i],xlim=c(xMin,xMax),ylim=c(0,100),type='l')
-#   }
-# }
-# axis(1,xaxp=c(xMin,xMax,5),labels=TRUE)
-# axis(2,xaxp=c(0,100,10),labels=TRUE, las=2)
-# legend("bottomright",legend=uniqueSubpop,col=colVec[1:i],lty=c(1,1,1),bty="n")
-# title("blahblahb",xlab=cont.var,ylab="P(Y <= y)")
-

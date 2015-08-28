@@ -13,119 +13,6 @@ analysis.GUI <- function()   {
   vbox1 <- gtkVBoxNew(FALSE, 8)
   vbox1$setBorderWidth(8)
   win$add(vbox1)
-
-#   # ================= Sample type frame ============================
-#   samp.types <- c("HAL - Halton Lattice Sampling", 
-#                   "BAS - Balanced Acceptance Sampling", 
-#                   "GRTS - Generalized Random Tessellation Stratified", 
-#                   "SSS - Simple Systematic Sampling")
-#   
-#   #this adds different sampling frames
-#   #I don't forsee adding anything other than BAS, GRTS, or SSS  -- HAL!!!
-#   samp.type.combo <- gtkComboBoxNewText()
-#   samp.type.combo$show()
-#   for( i in samp.types ){
-#     samp.type.combo$appendText( i )
-#   }
-#   samp.type.combo$setActive(0)
-#   
-#   #    print(gtkComboBoxGetActive(samp.type.combo))
-#   #    print(gtkComboBoxGetWrapWidth(samp.type.combo))
-#   
-#   samp.type.frame <- gtkFrameNew("Sample Type")
-#   samp.type.frame$setBorderWidth(8)
-#   #this adds a label to the combo box
-#   
-#   combo.box <- gtkHBoxNew(FALSE, 8)
-#   combo.box$setBorderWidth(8)
-#   combo.box$packStart( samp.type.combo )
-#   samp.type.frame$add( combo.box )
-#   
-#   hbox2 <- gtkHBoxNew(FALSE, 8)
-#   #hbox2$setBorderWidth(8)
-#   hbox2$packStart(samp.type.frame)
-#   
-#   #    logo <- gtkImageNewFromFile("s_draw_banner.png")
-#   #    hbox2$packStart(logo)
-#   
-#   
-#   vbox1$packStart(hbox2)
-#   
-#   #   Handler for change in sample type
-#   f.samp.type.change <- function(x,dat){
-#     stype <- samp.type.combo$getActive()
-#     
-#     #  Carefull, don't get the numbers out of order with the options
-#     if( stype == 0 ){
-#       # Halton samples
-#       over.entry$hide()
-#       over.size.label$hide()
-#     } else if( stype == 1 ){
-#       # BAS samples
-#       over.entry$hide()
-#       over.size.label$hide()        
-#     } else if( stype == 2 ){
-#       # GRTS samples
-#       over.entry$show()
-#       over.size.label$show()
-#     } else {
-#       # sss samples
-#       over.entry$hide()
-#       over.size.label$hide()
-#     }
-#     
-#     
-#   }
-#   gSignalConnect(samp.type.combo, "changed", f.samp.type.change )
-#   
-#   
-#   
-#   # ------ Optional inputs box
-#   opt.hbox <- gtkHBoxNew(TRUE, 2)
-#   opt.hbox$setBorderWidth(8)
-#   hbox2$packStart(opt.hbox)
-#   
-#   opt.frame <- gtkFrameNew("Optional Inputs")
-#   opt.hbox$packStart(opt.frame)
-#   
-#   #    opt.blank.box <- gtkHBoxNew(TRUE,2)
-#   #    opt.hbox$packStart(opt.blank.box)
-#   
-#   opt.vbox <- gtkVBoxNew(FALSE, 8)
-#   opt.vbox$setBorderWidth(8)
-#   opt.frame$add(opt.vbox)
-#   
-#   
-#   #   ---- Define table of boxes so everything aligns
-#   opt.tbl <- gtkTable(7,5,FALSE)
-#   gtkTableSetRowSpacings(opt.tbl,1)
-#   gtkTableSetColSpacings(opt.tbl,5)
-#   
-#   opt.vbox$add(opt.tbl)
-#   
-#   
-#   
-#   #   ---- Seed text box
-#   seed.entry <- gtkEntryNew()
-#   seed.entry$setText( "" )
-#   seed.label <- gtkLabel("Random number seed:")
-#   
-#   gtkTableAttach(opt.tbl,seed.label, 0, 1, 0, 1, xpadding=5, ypadding=5)
-#   gtkTableAttach(opt.tbl,seed.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
-#   
-#   
-#   #   ---- Over sample size text boxes
-#   over.entry <- gtkEntry()
-#   over.entry$setText( "0" )
-#   over.size.label <- gtkLabel("Over sample, total over all categories:")
-#   
-#   # Hide initially because Halton Latice is initial sample type
-#   over.entry$hide()
-#   over.size.label$hide()
-#    
-#   gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
-#   gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
-  
   
   # --------------------------- Middle horizontal box ---------------
   req.frame <- gtkFrameNew("Required Inputs")
@@ -211,6 +98,7 @@ gtkTableAttach(tbl,evalStatus.entry, 1, 2, 7, 8, xpadding=5, ypadding=5)
 evalStatusYes.entry <- gtkEntryNew()
 evalStatusYes.entry$setText( "Include=Y" )
 evalStatusYes.label <- gtkLabel("Inclusion Identifier:")
+#evalStatusYes.label$setMarkup("<span color='red'>Inclusion Identifier:</span>")
 gtkTableAttach(tbl,evalStatusYes.label, 0, 1, 9, 10, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,evalStatusYes.entry, 1, 2, 9, 10, xpadding=5, ypadding=5)
 
@@ -295,7 +183,7 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
   gtkTableAttach(finfo.tbl, gtkHSeparatorNew(), (n.blank.cols/2), (n.blank.cols/2)+1, 1,2)
   gtkTableAttach(finfo.tbl, gtkHSeparatorNew(), (n.blank.cols/2)+1, (n.blank.cols/2)+2, 1,2)
   
-  # Set thier length
+  # Set their length
   #     f.setlablen <-function(x,lablist){
   #         lablist[[x]]$setWidthChars(25)
   #         #lablist[[x]]$setJustify(GTK_JUSTIFY_LEFT)
@@ -370,7 +258,8 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
     wgt.entry=wgt.entry,
     xcoord.entry=xcoord.entry,
     ycoord.entry=ycoord.entry,
-    cont.var.entry=cont.var.entry
+    cont.var.entry=cont.var.entry,
+    out.r.entry = out.r.entry 
   )
   ) 
   bbox$packEnd(run.b, expand=FALSE)
@@ -385,20 +274,20 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
   
   #   ---- View button
   view.b <- gtkButton("Tabulate\n Sample")
-  gSignalConnect(view.b, "clicked", view.sample, data=list(
-#     out.r.entry = out.r.entry
+  gSignalConnect(view.b, "clicked", view.analysis.sample, data=list(
+    out.r.entry = out.r.entry
   ))
   bbox$packEnd( view.b, expand=FALSE)
   
   
   
   #   ---- Write to csv button
-  write.shp.b <- gtkButton("Export")
-  gSignalConnect(write.shp.b, "clicked", my.write.shp, data=list(
-#     out.r.entry = out.r.entry, 
-#     parent.window = win            
+  write.csv.b <- gtkButton("Export")
+  gSignalConnect(write.csv.b, "clicked", my.write.csv, data=list(
+    out.r.entry = out.r.entry, 
+    parent.window = win            
   ))
-  bbox$packEnd( write.shp.b, expand=FALSE)
+  bbox$packEnd( write.csv.b, expand=FALSE)
   
   
   #   ---- Done button
