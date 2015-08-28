@@ -214,33 +214,47 @@ evalStatusYes.label <- gtkLabel("Inclusion Identifier:")
 gtkTableAttach(tbl,evalStatusYes.label, 0, 1, 9, 10, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,evalStatusYes.entry, 1, 2, 9, 10, xpadding=5, ypadding=5)
 
+# (sub)Population 2 -- recall population 1 is all elements together
+pop2.entry <- gtkEntryNew()
+pop2.entry$setText( "" )
+pop2.label <- gtkLabel("Subpopulation 1:")
+gtkTableAttach(tbl,pop2.label, 0, 1, 11, 12, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,pop2.entry, 1, 2, 11, 12, xpadding=5, ypadding=5)
+
+# (sub)Population 3 -- recall population 1 is all elements together
+pop3.entry <- gtkEntryNew()
+pop3.entry$setText( "" )
+pop3.label <- gtkLabel("Subpopulation 2:")
+gtkTableAttach(tbl,pop3.label, 0, 1, 13, 14, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,pop3.entry, 1, 2, 13, 14, xpadding=5, ypadding=5)
+
 # wgt
 wgt.entry <- gtkEntryNew()
 wgt.entry$setText( "wgt" )
 wgt.label <- gtkLabel("Weight Variable:")
-gtkTableAttach(tbl,wgt.label, 0, 1, 11, 12, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,wgt.entry, 1, 2, 11, 12, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,wgt.label, 0, 1, 15, 16, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,wgt.entry, 1, 2, 15, 16, xpadding=5, ypadding=5)
 
 # xcoord
 xcoord.entry <- gtkEntryNew()
 xcoord.entry$setText( "xcoord" )
 xcoord.label <- gtkLabel("X-Coordinate Variable:")
-gtkTableAttach(tbl,xcoord.label, 0, 1, 13, 14, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,xcoord.entry, 1, 2, 13, 14, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,xcoord.label, 0, 1, 17, 18, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,xcoord.entry, 1, 2, 17, 18, xpadding=5, ypadding=5)
 
 # ycoord
 ycoord.entry <- gtkEntryNew()
 ycoord.entry$setText( "ycoord" )
 ycoord.label <- gtkLabel("Y-Coordinate Variable:")
-gtkTableAttach(tbl,ycoord.label, 0, 1, 15, 16, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,ycoord.entry, 1, 2, 15, 16, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,ycoord.label, 0, 1, 19, 20, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,ycoord.entry, 1, 2, 19, 20, xpadding=5, ypadding=5)
 
 # continuous analysis variable
 cont.var.entry <- gtkEntryNew()
 cont.var.entry$setText( "contvar" )
 cont.var.label <- gtkLabel("Continuous Variable:")
-gtkTableAttach(tbl,cont.var.label, 0, 1, 17, 18, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,cont.var.entry, 1, 2, 17, 18, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,cont.var.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
 
   
@@ -346,9 +360,13 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 17, 18, xpadding=5, ypadding=5)
   #   ---- Run button
   run.b <- gtkButton("Run")
   gSignalConnect(run.b, "clicked", analysisCont, data=list( 
+    shape.in.entry=shape.in.entry,
+    shape.in.dir=shape.in.dir,
     siteID.entry=siteID.entry,
     evalStatus.entry=evalStatus.entry,
     evalStatusYes.entry=evalStatusYes.entry,
+    pop2.entry=pop2.entry,
+    pop3.entry=pop3.entry,
     wgt.entry=wgt.entry,
     xcoord.entry=xcoord.entry,
     ycoord.entry=ycoord.entry,

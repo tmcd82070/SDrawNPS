@@ -8,7 +8,7 @@ getDataFrame <- function( filename, dir ){
     } else {
       
         #   The dat is not laying around.  Read it.      
-        dat <- read.csv(paste0(dir,'/',filename))  # a wrapper for readOGR
+        dat <- read.csv(paste0(dir,'/',filename))  
 
     }
 

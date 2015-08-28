@@ -10,6 +10,14 @@ readButtonActionCSV<-function(x,dat){
   fn <- dat$shape.in.entry$getText()
   in.dir <- dat$shape.in.dir$getText()
   
+  if(fn == ""){fn <- " "}    # so the check immediately below works...i don't want to change the default to " " in the gui.
+  
+  # Check input parameters
+  if( fn == " " ){
+    error.message("Specify a CSV or a valid dataframe in order to identify variables.")
+    return()
+  }
+  
   datframe <- getDataFrame(fn,in.dir)
 
   nms <- names(datframe)
