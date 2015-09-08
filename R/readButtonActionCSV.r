@@ -26,7 +26,7 @@ readButtonActionCSV<-function(x,dat){
   ftyp <- 'VARIABLES'
   
   # Set frame info title
-  dat$finfo.title$setText(paste("Frame Contents:    \n", length(datframe), toupper(ftyp)))
+  dat$finfo.title$setText(paste("Sample\nContents:    \n", length(datframe), toupper(ftyp)))
   
   # Add the variable names to the dialog box, first clear any existing labels
   lapply(2:length(dat$name.labs), function(x,lablist){lablist[[x]]$hide()}, lablist=dat$name.labs)

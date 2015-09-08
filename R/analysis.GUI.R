@@ -3,63 +3,96 @@ analysis.GUI <- function()   {
   #   Setup and run a GUI to take inputs for an analysis file.
   #
   
-#   design <- "unequal"
   
   #   ---- Define the main window
   win <- gtkWindowNew("toplevel")
   win$setBorderWidth(8) 
   win$setTitle("S-Draw : Continuous variable analysis interface")
-  
+
   vbox1 <- gtkVBoxNew(FALSE, 8)
   vbox1$setBorderWidth(8)
   win$add(vbox1)
   
   # --------------------------- Middle horizontal box ---------------
+#   req.frame <- gtkFrameNew("Required Inputs")
+#   vbox1$packStart(req.frame)
+#   
+#   hbox1 <- gtkVBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
+#   hbox1$setBorderWidth(8)
+#   req.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
   req.frame <- gtkFrameNew("Required Inputs")
-  vbox1$packStart(req.frame)
+  req.frame$setBorderWidth(8)
   
-  hbox1 <- gtkHBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
-  hbox1$setBorderWidth(8)
-  req.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically
+  hbox2 <- gtkHBoxNew(FALSE, 8)
+  hbox2$packStart(req.frame)
   
+  vbox1$packStart(hbox2)
   
+#--------------------------- Middle horizontal box ---------------
+# req.frame <- gtkFrameNew("Required Inputs")
+# vbox1$packStart(req.frame)
+
+hbox1 <- gtkVBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
+hbox1$setBorderWidth(8)
+req.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically   
+
+
+
+
+
+
+
+
+# ================= Required Inputs frame ============================
+frame.frame <- gtkFrameNew("Sample Information")
+hbox1$add(frame.frame)  # Adds the frame to the horizontal box
+
+#   ---- Define a vertical box
+req.vbox <- gtkVBoxNew(FALSE, 8)
+req.vbox$setBorderWidth(8)
+frame.frame$add(req.vbox)
+
+
+#   ---- Define table of boxes so everything aligns
+tbl <- gtkTable(18,2,FALSE) #3 rows, 2 columns, FALSE for nonhomogeneous
+gtkTableSetRowSpacings(tbl,1) #1 pixel between rows
+gtkTableSetColSpacings(tbl,5) #5 pixels between columns
+
+# hbox1$packStart(tbl)
+req.vbox$packStart(tbl)
+
+
+#   ---- Input csv file box
+shape.in.entry <- gtkEntry()
+shape.in.entry$setText( "" )
+shape.file.label <- gtkLabel("CSV file OR data.frame object:")
+
+shape.in.dir <- gtkEntry()  # this entry box is hidden/not displayed
+shape.in.dir$setText( getwd() )
+
+#out.r.entry <- gtkEntry()
+#out.r.entry$setText( "" )
+
+#   ---- Output R object box
+out.r.entry <- gtkEntry()
+out.r.entry$setText("")#paste("sdraw.", format(Sys.time(), "%Y.%m.%d.%H%M%S"), sep=""))
+out.r.label <- gtkLabel("Output File:")
+
+gtkTableAttach(tbl,out.r.label, 0, 1, 3, 4, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,out.r.entry, 1, 2, 3, 4, xpadding=5, ypadding=5)
+
   
-  # ================= Required Inputs frame ============================
-  frame.frame <- gtkFrameNew("Frame Information")
-  hbox1$add(frame.frame)  # Adds the frame to the horizontal box
-  
-  #   ---- Define a vertical box
-  req.vbox <- gtkVBoxNew(FALSE, 8)
-  req.vbox$setBorderWidth(8)
-  frame.frame$add(req.vbox)
-  
-  
-  #   ---- Define table of boxes so everything aligns
-  tbl <- gtkTable(18,2,FALSE) #3 rows, 2 columns, FALSE for nonhomogeneous
-  gtkTableSetRowSpacings(tbl,1) #1 pixel between rows
-  gtkTableSetColSpacings(tbl,5) #5 pixels between columns
-  
-  req.vbox$packStart(tbl)
-  
-  
-  #   ---- Input csv file box
-  shape.in.entry <- gtkEntry()
-  shape.in.entry$setText( "" )
-  shape.file.label <- gtkLabel("CSV file OR data.frame object:")
-  
-  shape.in.dir <- gtkEntry()  # this entry box is hidden/not displayed
-  shape.in.dir$setText( getwd() )
-  
-  #out.r.entry <- gtkEntry()
-  #out.r.entry$setText( "" )
-  
-  #   ---- Output R object box
-  out.r.entry <- gtkEntry()
-  out.r.entry$setText("")#paste("sdraw.", format(Sys.time(), "%Y.%m.%d.%H%M%S"), sep=""))
-  out.r.label <- gtkLabel("Sample's R name:")
-  
-  gtkTableAttach(tbl,out.r.label, 0, 1, 3, 4, xpadding=5, ypadding=5)
-  gtkTableAttach(tbl,out.r.entry, 1, 2, 3, 4, xpadding=5, ypadding=5)
   
   
   shape.file.box <- gtkHBox(FALSE, 10)
@@ -77,7 +110,7 @@ analysis.GUI <- function()   {
   
   gtkTableAttach(tbl,shape.file.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
   gtkTableAttach(tbl,shape.file.box, 1, 2, 1, 2, xpadding=5, ypadding=5)
-  
+ 
   # ---- needed analysis variables
 
 # siteID
@@ -126,39 +159,100 @@ gtkTableAttach(tbl,wgt.entry, 1, 2, 15, 16, xpadding=5, ypadding=5)
 # xcoord
 xcoord.entry <- gtkEntryNew()
 xcoord.entry$setText( "xcoord" )
-xcoord.label <- gtkLabel("X-Coordinate Variable:")
+xcoord.label <- gtkLabel("X-Coordinate:")
 gtkTableAttach(tbl,xcoord.label, 0, 1, 17, 18, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,xcoord.entry, 1, 2, 17, 18, xpadding=5, ypadding=5)
 
 # ycoord
 ycoord.entry <- gtkEntryNew()
 ycoord.entry$setText( "ycoord" )
-ycoord.label <- gtkLabel("Y-Coordinate Variable:")
+ycoord.label <- gtkLabel("Y-Coordinate:")
 gtkTableAttach(tbl,ycoord.label, 0, 1, 19, 20, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,ycoord.entry, 1, 2, 19, 20, xpadding=5, ypadding=5)
 
 # continuous analysis variable
 cont.var.entry <- gtkEntryNew()
 cont.var.entry$setText( "contvar" )
-cont.var.label <- gtkLabel("Continuous Variable:")
+cont.var.label <- gtkLabel("Continuous Outcome:")
 gtkTableAttach(tbl,cont.var.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # ------ display box
+  display.hbox <- gtkHBoxNew(TRUE, 2)
+  display.hbox$setBorderWidth(8)
+  hbox2$packStart(display.hbox)
   
-  # =========================== Frame information area ==================================
+  display.frame <- gtkFrameNew("Data Info")
+  display.hbox$packStart(display.frame)
+  
+  display.vbox <- gtkVBoxNew(FALSE, 8)
+  display.vbox$setBorderWidth(8)
+  display.frame$add(display.vbox)
+  
+  #   ---- Define table of boxes so everything aligns
+#   display.tbl <- gtkTable(7,5,FALSE)
+#   gtkTableSetRowSpacings(display.tbl,1)
+#   gtkTableSetColSpacings(display.tbl,5)
+#   
+#   display.vbox$add(display.tbl)
+  
+
+
+
+
+
+#   #   ---- Seed text box
+#   seed.entry <- gtkEntryNew()
+#   seed.entry$setText( "" )
+#   seed.label <- gtkLabel("Random number seed:")
+#   
+#   gtkTableAttach(display.tbl,seed.label, 0, 1, 0, 1, xpadding=5, ypadding=5)
+#   gtkTableAttach(display.tbl,seed.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
   
   #   ---- Separator
-  vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
+#   vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
   
-  finfo.vbox <- gtkHBoxNew(FALSE,2)
-  finfo.vbox$setBorderWidth(8)
-  vbox1$packStart(finfo.vbox)
+#   finfo.vbox <- gtkHBoxNew(FALSE,2)
+#   finfo.vbox$setBorderWidth(8)
+#   vbox1$packStart(finfo.vbox)
   
-  finfo.title <- gtkLabel("Frame Type:    \n<pending>")
-  finfo.vbox$packStart(finfo.title, expand=FALSE, fill=FALSE)
+  finfo.title <- gtkLabel("Sample\nContents:    \n<pending>")
+  display.vbox$packStart(finfo.title, expand=FALSE, fill=FALSE)
   
-  finfo.vbox$packStart(gtkVSeparatorNew(), expand=FALSE)
+  display.vbox$packStart(gtkVSeparatorNew(), expand=FALSE)
   
   max.vars <- 20  # maximum number of variables to display
   n.blank.cols <- 4  # must be even, half place on left and half on right
@@ -166,7 +260,7 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
   finfo.tbl <- gtkTable(max.vars+1,n.blank.cols+2,FALSE) #FALSE for nonhomogeneous
   gtkTableSetRowSpacings(finfo.tbl,1) #1 pixel between rows
   gtkTableSetColSpacings(finfo.tbl,5) #5 pixels between columns
-  finfo.vbox$packStart(finfo.tbl)
+  display.vbox$packStart(finfo.tbl)
   
   # Allocate the labels
   names.labs <- lapply(1:(max.vars+1), gtkLabel, str="")
@@ -213,6 +307,76 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
   vtypes.labs[[2]]$setText("<pending>")
   lapply(2:max.vars, function(x,lablist){lablist[[x+1]]$hide()}, lablist=names.labs)
   lapply(2:max.vars, function(x,lablist){lablist[[x+1]]$hide()}, lablist=vtypes.labs)
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+ 
+# 
+# 
+#   
+#   # =========================== Frame information area ==================================
+#   
+# 
+# 
+# 
+# # # ------ Optional inputs box
+# # opt.hbox <- gtkHBoxNew(TRUE, 2)
+# # opt.hbox$setBorderWidth(8)
+# # hbox2$packStart(opt.hbox)
+# # 
+# # opt.frame <- gtkFrameNew("Optional Inputs")
+# # opt.hbox$packStart(opt.frame)
+# # 
+# # #    opt.blank.box <- gtkHBoxNew(TRUE,2)
+# # #    opt.hbox$packStart(opt.blank.box)
+# # 
+# # opt.vbox <- gtkVBoxNew(FALSE, 8)
+# # opt.vbox$setBorderWidth(8)
+# # opt.frame$add(opt.vbox)
+# # 
+# # 
+# # #   ---- Define table of boxes so everything aligns
+# # opt.tbl <- gtkTable(7,5,FALSE)
+# # gtkTableSetRowSpacings(opt.tbl,1)
+# # gtkTableSetColSpacings(opt.tbl,5)
+# # 
+# # opt.vbox$add(opt.tbl)
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
   
   
   
@@ -231,7 +395,7 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
   bbox$SetBorderWidth(10)
   
   #   ---- Read frame button, but do not draw sample, this displays variables in shapefile
-  read.b <- gtkButton("Inspect\n Frame ")
+  read.b <- gtkButton("Inspect\n Sample")
   gSignalConnect(read.b, "clicked", readButtonActionCSV, 
                  data=list(
                    shape.in.entry=shape.in.entry,

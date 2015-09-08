@@ -18,7 +18,7 @@ analysisCont <- function(button, dat){
   dir <- dat$shape.in.dir$getText()
   
   outobj <- dat$out.r.entry$getText()
-  siteID <- dat$siteID.entry$getText()
+  theSiteID <- dat$siteID.entry$getText()
   evalStatus <- dat$evalStatus.entry$getText()
   evalStatusYes <- dat$evalStatusYes.entry$getText()
   pop2 <- dat$pop2.entry$getText() # note that pop1 is all elements combined
@@ -30,7 +30,7 @@ analysisCont <- function(button, dat){
   
   df <- getDataFrame( fn, dir )
   
-  the.siteID.o <- df[,siteID]   
+  the.siteID.o <- df[,theSiteID]   
   
   # make sites df of two vars
   the.sites <- data.frame(siteID=the.siteID.o, df[,evalStatus]==evalStatusYes) 
@@ -52,7 +52,7 @@ analysisCont <- function(button, dat){
   # make cont var df
   the.data.cont <- data.frame(siteID=the.siteID.o, Ind=df[,cont.var])
   
-  siteID.pretty <- paste0("df","$",siteID)
+  siteID.pretty <- paste0("df","$",theSiteID)
   evalStatus.pretty <- paste0("df","$",evalStatus)
   pop2.pretty <- paste0("df","$",pop2)
   pop3.pretty <- paste0("df","$",pop3)
@@ -119,4 +119,8 @@ the.data.cont <- data.frame(siteID=",siteID.pretty,", Ind=",cont.var.pretty,")\n
   cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - CDF Plots.pdf"),ans$CDF)
   makeAnalysisLog(fn,dir,the.pretty)
   options(useFancyQuotes = TRUE)
+
+  dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", "Analysis successful.")
+  dialog$run()
+  dialog$destroy()
 }
