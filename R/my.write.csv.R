@@ -4,12 +4,20 @@ my.write.csv <- function(x,dat){
   #   and open a dialog and ask for the format (from amoung those 
   #   supported by writeOGR - see ogrDrivers()$name
   
-  samp.nm <- dat$out.r.entry$getText()
+  outobj <- dat$out.r.entry$getText()
   
-  if( exists( samp.nm ) ){
-    samp <- get( samp.nm )
-    samp.nm2 <- gsub(".", "_", samp.nm, fixed=TRUE )
+  if( exists( paste0(outobj,".cont"), envir=.GlobalEnv ) | exists( paste0(outobj,".cat"), envir=.GlobalEnv ) ){
     
+    # set up naming variables
+    if( exists( paste0( outobj,".cont"), envir=.GlobalEnv) ){
+      samp.cont <- get( paste0(outobj,".cont") )
+      samp.nm.cont <- gsub(".", "_", paste0(outobj,".cont"), fixed=TRUE )
+    }
+    if( exists( paste0( outobj,".cat"), envir=.GlobalEnv) ){
+      samp.cat <- get( paste0(outobj,".cat") )
+      samp.nm.cat <- gsub(".", "_",paste0(outobj,".cat"), fixed=TRUE )
+    }
+
     # This is how one creates a dialog with buttons and associated response codes.
     dialog <- gtkFileChooserDialog("Export Sample As...", dat$parent.window, "save",
                                    "gtk-save", GtkResponseType["accept"], 
@@ -43,8 +51,13 @@ my.write.csv <- function(x,dat){
       
       if( length(grep("CSV", out.format)) > 0 ){
         path.n.filename <- extractPathFilename(path.n.filename)
-        write.csv( samp[[1]],paste0(path.n.filename$path,'/',path.n.filename$file,'.csv'))
-        write.csv( samp[[2]],paste0(path.n.filename$path,'/Summary ',path.n.filename$file,'.csv'))
+        if( exists( paste0( outobj,".cont"), envir=.GlobalEnv) ){
+          write.csv( samp.cont[[1]],paste0(path.n.filename$path,'/',path.n.filename$file,'_CDF.csv'))
+          write.csv( samp.cont[[2]],paste0(path.n.filename$path,'/',path.n.filename$file,'_Pct.csv'))
+        }
+        if( exists( paste0( outobj,".cat"), envir=.GlobalEnv) ){
+          write.csv( samp.cat,paste0(path.n.filename$path,'/',path.n.filename$file,'_Cat.csv'))
+        }
       } 
       
     } else {
@@ -52,7 +65,7 @@ my.write.csv <- function(x,dat){
     }
       
   } else {
-    error.message( paste( "Sample object '", samp.nm, "' not found. Hit RUN before EXPORT.\n", sep=""))
+    error.message( paste( "Sample object(s) '", samp.nm.cont,"' and/or '", samp.nm.cat, "' not found. Hit RUN before EXPORT.\n", sep=""))
   }
   
 }

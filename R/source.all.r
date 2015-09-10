@@ -50,7 +50,7 @@ source(  "view.sample.R"  )
 source(  "zzz.r"  )
 
 source(  "analysis.GUI.R"  )
-source(  "analysisCont.R"  )
+source(  "analysis.R"  )
 source(  "getDataFrame.R"  )
 source(  "readButtonActionCSV.r"  )
 source(  "makeAnalysisLog.R"  )
@@ -58,3 +58,4 @@ source(  "view.analysis.sample.R"  )
 source(  "my.write.csv.R"  )
 
 #source(  "old.analysis.GUI.R"  )
+#source(  "analysisCont.R"  )

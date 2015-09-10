@@ -171,14 +171,18 @@ gtkTableAttach(tbl,ycoord.label, 0, 1, 19, 20, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,ycoord.entry, 1, 2, 19, 20, xpadding=5, ypadding=5)
 
 # continuous analysis variable
-cont.var.entry <- gtkEntryNew()
-cont.var.entry$setText( "contvar" )
-cont.var.label <- gtkLabel("Continuous Outcome:")
-gtkTableAttach(tbl,cont.var.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
+# cont.var.entry <- gtkEntryNew()
+# cont.var.entry$setText( "contvar" )
+# cont.var.label <- gtkLabel("Continuous Outcome:")
+# gtkTableAttach(tbl,cont.var.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
+# gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
-
-
+# analysis variable(s)
+vars.entry <- gtkEntryNew()
+vars.entry$setText( "variable1, variable2, variable3, ..." )
+vars.label <- gtkLabel("Outcome(s):")
+gtkTableAttach(tbl,vars.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
 
 
@@ -308,78 +312,6 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
   lapply(2:max.vars, function(x,lablist){lablist[[x+1]]$hide()}, lablist=names.labs)
   lapply(2:max.vars, function(x,lablist){lablist[[x+1]]$hide()}, lablist=vtypes.labs)
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-
-
-
-
- 
-# 
-# 
-#   
-#   # =========================== Frame information area ==================================
-#   
-# 
-# 
-# 
-# # # ------ Optional inputs box
-# # opt.hbox <- gtkHBoxNew(TRUE, 2)
-# # opt.hbox$setBorderWidth(8)
-# # hbox2$packStart(opt.hbox)
-# # 
-# # opt.frame <- gtkFrameNew("Optional Inputs")
-# # opt.hbox$packStart(opt.frame)
-# # 
-# # #    opt.blank.box <- gtkHBoxNew(TRUE,2)
-# # #    opt.hbox$packStart(opt.blank.box)
-# # 
-# # opt.vbox <- gtkVBoxNew(FALSE, 8)
-# # opt.vbox$setBorderWidth(8)
-# # opt.frame$add(opt.vbox)
-# # 
-# # 
-# # #   ---- Define table of boxes so everything aligns
-# # opt.tbl <- gtkTable(7,5,FALSE)
-# # gtkTableSetRowSpacings(opt.tbl,1)
-# # gtkTableSetColSpacings(opt.tbl,5)
-# # 
-# # opt.vbox$add(opt.tbl)
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-  
-  
-  
   
   
   # =========================== Bottom row of buttons ==================================
@@ -411,7 +343,7 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
   #   ---- Run button
   run.b <- gtkButton("Run")
-  gSignalConnect(run.b, "clicked", analysisCont, data=list( 
+  gSignalConnect(run.b, "clicked", analysis, data=list( 
     shape.in.entry=shape.in.entry,
     shape.in.dir=shape.in.dir,
     siteID.entry=siteID.entry,
@@ -422,7 +354,8 @@ gtkTableAttach(tbl,cont.var.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
     wgt.entry=wgt.entry,
     xcoord.entry=xcoord.entry,
     ycoord.entry=ycoord.entry,
-    cont.var.entry=cont.var.entry,
+    #cont.var.entry=cont.var.entry,
+    vars.entry=vars.entry,
     out.r.entry = out.r.entry 
   )
   ) 

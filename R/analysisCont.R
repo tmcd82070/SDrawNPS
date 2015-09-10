@@ -37,13 +37,17 @@ analysisCont <- function(button, dat){
 
   # make subpop df describing sets of popns - expand later?
   if(pop3 != '' & pop2 != ''){
-    the.subpop <- data.frame(siteID=the.siteID.o, Popn1=rep(1,nrow(df)), Popn2=df[,pop2], Popn3=df[,pop3])     
+    the.subpop <- data.frame(siteID=the.siteID.o, Popn1=rep(1,nrow(df)), Popn2=df[,pop2], Popn3=df[,pop3]) 
+    cdfPage <- 4
   } else if(pop3 == '' & pop2 != ''){
     the.subpop <- data.frame(siteID=the.siteID.o, Popn1=rep(1,nrow(df)), Popn2=df[,pop2])     
+    cdfPage <- 4    
   } else if (pop3 != '' & pop2 == ''){
-    the.subpop <- data.frame(siteID=the.siteID.o, Popn1=rep(1,nrow(df)), Popn2=df[,pop3])       
+    the.subpop <- data.frame(siteID=the.siteID.o, Popn1=rep(1,nrow(df)), Popn2=df[,pop3])     
+    cdfPage <- 4    
   } else if(pop3 == '' & pop2 == ''){
     the.subpop <- data.frame(siteID=the.siteID.o, Popn1=rep(1,nrow(df))) 
+    cdfPage <- 1    
   }
 
   # make design df
@@ -60,7 +64,8 @@ analysisCont <- function(button, dat){
   xcoord.pretty <- paste0("df","$",xcoord)
   ycoord.pretty <- paste0("df","$",ycoord)
   cont.var.pretty <- paste0("df","$",cont.var)
-  the.pretty <- c(siteID.pretty,evalStatus.pretty,evalStatusYes,pop2.pretty,pop3.pretty,wgt.pretty,xcoord.pretty,ycoord.pretty,cont.var.pretty)
+  cdfPage.pretty <- cdfPage
+  the.pretty <- c(siteID.pretty,evalStatus.pretty,evalStatusYes,pop2.pretty,pop3.pretty,wgt.pretty,xcoord.pretty,ycoord.pretty,cont.var.pretty,cdfPage.pretty)
   
   the.pretty <<- the.pretty
 
@@ -116,7 +121,7 @@ the.data.cont <- data.frame(siteID=",siteID.pretty,", Ind=",cont.var.pretty,")\n
 #   ans2 <<- ans
 #   assign(outobj2,ans2)
   
-  cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - CDF Plots.pdf"),ans$CDF)
+  cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - CDF Plots.pdf"),ans$CDF,cdf.page=cdfPage)
   makeAnalysisLog(fn,dir,the.pretty)
   options(useFancyQuotes = TRUE)
 
