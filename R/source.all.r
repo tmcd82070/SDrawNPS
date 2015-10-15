@@ -1,7 +1,7 @@
 
 
 
-setwd('//LAR-FILE-SRV/Data/NPS/SDrawGUI/R/')
+setwd('//LAR-FILE-SRV/Data/NPS/GRTSUsersManual/SDrawGUI/R/')
 
 require(sp)
 require(rgdal)

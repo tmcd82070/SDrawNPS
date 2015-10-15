@@ -129,7 +129,7 @@ gtkTableAttach(tbl,evalStatus.entry, 1, 2, 7, 8, xpadding=5, ypadding=5)
 
 # Target_Sampled
 evalStatusYes.entry <- gtkEntryNew()
-evalStatusYes.entry$setText( "Include=Y" )
+evalStatusYes.entry$setText( "Target - Surveyed" )
 evalStatusYes.label <- gtkLabel("Inclusion Identifier:")
 #evalStatusYes.label$setMarkup("<span color='red'>Inclusion Identifier:</span>")
 gtkTableAttach(tbl,evalStatusYes.label, 0, 1, 9, 10, xpadding=5, ypadding=5)
@@ -185,7 +185,35 @@ gtkTableAttach(tbl,vars.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
 
+# ============================ Sample Weights frame ===========
 
+samp.weight.frame <- gtkFrameNew("Adjust Weights?")
+hbox1$add(samp.weight.frame)  # alloc
+
+#  Radio Buttons to Specify Sample Weights
+stype.box <- gtkHBoxNew(TRUE, 2)
+stype.box$setBorderWidth(8)
+samp.weight.frame$add( stype.box )
+
+n.rb <- gtkRadioButtonNewWithLabel(label="No")  # prop.rb
+y.rb <- gtkRadioButtonNewWithLabelFromWidget(n.rb,"Yes") #const.rb
+
+stype.box$packStart(y.rb, TRUE, TRUE, 2)
+stype.box$packStart(n.rb, TRUE, TRUE, 2)
+
+# f.write.sample.label <- function(x,dat){
+#   y.active <- y.rb$getActive()
+#   n.active <- n.rb$getActive()
+#   
+#   if(y.active){
+#     n.label$setText("Specify: total n across all\n\tstrata")
+#   } else {
+#     n.label$setText("Specify: n for all strata")
+#   } 
+# }
+# 
+# gSignalConnect(y.rb, "toggled", f.write.sample.label )
+# gSignalConnect(n.rb, "toggled", f.write.sample.label )
 
 
 
@@ -356,7 +384,9 @@ gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
     ycoord.entry=ycoord.entry,
     #cont.var.entry=cont.var.entry,
     vars.entry=vars.entry,
-    out.r.entry = out.r.entry 
+    out.r.entry = out.r.entry,
+    y.rb=y.rb,
+    n.rb=n.rb
   )
   ) 
   bbox$packEnd(run.b, expand=FALSE)

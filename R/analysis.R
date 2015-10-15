@@ -31,7 +31,47 @@ analysis <- function(button, dat){
   
   df <- getDataFrame( fn, dir )
   
+  EvalCheck <- 0
+  if(sum(df[ ,evalStatus ] %in% c('Target - Not Sampled','Target - Not Surveyed','Non-target','Non-Target')) > 0){
+    EvalCheck <- 1
+  }   
+  
+  # Then maybe a pop-up window that says "Are you sure? The data set include nonsampling error." 
+  # that checks to see if the EvalStatus includes fields that indicate nonsampling error 
+  # (Target - Not Sampled, Target - Not Surveyed, Non-target).  In some cases, the analyst may have 
+  # conducted their own weighting adjustment outside of SDraw and would use the weights provided in 
+  # the design file.  But it might be nice to warn the analyst that something looks amiss.
+  
+  # Get sample allocation information from radio buttons
+  if( dat$y.rb$getActive() ){
+    alloc.type <- "YES"
+  } else {
+    alloc.type <- "NO"
+  }
+  
+  # slightly variable pop-up, depending on what's in their data.
+  if(EvalCheck == 0 & alloc.type == "YES"){
+    dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", "You have selected to weight your sample.")
+    dialog$run()
+    dialog$destroy()    
+  } else if(EvalCheck == 0 & alloc.type == "NO"){
+    dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", "You have selected to not weight your sample.")
+    dialog$run()
+    dialog$destroy()
+  } else if(EvalCheck == 1 & alloc.type == "YES"){
+    dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", "You have selected to weight your sample.")
+    dialog$run()
+    dialog$destroy()
+  } else {
+    dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", "You have selected to not weight your sample.  Are you sure?  The data include non-sampling error.")
+    dialog$run()
+    dialog$destroy()
+  }
+  
   the.siteID.o <- df[,theSiteID]   
+  
+  # adjust weights by calling fn and using read-in var names specific to datarun
+  adjwgt <- Adjwgt_FrameNR(dat=df, popn=???, evalstatus=evalStatus, wgt=wgt)
   
   # make sites df of two vars
   the.sites <- data.frame(siteID=the.siteID.o, df[,evalStatus]==evalStatusYes) 
