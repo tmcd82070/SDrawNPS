@@ -4,8 +4,8 @@ makeAnalysisLog <- function(fn,dir,the.pretty,the.pretty.cont,the.pretty.cat){
 #   the.pretty <- the.pretty
 #   the.pretty.cont <- the.pretty.cont
 #   the.pretty.cat <- the.pretty.cat
-#   fn <- 'SEKIlakes_ExampleData.csv'
-#   dir <- '//lar-file-srv/Data/NPS/SDrawGUI/data'
+#   fn <- 'JOTR_IntUp_GRTS_sample.csv'
+#   dir <- '//lar-file-srv/Data/NPS/GRTSUsersManual/SDrawGUI/data'
   
   # if file currently exists, delete it out.
   pasteString <- paste0(dir,"/Analysis of ",substr(fn,1,nchar(fn) - 4),".log")
@@ -25,24 +25,45 @@ makeAnalysisLog <- function(fn,dir,the.pretty,the.pretty.cont,the.pretty.cat){
   
   cat("# Utilization of this code without first installing R package spsurvey will result in error.\n",sep="",append=TRUE,file=log_con)
   
-  cat("# This output results from the xxxxxxx.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
-  library(spsurvey)\n\n",sep="",append=TRUE,file=log_con)
+  cat("# This output results from the analysis.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
+  library(spsurvey)
+  library(SDraw)\n\n",sep="",append=TRUE,file=log_con)
   
   cat("# Read in the csv file of interest for which analysis is required.\n
   df <- read.csv(",dQuote(pathfile),") \n\n",sep="",file=log_con)
   
+  if(the.pretty[12] == "Yes"){
+    if(the.pretty[13] == "Target"){
+      cat("# Identify the pop'n of inference.  Keep in mind you have chosen to focus on the entire pop'n.\n
+    popn <- ",dQuote(the.pretty[13]),"\n\n",sep="",file=log_con)
+    } else {
+      cat("# Identify the pop'n of inference.  Keep in mind you have chosen to focus on the subpop'n of the target pop'n.\n
+    popn <- ",dQuote(the.pretty[13]),"\n\n",sep="",file=log_con)
+    }
+  }
+
+  object <- "oldwgt"
+  if(the.pretty[12] == "Yes"){
+    cat("# Identify your chosen weighting scheme.  Keep in mind SDraw is adjusting your weights.\n
+  df$oldwgt <- ",the.pretty[6],"
+  df$wgt <- Adjwgt_FrameNR(dat=df, popn=popn, evalstatus=",dQuote(the.pretty[10]),", wgt=",dQuote(object),")\n",sep="",file=log_con)
+  } else {
+    cat("# Identify your chosen weighting scheme.  Keep in mind your original data contains the weights.\n
+  df$wgt <-",dQuote(the.pretty[6]),"\n",sep="",file=log_con)
+  }
+  
   if(the.pretty.cont != "the.data.cont <- data.frame()"){
-    cat("\n\n# Prepare the analysis for use in the continuous analysis function.\n\n",sep="",append=TRUE,file=log_con)
+    cat("# Prepare the analysis for use in the continuous analysis function.\n\n",sep="",append=TRUE,file=log_con)
     cat("  the.sites <- data.frame(siteID=",the.pretty[1],", ",the.pretty[2],"==",dQuote(the.pretty[3]),")\n",sep="",append=TRUE,file=log_con)
   
     if(the.pretty[4] != 'df$' & the.pretty[5] != 'df$'){
-      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep(1,nrow(df)), Popn2=",the.pretty[4],", Popn3=",the.pretty[5],")\n",sep="",append=TRUE,file=log_con)  
+      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep('AllSites',nrow(df)), Popn2=",the.pretty[4],", Popn3=",the.pretty[5],")\n",sep="",append=TRUE,file=log_con)  
     } else if(the.pretty[5] == 'df$' & the.pretty[4] != 'df$'){
-      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep(1,nrow(df)), Popn2=",the.pretty[4],")\n",sep="",append=TRUE,file=log_con) 
+      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep('AllSites',nrow(df)), Popn2=",the.pretty[4],")\n",sep="",append=TRUE,file=log_con) 
     } else if (the.pretty[5] != 'df$' & the.pretty[4] == 'df$'){
-      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep(1,nrow(df)), Popn2=",the.pretty[5],")\n",sep="",append=TRUE,file=log_con) 
+      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep('AllSites',nrow(df)), Popn2=",the.pretty[5],")\n",sep="",append=TRUE,file=log_con) 
     } else if(the.pretty[5] == 'df$' & the.pretty[4] == 'df$'){
-      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep(1,nrow(df)))\n",sep="",append=TRUE,file=log_con)  
+      cat("  the.subpop <- data.frame(siteID=",the.pretty[1],", Popn1=rep('AllSites',nrow(df)))\n",sep="",append=TRUE,file=log_con)  
     }
   
     cat("  the.design <- data.frame(siteID=",the.pretty[1],", wgt=",the.pretty[6],", xcoord=",the.pretty[7],", ycoord=",the.pretty[8],")\n",sep="",append=TRUE,file=log_con)
@@ -56,7 +77,7 @@ makeAnalysisLog <- function(fn,dir,the.pretty,the.pretty.cont,the.pretty.cat){
                             total=TRUE)\n\n",sep="",append=TRUE,file=log_con)
   
     cat("# Plot the resulting empirical distribution functions.\n
-  cont.cdfplot(",dQuote(CDFString),",ans.cont$CDF,cdf.plot=",as.numeric(the.pretty[10]),")\n\n", sep="",append=TRUE,file=log_con)
+  cont.cdfplot(",dQuote(CDFString),",ans.cont$CDF,cdf.plot=",as.numeric(the.pretty[9]),")\n\n", sep="",append=TRUE,file=log_con)
   }
   
   if(the.pretty.cat != "the.data.cat <- data.frame()"){

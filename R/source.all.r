@@ -8,7 +8,7 @@ require(rgdal)
 require(rgeos)
 require(RGtk2)
 require(spsurvey)
-
+require(RGtk2)
 
 
 #   --------------------------------------------------------

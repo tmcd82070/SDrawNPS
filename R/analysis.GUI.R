@@ -138,14 +138,14 @@ gtkTableAttach(tbl,evalStatusYes.entry, 1, 2, 9, 10, xpadding=5, ypadding=5)
 # (sub)Population 2 -- recall population 1 is all elements together
 pop2.entry <- gtkEntryNew()
 pop2.entry$setText( "" )
-pop2.label <- gtkLabel("Subpopulation 1:")
+pop2.label <- gtkLabel("Stratum / Subpopulation 1:")
 gtkTableAttach(tbl,pop2.label, 0, 1, 11, 12, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,pop2.entry, 1, 2, 11, 12, xpadding=5, ypadding=5)
 
 # (sub)Population 3 -- recall population 1 is all elements together
 pop3.entry <- gtkEntryNew()
 pop3.entry$setText( "" )
-pop3.label <- gtkLabel("Subpopulation 2:")
+pop3.label <- gtkLabel("Stratum / Subpopulation 2:")
 gtkTableAttach(tbl,pop3.label, 0, 1, 13, 14, xpadding=5, ypadding=5)
 gtkTableAttach(tbl,pop3.entry, 1, 2, 13, 14, xpadding=5, ypadding=5)
 
@@ -186,6 +186,18 @@ gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 
 
 # ============================ Sample Weights frame ===========
+#   ---- Separator
+#vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
+
+samp.frame <- gtkFrameNew("Optional Weighting Inputs")
+vbox1$packStart(samp.frame)
+
+hbox1 <- gtkVBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
+hbox1$setBorderWidth(8)
+samp.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically
+
+
+# add weight boxes.
 
 samp.weight.frame <- gtkFrameNew("Adjust Weights?")
 hbox1$add(samp.weight.frame)  # alloc
@@ -201,21 +213,22 @@ y.rb <- gtkRadioButtonNewWithLabelFromWidget(n.rb,"Yes") #const.rb
 stype.box$packStart(y.rb, TRUE, TRUE, 2)
 stype.box$packStart(n.rb, TRUE, TRUE, 2)
 
-# f.write.sample.label <- function(x,dat){
-#   y.active <- y.rb$getActive()
-#   n.active <- n.rb$getActive()
-#   
-#   if(y.active){
-#     n.label$setText("Specify: total n across all\n\tstrata")
-#   } else {
-#     n.label$setText("Specify: n for all strata")
-#   } 
-# }
-# 
-# gSignalConnect(y.rb, "toggled", f.write.sample.label )
-# gSignalConnect(n.rb, "toggled", f.write.sample.label )
 
 
+popn.weight.frame <- gtkFrameNew("Population Inference")
+hbox1$add(popn.weight.frame)  # alloc
+
+#  Radio Buttons to Specify popn Parameter in Adj Wgt Function
+ttype.box <- gtkHBoxNew(TRUE, 2)
+ttype.box$setBorderWidth(8)
+popn.weight.frame$add( ttype.box )
+
+S.rb <- gtkRadioButtonNewWithLabel(label="Sampled") #popn="Sampled"
+T.rb <- gtkRadioButtonNewWithLabelFromWidget(S.rb,label="Target")  # popn="Target"
+
+
+ttype.box$packStart(T.rb, TRUE, TRUE, 2)
+ttype.box$packStart(S.rb, TRUE, TRUE, 2)
 
 
 
@@ -255,31 +268,11 @@ stype.box$packStart(n.rb, TRUE, TRUE, 2)
   display.frame$add(display.vbox)
   
   #   ---- Define table of boxes so everything aligns
-#   display.tbl <- gtkTable(7,5,FALSE)
-#   gtkTableSetRowSpacings(display.tbl,1)
-#   gtkTableSetColSpacings(display.tbl,5)
-#   
-#   display.vbox$add(display.tbl)
-  
 
 
 
 
 
-#   #   ---- Seed text box
-#   seed.entry <- gtkEntryNew()
-#   seed.entry$setText( "" )
-#   seed.label <- gtkLabel("Random number seed:")
-#   
-#   gtkTableAttach(display.tbl,seed.label, 0, 1, 0, 1, xpadding=5, ypadding=5)
-#   gtkTableAttach(display.tbl,seed.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
-  
-  #   ---- Separator
-#   vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
-  
-#   finfo.vbox <- gtkHBoxNew(FALSE,2)
-#   finfo.vbox$setBorderWidth(8)
-#   vbox1$packStart(finfo.vbox)
   
   finfo.title <- gtkLabel("Sample\nContents:    \n<pending>")
   display.vbox$packStart(finfo.title, expand=FALSE, fill=FALSE)
@@ -386,7 +379,9 @@ stype.box$packStart(n.rb, TRUE, TRUE, 2)
     vars.entry=vars.entry,
     out.r.entry = out.r.entry,
     y.rb=y.rb,
-    n.rb=n.rb
+    n.rb=n.rb,
+    S.rb=S.rb,
+    T.rb=T.rb
   )
   ) 
   bbox$packEnd(run.b, expand=FALSE)
