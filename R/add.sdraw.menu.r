@@ -19,6 +19,7 @@ if( sys == "Windows" & interactive() & !rstudio){
   cat("\t equi.GUI() -> Equi-probable samples.\n")
 	cat("\t stratified.GUI() -> Stratified samples.\n") #added by Guy, 1/2/15
   cat("\t unequalprob.GUI() -> Unequal probability samples.\n")
+  cat("\t analysis.GUI() -> Analysis of continuous or categorical variables.")
   #cat("\t advanced.GUI() -> Interface to draw advanced samples.\n")
 } else {
   cat("You are running in RStudio where an SDraw menu cannot be created.\n")
@@ -26,6 +27,7 @@ if( sys == "Windows" & interactive() & !rstudio){
   cat("  equi.GUI() -> Equi-probable samples.\n")
   cat("  stratified.GUI() -> Stratified samples.\n")
   cat("  unequal.GUI() -> Unequal probability samples.\n")
+  cat("  analysis.GUI() -> Analysis of continuous or categorical variables.")
 }
 
 }

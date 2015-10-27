@@ -1,16 +1,16 @@
-\name{SDraw-package}
-\alias{SDraw-package}
+\name{SDrawGUI-package}
+\alias{SDrawGUI-package}
 \alias{BAS-package}
 \alias{BAS}
 \alias{GRTS}
-\alias{SDraw}
+\alias{SDrawGUI}
 
 \docType{package}
 
 \title{Selection of spatially balanced samples.}
 
 \description{
-SDraw is a GUI interface to a set of R functions that draw 
+SDrawGUI is a GUI interface to a set of R functions that draw 
 Balanced-Acceptance-Samples (BAS) and Generalized-Random-Tesselation-Stratified (GRTS) samples. 
 Input sampling frames can be points (0-D, finite), lines (1-D, infinite), or polygons (2-D, infinit), 
 and can be contained in ESRI shapefiles (SHP), Google Earth files (KML), Garmin files (GPX), 
@@ -19,18 +19,18 @@ or CSV files.  Functionality to visualize the frame and sample is included.
 
 \details{
 \tabular{ll}{
-Package: \tab SDraw\cr
+Package: \tab SDrawGUI\cr
 Type: \tab Package\cr
 License: \tab GNU General Public License\cr
 Dependencies: \tab RGtk2, sp, spsurvey, utils, rgdal\cr 
 }
-When SDraw is attached (via \code{library(SDraw)}, a new menu item appears in the (Windows) R interface.  This 
-menu ('SDraw') contains items which call dialog boxes that implement the interface to functions that 
+When SDrawGUI is attached (via \code{library(SDrawGUI)}, a new menu item appears in the (Windows) R interface.  This 
+menu ('SDrawGUI') contains items which call dialog boxes that implement the interface to functions that 
 actually do the work of drawing samples.   
 
 The functions that actually draw the samples are \code{bas} (for BAS samples) and \code{grts} (for GRTS samples) and \code{sss.polygon} (for Simple Systematic Samples).  
-\code{bas} and \code{sss.polygon} are contained in SDraw.  \code{grts} is taken straight from package \code{spsurvey}.  The main 
-purpose of SDraw is to provide a simple-to-use interface to these routines.  These routines, however, could be called
+\code{bas} and \code{sss.polygon} are contained in SDrawGUI.  \code{grts} is taken straight from package \code{spsurvey}.  The main 
+purpose of SDrawGUI is to provide a simple-to-use interface to these routines.  These routines, however, could be called
 directly in code if needed.  BAS samples of n-dimensional resources (up to a max of n = 99 dimensions) can be drawn. 
 GRTS samples can be drawn from resources having at most 2 dimensions.  
 
