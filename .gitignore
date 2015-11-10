@@ -36,14 +36,14 @@ Icon
 .Spotlight-V100
 .Trashes
 
-SDraw.Rcheck
+SDrawGUI.Rcheck
 ArchivedVersions
 TestingFolder
-SDraw*.zip
-SDraw*.tar.gz
-SDraw*.piz
+SDrawGUI*.zip
+SDrawGUI*.tar.gz
+SDrawGUI*.piz
 .Rproj.user
-SDraw.Rproj
+SDrawGUI.Rproj
 .Rhistory
 .RData
 source_all.r

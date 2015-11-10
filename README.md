@@ -30,10 +30,10 @@ The above methods should install all dependencies. If not, execute the following
 * `install.packages( c("RGtk2", "spsurvey", "rgdal", "rgeos", "sp"), repos="http://cran.r-project.org")`
 
 # After installation
-Issue `library(SDraw)` at the command prompt.  The first time you do this, R will ask whether you want to install the GTK+ runtime library.  Say 'yes'.  At the end of this, R may give you some sort of error.  Ignore it.  Restart R. 
+Issue `library(SDrawGUI)` at the command prompt.  The first time you do this, R will ask whether you want to install the GTK+ runtime library.  Say 'yes'.  At the end of this, R may give you some sort of error.  Ignore it.  Restart R. 
 
 
-Re-start R and issue `library(SDrawGUI)`.  An 'SDrawGUI' menu item will appear in your R gui if you are using Windows and the default R console.  From the "SDrawGUI" menu, choose the appropriate action.   The dialog boxes that pop up should be self explanatory.  See `help(package="SDrawGUI")` for a list of functions.  The functions that open the dialog boxes are `equi.GUI()`, `stratified.GUI()`, `unequal.GUI()`, and `analysis.GUI`.  
+Re-start R and issue `library(SDrawGUI)`.  An 'SDrawGUI' menu item will appear in your R gui if you are using Windows and the default R console.  From the "SDrawGUI" menu, choose the appropriate action.   The dialog boxes that pop up should be self explanatory.  See `help(package="SDrawGUI")` for a list of functions.  The functions that open the dialog boxes are `equi.GUI()`, `stratified.GUI()`, `unequal.GUI()`, and `analysis.GUI()`.  
 
 # Bugs
 

@@ -1,4 +1,5 @@
 #exportPattern("^[[:alpha:]]+")
+export(analysis.GUI)
 export(bas)
 export(bas.polygon)
 export(bas.line)

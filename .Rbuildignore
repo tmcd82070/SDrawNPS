@@ -7,7 +7,7 @@ src-x64
 .Rhistory
 ^\.RData$
 .Rbuildignore
-SDraw.rproj
+SDrawGUI.rproj
 ArchivedVersions
 TestingFolder
 Testing
@@ -18,5 +18,5 @@ Testing
 .*\.mod$
 .*\.o$
 .*\.dll$
-^source_all.r$
+^source_all.R$
 ^R\jasonHelper.R$
