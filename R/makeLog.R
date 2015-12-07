@@ -37,7 +37,7 @@ if(!is.null(strata.levels)){
   log_con <- file(paste0(dir,"/",outobj,".log"),open="a")     
   cat("# Utilization of this code without first installing R packages rgdal and spsurvey will result in error.\n",sep="",file=log_con)
   
-  cat("# This output results from the grts.strat.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
+  cat("# This output results from the grts.strat.r function of the SDraw package, WEST Inc., 2015.\n
   library(rgdal)
   library(spsurvey)\n\n",sep="",file=log_con)
   
@@ -64,7 +64,7 @@ if(!is.null(strata.levels)){
   
   cat("# Plot the original shapefile, along with the sample.\n
       plot(shp)
-      plot(Stratsites,col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
+      plot(as(Stratsites,'SpatialPointsDataFrame'),col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   close(log_con)
   options(useFancyQuotes = TRUE)
@@ -106,10 +106,10 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
     
     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
     cat("# Prepare the design of the sampling for use in the grts function.\n
-        Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
-        seltype=",dQuote(get("selType")),",
-        caty.n=",string,",
-        over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+      Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
+      seltype=",dQuote(get("selType")),",
+      caty.n=",string,",
+      over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
     close(log_con)
     
   } else if(alloc.type == "continuous"){
@@ -120,9 +120,9 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
     
     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
     cat("# Prepare the design of the sampling for use in the grts function.\n
-        Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
-        seltype=",dQuote(get("selType")),",
-        over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+      Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
+      seltype=",dQuote(get("selType")),",
+      over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
     close(log_con)
     
   } else if(alloc.type == "uneqproportion"){
@@ -147,10 +147,17 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
     
     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
     cat("# Prepare the design of the sampling for use in the grts function.\n
-        Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
-        seltype=",dQuote(get("selType")),",
-        caty.n=",string,",
-        over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+      Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
+      seltype=",dQuote(get("selType")),",
+      caty.n=",string,",
+      over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+    close(log_con)
+  }
+  
+  if(!is.null(seed)){
+    log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
+    cat("# For this run, you specified a seed.\n
+      set.seed(",seed,")\n\n", sep="", append=TRUE,file=log_con)
     close(log_con)
   }
   
@@ -167,7 +174,7 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   
   cat("# Plot the original shapefile, along with the sample.\n
       plot(shp)
-      plot(Unequalsites,col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
+      plot(as(Unequalsites,'SpatialPointsDataFrame'),col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   close(log_con)
   options(useFancyQuotes = TRUE)
@@ -199,7 +206,7 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   
   cat("# Plot the original shapefile, along with the sample.\n
       plot(shp)
-      plot(Equalsites,col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
+      plot(as(Equalsites,'SpatialPointsDataFrame'),col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   close(log_con)
   options(useFancyQuotes = TRUE)

@@ -35,6 +35,7 @@ run.unequal.sample <- function(button, dat){
   if( nchar(seed) > 0 ){
     seed <- as.numeric( seed )
     set.seed( seed )
+    assign( "seed", seed, pos=.GlobalEnv )
   }
   
   #   Get sample allocation information from radio buttons

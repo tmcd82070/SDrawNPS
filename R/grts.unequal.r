@@ -119,6 +119,11 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
 
 
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------
+if(!is.null(seed)){
+cat("# You specified a seed.\n
+    set.seed(",seed,")\n\n",sep="")
+}
+  
 cat("# Draw the sample via the grts function in package spsurvey.\n
     Unequalsites <- grts(design=Unequaldsgn,
     DesignID=",dQuote(get("IDHelper")),",
@@ -126,7 +131,7 @@ cat("# Draw the sample via the grts function in package spsurvey.\n
     att.frame=data.frame(shp),
     src.frame='sp.object',
     sp.object=shp,
-    mdcaty=",dQuote(get("unequal.var")),",   
+    mdcaty=",dQuote(get("unequal.var")),",  
     shapefile=FALSE)\n\n", sep="")
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------
 
@@ -163,5 +168,7 @@ cat("# Draw the sample via the grts function in package spsurvey.\n
 
   makeLog(strat.var=NULL,strata.levels=NULL,unequal.var=unequal.var,alloc.type=alloc.type,category.levels=category.levels,n,over.n,shp,fn,dir,outobj,sframe.type=sframe.type,selType=selType)
 
+  seed = set.seed(NULL)       # make sure that if this var is set, it gets cleared out.
+  
   Unequalsites
 }

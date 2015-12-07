@@ -25,7 +25,7 @@ makeAnalysisLog <- function(fn,dir,the.pretty,the.pretty.cont,the.pretty.cat){
   
   cat("# Utilization of this code without first installing R package spsurvey will result in error.\n",sep="",append=TRUE,file=log_con)
   
-  cat("# This output results from the analysis.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
+  cat("# This output results from the analysis.r function of the SDraw package, WEST Inc., 2015.\n
   library(spsurvey)
   library(SDraw)\n\n",sep="",append=TRUE,file=log_con)
   

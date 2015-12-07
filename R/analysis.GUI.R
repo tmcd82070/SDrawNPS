@@ -192,7 +192,18 @@ gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
 samp.frame <- gtkFrameNew("Optional Weighting Inputs")
 vbox1$packStart(samp.frame)
 
-hbox1 <- gtkVBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
+
+
+# # ---- NEW ------------------------------------
+# #   ---- Define a vertical box
+# req.vbox <- gtkVBoxNew(FALSE, 8)
+# req.vbox$setBorderWidth(8)
+# frame.frame$add(req.vbox)
+# # ---- NEW ------------------------------------
+
+
+
+hbox1 <- gtkHBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
 hbox1$setBorderWidth(8)
 samp.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically
 
@@ -424,6 +435,7 @@ ttype.box$packStart(S.rb, TRUE, TRUE, 2)
   #   ---- Pack the rows of buttons into the vertical box
   vbox1$packEnd( bbox, expand=FALSE)
   
+  gtkWindowResize(win,678,705)
   
   #   ---- Finally, show the window
   win$Show()
