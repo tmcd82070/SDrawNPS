@@ -22,13 +22,13 @@ After installation, issue `library(RGtk2)` at the command prompt.  The first tim
 
 If `library(RGtk2)` produces an error after installation of the GTK+ runtime, you can attempt a manual install by downloading the dll from the GTK website and copying to the correct directory in your R installation.  The authors have found most of the time it works to un-install `RGtk` and try again (i.e., `remove.packages("RGtk2"); install.packages("RGtk2"); library(RGtk2)`).  
 
-## Install `SDrawNPS` From source 
+## Install `SDrawNPS` from source 
 
 * Download the source tarball (the `tar.gz`) from the [current release](https://github.com/tmcd82070/SDrawNPS/releases)
 * In R, execute the following: `install.packages( pkgs=file.choose(), type="source"" )`
 * A choose-file dialog will appear.  Navigate to the `tar.gz` file and click "Open"
 
-## From binary build
+## Install `SDrawNPS` from binary build
 
 * Download the binary build zip file from the link provided in the [current release notes.](https://github.com/tmcd82070/SDrawNPS/releases) 
 * In the default R interface, select "Install from local zip file..." from the "Packages" menu. Or, in RStudio, click the 'Packages' tab, then 'Install', then 'Browse'. 
