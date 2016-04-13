@@ -30,7 +30,7 @@ If `library(RGtk2)` produces an error after installation of the GTK+ runtime, yo
 
 ## Install `SDrawNPS` from binary build
 
-* Download the binary build zip file from the link provided in the [current release notes.](https://github.com/tmcd82070/SDrawNPS/releases) 
+* Download the binary build zip file from the [current release](https://github.com/tmcd82070/SDrawNPS/releases) 
 * In the default R interface, select "Install from local zip file..." from the "Packages" menu. Or, in RStudio, click the 'Packages' tab, then 'Install', then 'Browse'. 
 * Navigate to the binary build .zip and click Open 
 
