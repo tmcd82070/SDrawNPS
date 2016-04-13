@@ -37,9 +37,17 @@ if(!is.null(strata.levels)){
   log_con <- file(paste0(dir,"/",outobj,".log"),open="a")     
   cat("# Utilization of this code without first installing R packages rgdal and spsurvey will result in error.\n",sep="",file=log_con)
   
-  cat("# This output results from the grts.strat.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
-  library(rgdal)
-  library(spsurvey)\n\n",sep="",file=log_con)
+#   cat("# This output results from the grts.strat.r function of the SDrawNPS package, WEST Inc., 2015.\n
+#   library(rgdal)
+#   library(spsurvey)\n\n",sep="",file=log_con)
+  
+  cat("# This output results from the grts.strat.r function of the SDrawNPS package, WEST Inc., 2015.\n
+# To ensure code completion, check if packages are installed;  if not, install them.\n
+  pkgList <- c('rgdal','spsurvey')
+  inst <- pkgList %in% installed.packages()
+  if (length(pkgList[!inst]) > 0)
+  install.packages(pkgList[!inst])
+  lapply(pkgList, library, character.only=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   cat("# Read in the shapefile of interest from which sampling occurs.\n
   shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
@@ -51,6 +59,9 @@ if(!is.null(strata.levels)){
       }, nn=",nstring,", st=",dQuote(get("selType")),", o.n=",get("over.n"),")\n
   names(Stratdsgn) <- ",string,"\n\n", sep="", append = TRUE, file = log_con)
 
+  cat("# Record the seed for future use.\n
+      set.seed(",get("seed"),")\n\n", sep="", append=TRUE,file=log_con)
+  
   cat("# Draw the sample via the grts function in package spsurvey.\n
       Stratsites <- grts(design=Stratdsgn,
       DesignID='STRAT',
@@ -64,7 +75,7 @@ if(!is.null(strata.levels)){
   
   cat("# Plot the original shapefile, along with the sample.\n
       plot(shp)
-      plot(Stratsites,col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
+      plot(as(Stratsites,'SpatialPointsDataFrame'),col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   close(log_con)
   options(useFancyQuotes = TRUE)
@@ -76,9 +87,17 @@ if(!is.null(strata.levels)){
   log_con <- file(paste0(dir,"/",outobj,".log"),open="a")    
   cat("# Utilization of this code without first installing R packages rgdal and spsurvey will result in error.\n",sep="",file=log_con)
   
-  cat("# This output results from the grts.unequal.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
-library(rgdal)
-library(spsurvey)\n\n",sep="",file=log_con)
+#   cat("# This output results from the grts.unequal.r function of the SDrawNPS package, WEST Inc., 2015.\n
+# library(rgdal)
+# library(spsurvey)\n\n",sep="",file=log_con)
+  
+  cat("# This output results from the grts.unequal.r function of the SDrawNPS package, WEST Inc., 2015.\n
+# To ensure code completion, check if packages are installed;  if not, install them.\n
+      pkgList <- c('rgdal','spsurvey')
+      inst <- pkgList %in% installed.packages()
+      if (length(pkgList[!inst]) > 0)
+      install.packages(pkgList[!inst])
+      lapply(pkgList, library, character.only=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   cat("# Read in the shapefile of interest from which sampling occurs.\n
 shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
@@ -106,10 +125,10 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
     
     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
     cat("# Prepare the design of the sampling for use in the grts function.\n
-        Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
-        seltype=",dQuote(get("selType")),",
-        caty.n=",string,",
-        over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+      Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
+      seltype=",dQuote(get("selType")),",
+      caty.n=",string,",
+      over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
     close(log_con)
     
   } else if(alloc.type == "continuous"){
@@ -120,9 +139,9 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
     
     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
     cat("# Prepare the design of the sampling for use in the grts function.\n
-        Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
-        seltype=",dQuote(get("selType")),",
-        over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+      Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
+      seltype=",dQuote(get("selType")),",
+      over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
     close(log_con)
     
   } else if(alloc.type == "uneqproportion"){
@@ -147,14 +166,25 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
     
     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
     cat("# Prepare the design of the sampling for use in the grts function.\n
-        Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
-        seltype=",dQuote(get("selType")),",
-        caty.n=",string,",
-        over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+      Unequaldsgn <- list(None=list(panel=c(PanelOne=(",sum(get("n")),")),
+      seltype=",dQuote(get("selType")),",
+      caty.n=",string,",
+      over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
     close(log_con)
   }
   
+#   if(!is.null(seed)){
+#     log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
+#     cat("# For this run, you specified a seed.\n
+#       set.seed(",seed,")\n\n", sep="", append=TRUE,file=log_con)
+#     close(log_con)
+#   }
+  
   log_con <- file(paste0(dir,"/",outobj,".log"),open="a")
+  
+  cat("# Record the seed for future use.\n
+      set.seed(",get("seed"),")\n\n", sep="", append=TRUE,file=log_con)
+  
   cat("# Draw the sample via the grts function in package spsurvey.\n
       Unequalsites <- grts(design=Unequaldsgn,
       DesignID=",dQuote(get("IDHelper")),",
@@ -167,7 +197,7 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   
   cat("# Plot the original shapefile, along with the sample.\n
       plot(shp)
-      plot(Unequalsites,col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
+      plot(as(Unequalsites,'SpatialPointsDataFrame'),col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   close(log_con)
   options(useFancyQuotes = TRUE)
@@ -178,9 +208,17 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   
   cat("# Utilization of this code without first installing R packages rgdal and spsurvey will result in error.\n",sep="",file=log_con)
   
-  cat("# This output results from the grts.equi.r function of the SDraw package, WEST Inc., 2015, Version 1.04.\n
-      library(rgdal)
-      library(spsurvey)\n\n",sep="",file=log_con)
+#   cat("# This output results from the grts.equi.r function of the SDrawNPS package, WEST Inc., 2015.\n
+#       library(rgdal)
+#       library(spsurvey)\n\n",sep="",file=log_con)
+  
+  cat("# This output results from the grts.equi.r function of the SDrawNPS package, WEST Inc., 2015.\n
+# To ensure code completion, check if packages are installed;  if not, install them.\n
+      pkgList <- c('rgdal','spsurvey')
+      inst <- pkgList %in% installed.packages()
+      if (length(pkgList[!inst]) > 0)
+      install.packages(pkgList[!inst])
+      lapply(pkgList, library, character.only=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   cat("# Read in the shapefile of interest from which sampling occurs.\n
       shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
@@ -188,6 +226,9 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   cat("# Prepare the design of the sampling for use in the grts function.\n
         Equaldsgn <- list(None=list(panel=c(Main=(",sum(get("n")),")),
         seltype='Equal',over=",get("over.n"),"))\n\n", sep="", append = TRUE, file = log_con)
+  
+  cat("# Record the seed for future use.\n
+      set.seed(",get("seed"),")\n\n", sep="", append=TRUE,file=log_con)
   
   cat("# Draw the sample via the grts function in package spsurvey.\n
        Equalsites <- grts(design=Equaldsgn,
@@ -199,7 +240,7 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   
   cat("# Plot the original shapefile, along with the sample.\n
       plot(shp)
-      plot(Equalsites,col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
+      plot(as(Equalsites,'SpatialPointsDataFrame'),col='red',pch=19,add=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   close(log_con)
   options(useFancyQuotes = TRUE)

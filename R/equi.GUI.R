@@ -7,8 +7,9 @@ equi.GUI <- function()   {
 
     #   ---- Define the main window
     win <- gtkWindowNew("toplevel")
+    win$setSizeRequest(750,350)
     win$setBorderWidth(8)
-    win$setTitle("S-Draw : A sample drawing interface")
+    win$setTitle("SDrawNPS : A sample drawing interface")
     #gtkWindowSetIconFromFile(win, filename = "s-draw.ico")  # need path to be correct here, or does not work, obviously
 
     vbox1 <- gtkVBoxNew(FALSE, 8)
@@ -23,7 +24,7 @@ equi.GUI <- function()   {
     for( i in samp.types ){
         samp.type.combo$appendText( i )
     }
-    samp.type.combo$setActive(0)
+    samp.type.combo$setActive(2)
     
 #    print(gtkComboBoxGetActive(samp.type.combo))
 #    print(gtkComboBoxGetWrapWidth(samp.type.combo))
@@ -97,7 +98,6 @@ equi.GUI <- function()   {
     gtkTableAttach(tbl,out.r.label, 0, 1, 2, 3, xpadding=5, ypadding=5) 
     gtkTableAttach(tbl,out.r.entry, 1, 2, 2, 3, xpadding=5, ypadding=5)
  
-    
 
     shape.file.box <- gtkHBox(FALSE, 10)
     browse.b <- gtkButton("Browse")
@@ -166,6 +166,28 @@ equi.GUI <- function()   {
 #    stype.box$packStart(line.rb, TRUE, TRUE, 2)
 #    stype.box$packStart(disc.rb, TRUE, TRUE, 2)
 #
+    
+#     # =========================== Seed row button ==================================
+#     hbox2 <- gtkHBoxNew(FALSE, 8)
+#     hbox2$setBorderWidth(8)
+#     vbox1$add(hbox2)
+#     
+#     # add seed box.
+#     seed.random.frame <- gtkFrameNew("Generate a random seed?")
+#     hbox2$add(seed.random.frame)  # alloc
+#     
+#     #  Radio Buttons to Specify Sample Weights
+#     stype.box <- gtkHBoxNew(TRUE, 2)
+#     stype.box$setBorderWidth(8)
+#     seed.random.frame$add( stype.box )
+#     
+#     seedy.rb <- gtkRadioButtonNewWithLabel(label="Yes") #const.rb
+#     seedn.rb <- gtkRadioButtonNewWithLabelFromWidget(seedy.rb,label="No")  # prop.rb
+# 
+#     stype.box$packStart(seedn.rb, TRUE, TRUE, 2)
+#     stype.box$packStart(seedy.rb, TRUE, TRUE, 2)
+  
+    
     # =========================== Bottom row of buttons ==================================
 
     #   ---- Separator
@@ -185,8 +207,10 @@ equi.GUI <- function()   {
       shape.in.dir=shape.in.dir,
       out.r.entry=out.r.entry,
       over.entry=over.entry,
-      seed.entry=seed.entry 
-    )
+      seed.entry=seed.entry
+#       seedy.rb=seedy.rb,
+#       seedn.rb=seedn.rb
+      )
     ) 
     bbox$packEnd(run.b, expand=FALSE)
     
@@ -236,6 +260,7 @@ equi.GUI <- function()   {
 
 
     #   ---- Finally, show the window
+
     win$Show()
 
 }
