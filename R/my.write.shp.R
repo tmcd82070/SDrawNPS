@@ -8,6 +8,7 @@ my.write.shp <- function(x,dat){
 
     if( exists( samp.nm ) ){
         samp <- get( samp.nm )
+        samp <- as(samp,"SpatialPointsDataFrame")
         samp.nm2 <- gsub(".", "_", samp.nm, fixed=TRUE )
 
         # This is how one creates a dialog with buttons and associated response codes.

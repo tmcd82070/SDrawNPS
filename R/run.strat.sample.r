@@ -15,12 +15,6 @@ run.strat.sample <- function(button, dat){
     stype <- dat$samp.type.combo$getActiveText()
     stype <- substring(stype, 1, 4)
 
-    #   Set seed if there is a number present
-    if( nchar(seed) > 0 ){
-        seed <- as.numeric( seed )
-        set.seed( seed )
-    }
-
    #   Get sample allocation information from radio buttons
    if( dat$prop.rb$getActive() ){
        alloc.type <- "proportional"
@@ -29,6 +23,23 @@ run.strat.sample <- function(button, dat){
    } else {
        alloc.type <- "user"
    }
+    
+#     #   Get random seed information from radio buttons
+#     if( dat$seedy.rb$getActive() ){
+#       seed.type <- "yes"
+#     } else {
+#       seed.type <- "no"
+#     }
+    
+    #   Set seed if there is a number present
+    if( nchar(seed) > 0 ){
+      seed <- as.numeric( seed )
+    } else {
+      seed <- sample(2^31,1)
+    }
+    set.seed(seed)
+    assign( "seed", seed, pos=.GlobalEnv )
+    
    ## will need a function call here to use sample allocation info to determine sample sizes
    ## first step is to get it to read a user-input vector of strata sample sizes
    
@@ -66,7 +77,9 @@ run.strat.sample <- function(button, dat){
 
     #   fix up the sample sizes
     # n <- as.numeric(as.vector( n ))
-	  # over.n <- as.numeric(as.vector(over.n))
+
+    # over.n <- as.numeric(unlist(strsplit(over.n,",")))
+
     if( nchar(over.n) == 0 ){ #right now this just works on 1 oversample, which is fine
         over.n <- 0
     } else {

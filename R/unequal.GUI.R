@@ -8,7 +8,8 @@ unequal.GUI <- function()   {
   #   ---- Define the main window
   win <- gtkWindowNew("toplevel")
   win$setBorderWidth(8) 
-  win$setTitle("S-Draw : Unequal probability sample drawing interface")
+  win$setTitle("SDrawNPS : Unequal probability sample drawing interface")
+
   #gtkWindowSetIconFromFile(win, filename = "s-draw.ico")  # need path to be correct here, or does not work, obviously
   
   vbox1 <- gtkVBoxNew(FALSE, 8)
@@ -28,8 +29,9 @@ unequal.GUI <- function()   {
   for( i in samp.types ){
     samp.type.combo$appendText( i )
   }
-  samp.type.combo$setActive(0)
-  
+
+  samp.type.combo$setActive(2)
+
   #    print(gtkComboBoxGetActive(samp.type.combo))
   #    print(gtkComboBoxGetWrapWidth(samp.type.combo))
   
@@ -104,29 +106,36 @@ unequal.GUI <- function()   {
   
   opt.vbox$add(opt.tbl)
   
+  #   ---- Over sample size text box
+  over.entry <- gtkEntry()
+  over.entry$setText( "0" )
+  over.size.label <- gtkLabel("Over sample, total over all categories:")
   
+  gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
+  gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
   
   #   ---- Seed text box
-  seed.entry <- gtkEntryNew()
+  seed.entry <- gtkEntry()
+
   seed.entry$setText( "" )
   seed.label <- gtkLabel("Random number seed:")
   
   gtkTableAttach(opt.tbl,seed.label, 0, 1, 0, 1, xpadding=5, ypadding=5)
   gtkTableAttach(opt.tbl,seed.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
   
-  
-  #   ---- Over sample size text boxes
-  over.entry <- gtkEntry()
-  over.entry$setText( "0" )
-  over.size.label <- gtkLabel("Over sample, total over all categories:")
-  
-  # Hide initially because Halton Latice is initial sample type
-  over.entry$hide()
-  over.size.label$hide()
-   
-  gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
-  gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
-  
+#   #   ---- Over sample size text boxes
+#   over.entry <- gtkEntry()
+#   over.entry$setText( "0" )
+#   over.size.label <- gtkLabel("Over sample, total over all categories:")
+#   
+#   # Hide initially because Halton Latice is initial sample type
+#   over.entry$hide()
+#   over.size.label$hide()
+#    
+#   gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
+#   gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
+
+
   
   # --------------------------- Middle horizontal box ---------------
   req.frame <- gtkFrameNew("Required Inputs")

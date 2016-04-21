@@ -79,7 +79,6 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
     names(the.caty.n) <- category.levels
     
     
-    
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------    
     # prepare category string for printing
     for(i in 1:length(the.caty.n)){
@@ -101,7 +100,6 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
     
     
     #this makes a list of elements to be passed to the grts function
-    selType="Unequal"
     IDHelper <- "Site" 
     Unequaldsgn <- list(None=list(panel=c(PanelOne=sum(n)),
                                   seltype=selType,
@@ -120,6 +118,7 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
 
 
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------
+cat(paste0("The seed utilized was ",seed,".\n\n"))
 cat("# Draw the sample via the grts function in package spsurvey.\n
     Unequalsites <- grts(design=Unequaldsgn,
     DesignID=",dQuote(get("IDHelper")),",
@@ -127,7 +126,7 @@ cat("# Draw the sample via the grts function in package spsurvey.\n
     att.frame=data.frame(shp),
     src.frame='sp.object',
     sp.object=shp,
-    mdcaty=",dQuote(get("unequal.var")),",   
+    mdcaty=",dQuote(get("unequal.var")),",  
     shapefile=FALSE)\n\n", sep="")
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------
 
@@ -162,7 +161,9 @@ cat("# Draw the sample via the grts function in package spsurvey.\n
   attr(Unequalsites, "unequal.var") <- unequal.var
   attr(Unequalsites, "alloc.type") <- selType
 
-  makeLog(strat.var=NULL,strata.levels=NULL,unequal.var=unequal.var,alloc.type=alloc.type,category.levels=NULL,n,over.n,shp,fn,dir,outobj,sframe.type=sframe.type,selType=selType)
+  makeLog(strat.var=NULL,strata.levels=NULL,unequal.var=unequal.var,alloc.type=alloc.type,category.levels=category.levels,n,over.n,shp,fn,dir,outobj,sframe.type=sframe.type,selType=selType)
 
+  seed = set.seed(NULL)       # make sure that if this var is set, it gets cleared out.
+  
   Unequalsites
 }

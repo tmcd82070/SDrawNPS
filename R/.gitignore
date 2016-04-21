@@ -14,6 +14,9 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+# Windows shortcuts
+*.lnk
+
 # =========================
 # Operating System Files
 # =========================
@@ -25,10 +28,6 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 
-# Icon must ends with two \r.
-Icon
-
-
 # Thumbnails
 ._*
 
@@ -36,16 +35,9 @@ Icon
 .Spotlight-V100
 .Trashes
 
-SDrawNPS.Rcheck
-ArchivedVersions
-TestingFolder
-SDrawNPS*.zip
-SDrawNPS*.tar.gz
-SDrawNPS*.piz
-.Rproj.user
-SDrawNPS.Rproj
-.Rhistory
-.RData
-source_all.r
-Testing
-*.log
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
