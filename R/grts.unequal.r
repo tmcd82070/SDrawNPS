@@ -77,7 +77,7 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
     #make caty.n
     the.caty.n <- n
     names(the.caty.n) <- category.levels
-    
+    selType="Unequal"
     
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------    
     # prepare category string for printing

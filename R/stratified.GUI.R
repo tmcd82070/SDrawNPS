@@ -8,11 +8,8 @@ stratified.GUI <- function()   {
     #   ---- Define the main window
     win <- gtkWindowNew("toplevel")
     win$setBorderWidth(8) 
-<<<<<<< HEAD
-    win$setTitle("S-Draw : Stratified sample drawing interface")
-=======
     win$setTitle("SDrawNPS : Stratified sample drawing interface")
->>>>>>> makeSDrawNPS
+
     #gtkWindowSetIconFromFile(win, filename = "s-draw.ico")  # need path to be correct here, or does not work, obviously
 
     vbox1 <- gtkVBoxNew(FALSE, 8)
@@ -31,11 +28,9 @@ stratified.GUI <- function()   {
     for( i in samp.types ){
         samp.type.combo$appendText( i )
     }
-<<<<<<< HEAD
+
     samp.type.combo$setActive(0)
-=======
-    samp.type.combo$setActive(2)
->>>>>>> makeSDrawNPS
+
     
 #    print(gtkComboBoxGetActive(samp.type.combo))
 #    print(gtkComboBoxGetWrapWidth(samp.type.combo))
@@ -111,12 +106,15 @@ stratified.GUI <- function()   {
     
     opt.vbox$add(opt.tbl)
     
-<<<<<<< HEAD
+    #   ---- Over sample size text box
+    over.entry <- gtkEntry()
+    over.entry$setText( "0" )
+    over.size.label <- gtkLabel("Over sample, each strata:")
     
+    gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
+    gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
     
     #   ---- Seed text box
-    seed.entry <- gtkEntryNew()
-=======
     #   ---- Over sample size text box
     over.entry <- gtkEntry()
     over.entry$setText( "0" )
@@ -127,7 +125,6 @@ stratified.GUI <- function()   {
     
     #   ---- Seed text box
     seed.entry <- gtkEntry()
->>>>>>> makeSDrawNPS
     seed.entry$setText( "" )
     seed.label <- gtkLabel("Random number seed:")
     
@@ -135,20 +132,6 @@ stratified.GUI <- function()   {
     gtkTableAttach(opt.tbl,seed.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
     
 
-<<<<<<< HEAD
-    #   ---- Over sample size text boxes
-    over.entry <- gtkEntry()
-    over.entry$setText( "0" )
-    over.size.label <- gtkLabel("Over sample, each strata:")
-
-    # Hide initially because Halton Latice is initial sample type
-    over.entry$hide()
-    over.size.label$hide()
-
-    
-    gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
-    gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
-=======
 #     #   ---- Over sample size text boxes
 #     over.entry <- gtkEntry()
 #     over.entry$setText( "0" )
@@ -161,7 +144,6 @@ stratified.GUI <- function()   {
 #     
 #     gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
 #     gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
->>>>>>> makeSDrawNPS
 
 
     # --------------------------- Middle horizontal box ---------------
@@ -270,11 +252,8 @@ stratified.GUI <- function()   {
       if(prop.active){
         n.label$setText("Specify: total n across all\n\tstrata")
       } else if( const.active ){
-<<<<<<< HEAD
-        n.label$setText("Specify: n for all strata")
-=======
         n.label$setText("Specify: n for a single stratum")
->>>>>>> makeSDrawNPS
+
       } else {
         # Note, because the three buttons are in a group, you don't need signal for the last one
         n.label$setText("Specify: a comma delimited\n\tlist of n, in strata order")
@@ -314,9 +293,6 @@ stratified.GUI <- function()   {
     # gtkTableAttach(n.tbl,n.entry, 1, 2, 0, 1, xpadding=5, ypadding=5)
 
 
-<<<<<<< HEAD
-=======
-    
     
     
 #     # =========================== Seed row button ==================================
@@ -347,7 +323,6 @@ stratified.GUI <- function()   {
     
     
     
->>>>>>> makeSDrawNPS
     # =========================== Frame information area ==================================
 
     #   ---- Separator
@@ -465,13 +440,9 @@ gSignalConnect(run.b, "clicked", run.strat.sample, data=list(
   prop.rb=prop.rb,
   const.rb=const.rb, 
   user.rb=user.rb
-<<<<<<< HEAD
-)
-=======
 #   seedy.rb=seedy.rb,
 #   seedn.rb=seedn.r
   )
->>>>>>> makeSDrawNPS
 ) 
 bbox$packEnd(run.b, expand=FALSE)
 
@@ -529,8 +500,4 @@ bbox$packEnd( cancel.b, expand=FALSE)
     #   ---- Finally, show the window
     win$Show()
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> makeSDrawNPS

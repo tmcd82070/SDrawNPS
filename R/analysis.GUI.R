@@ -352,7 +352,6 @@ ttype.box$packStart(S.rb, TRUE, TRUE, 0)
   lapply(2:max.vars, function(x,lablist){lablist[[x+1]]$hide()}, lablist=vtypes.labs)
 
   
- 
   # =========================== Bottom row of buttons ==================================
   
   

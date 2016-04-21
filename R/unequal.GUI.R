@@ -9,7 +9,6 @@ unequal.GUI <- function()   {
   win <- gtkWindowNew("toplevel")
   win$setBorderWidth(8) 
   win$setTitle("SDrawNPS : Unequal probability sample drawing interface")
-
   #gtkWindowSetIconFromFile(win, filename = "s-draw.ico")  # need path to be correct here, or does not work, obviously
   
   vbox1 <- gtkVBoxNew(FALSE, 8)
@@ -29,9 +28,8 @@ unequal.GUI <- function()   {
   for( i in samp.types ){
     samp.type.combo$appendText( i )
   }
-
   samp.type.combo$setActive(2)
-
+  
   #    print(gtkComboBoxGetActive(samp.type.combo))
   #    print(gtkComboBoxGetWrapWidth(samp.type.combo))
   
@@ -116,7 +114,6 @@ unequal.GUI <- function()   {
   
   #   ---- Seed text box
   seed.entry <- gtkEntry()
-
   seed.entry$setText( "" )
   seed.label <- gtkLabel("Random number seed:")
   
@@ -134,8 +131,6 @@ unequal.GUI <- function()   {
 #    
 #   gtkTableAttach(opt.tbl,over.size.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
 #   gtkTableAttach(opt.tbl,over.entry, 1, 2, 1, 2, xpadding=5, ypadding=5)
-
-
   
   # --------------------------- Middle horizontal box ---------------
   req.frame <- gtkFrameNew("Required Inputs")

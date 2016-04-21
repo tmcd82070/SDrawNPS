@@ -77,9 +77,7 @@ run.strat.sample <- function(button, dat){
 
     #   fix up the sample sizes
     # n <- as.numeric(as.vector( n ))
-
-    # over.n <- as.numeric(unlist(strsplit(over.n,",")))
-
+	  # over.n <- as.numeric(unlist(strsplit(over.n,",")))
     if( nchar(over.n) == 0 ){ #right now this just works on 1 oversample, which is fine
         over.n <- 0
     } else {

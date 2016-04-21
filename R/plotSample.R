@@ -57,9 +57,7 @@ plotSample <- function(button, dat){
           for(h in strat.vals){
             points( samp[strat.ind == h,], pch=which(h==strat.vals)+14,cex=1.5,col=strat.cols[which(h==strat.vals)] )
           }
-
           legend("bottomleft", legend=strat.vals, pch=1:length(strat.vals)+14, col=strat.cols, title="Strata:", cex=0.75)
-
           # Note. oversample points in stratified samples, if they exist, are not plotted.
         } else if( !is.null( unequal.var )){
           
@@ -72,9 +70,7 @@ plotSample <- function(button, dat){
             for(h in unequal.vals){
               points( samp[unequal.ind == h,], pch=which(h==unequal.vals)+14,cex=1.5,col=unequal.cols[which(h==unequal.vals)] )
             }
-
             legend("bottomleft", legend=unequal.vals, pch=1:length(unequal.vals)+14, col=unequal.cols, title="Categories:", cex=0.75)
-
 
           } else if( attr(samp, "alloc.type") == "Continuous" ){     # continuous sample
             samp <- samp[order(samp$mdcaty),]                        # make sure legend plots in range order
