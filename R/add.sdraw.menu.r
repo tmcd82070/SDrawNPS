@@ -30,4 +30,5 @@ if( sys == "Windows" & interactive() & !rstudio){
   cat("  analysis.GUI() -> Analysis of continuous or categorical variables.")
 }
 
+
 }
