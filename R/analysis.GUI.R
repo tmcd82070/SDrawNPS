@@ -2,7 +2,8 @@ analysis.GUI <- function()   {
   #
   #   Setup and run a GUI to take inputs for an analysis file.
   #
-  
+  #
+
   
   #   ---- Define the main window
   win <- gtkWindowNew("toplevel")
