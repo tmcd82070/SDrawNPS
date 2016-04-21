@@ -2,9 +2,9 @@
 
 .onAttach<-function(libname, pkgname){
 
-    v <- packageVersion("SDrawGUI")
+    v <- packageVersion("SDrawNPS")
 
-    packageStartupMessage( paste("SDraw - Sample Draws (vers ", v ,")", sep=""))
+    packageStartupMessage( paste("SDrawNPS - Sample Draws (vers ", v ,")", sep=""))
 #   packageStartupMessage("\nWEST Inc. (tmcdonald@west-inc.com)")
 
 

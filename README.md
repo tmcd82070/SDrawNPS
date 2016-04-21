@@ -1,4 +1,4 @@
-# SDrawGUI
+# SDrawNPS
 An R package to draw samples via a Graphical User Interface (GUI).
 
 Description: This package draws several types of statistical samples, but focuses on 
@@ -8,13 +8,13 @@ user interface is included for the common functions.
 
 License: GNU General Public License
 
-# Installation
+## Installation
 
 There are multiple ways to install.  One is from source, the other is from the binary build. 
 
 ## From source 
 
-* Download the source tarball (the `tar.gz`) from the [current release](https://github.com/tmcd82070/SDrawGUI/releases)
+* Download the source tarball (the `tar.gz`) from the [current release](https://github.com/tmcd82070/SDrawNPS/releases)
 * In R, execute the following: `install.packages( pkgs=file.choose(), type="source"" )`
 * A choose-file dialog will appear.  Navigate to the `tar.gz` file and click "Open"
 
@@ -22,19 +22,19 @@ There are multiple ways to install.  One is from source, the other is from the b
 
 * Download the binary build zip file from the link provided in the [current release notes.](https://github.com/tmcd82070/SDrawGUI/releases) 
 * In R, select "Install from local zip file..." from the "Packages" menu in the standard R interface. Or, execute the following: `install.packages( pkgs=file.choose(), type="binary")` 
-* Navigate to the binary build .zip and click Open 
+* Navigate to the binary build zip and click 'Open' 
 
 ## Dependencies
 
 The above methods should install all dependencies. If not, execute the following: 
 * `install.packages( c("RGtk2", "spsurvey", "rgdal", "rgeos", "sp"), repos="http://cran.r-project.org")`
 
-# After installation
-Issue `library(SDrawGUI)` at the command prompt.  The first time you do this, R will ask whether you want to install the GTK+ runtime library.  Say 'yes'.  At the end of this, R may give you some sort of error.  Ignore it.  Restart R. 
+## After installation
+Issue `library(SDrawNPS)` at the command prompt.  The first time you do this, R will ask whether you want to install the GTK+ runtime library.  Say 'yes'.  At the end of this, R may give you some sort of error.  Ignore it.  Restart R. 
 
 
-Re-start R and issue `library(SDrawGUI)`.  An 'SDrawGUI' menu item will appear in your R gui if you are using Windows and the default R console.  From the "SDrawGUI" menu, choose the appropriate action.   The dialog boxes that pop up should be self explanatory.  See `help(package="SDrawGUI")` for a list of functions.  The functions that open the dialog boxes are `equi.GUI()`, `stratified.GUI()`, `unequal.GUI()`, and `analysis.GUI()`.  
+Re-start R and issue `library(SDrawNPS)`.  An 'SDrawNPS' menu item will appear in your R gui if you are using Windows and the default R console.  From the "SDrawNPS" menu, choose the appropriate action.   The dialog boxes that pop up should be self explanatory.  See `help(package="SDrawNPS")` for a list of functions.  The functions that open the dialog boxes are `equi.GUI()`, `stratified.GUI()`, `unequal.GUI()`, and `analysis.GUI()`.  
 
 # Bugs
 
-https://github.com/tmcd82070/SDrawGUI/issues
+https://github.com/tmcd82070/SDrawNPS/issues

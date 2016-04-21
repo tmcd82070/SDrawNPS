@@ -14,6 +14,4 @@ LaTeX: pdfLaTeX
 
 BuildType: Package
 PackageUseDevtools: Yes
-PackagePath: L:/NPS/GRTSUsersManual/SDrawGUI
 PackageInstallArgs: --no-multiarch --with-keep.source
-PackageCheckArgs: –no-examples

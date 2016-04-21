@@ -57,7 +57,7 @@ plotSample <- function(button, dat){
           for(h in strat.vals){
             points( samp[strat.ind == h,], pch=which(h==strat.vals)+14,cex=1.5,col=strat.cols[which(h==strat.vals)] )
           }
-          legend("bottomleft", legend=strat.vals, pch=1:length(strat.vals)+14, col=strat.cols, title="Strata:")
+          legend("bottomleft", legend=strat.vals, pch=1:length(strat.vals)+14, col=strat.cols, title="Strata:", cex=0.75)
           # Note. oversample points in stratified samples, if they exist, are not plotted.
         } else if( !is.null( unequal.var )){
           
@@ -70,7 +70,7 @@ plotSample <- function(button, dat){
             for(h in unequal.vals){
               points( samp[unequal.ind == h,], pch=which(h==unequal.vals)+14,cex=1.5,col=unequal.cols[which(h==unequal.vals)] )
             }
-            legend("bottomleft", legend=unequal.vals, pch=1:length(unequal.vals)+14, col=unequal.cols, title="Categories:")
+            legend("bottomleft", legend=unequal.vals, pch=1:length(unequal.vals)+14, col=unequal.cols, title="Categories:", cex=0.75)
 
           } else if( attr(samp, "alloc.type") == "Continuous" ){     # continuous sample
             samp <- samp[order(samp$mdcaty),]                        # make sure legend plots in range order
@@ -78,7 +78,7 @@ plotSample <- function(button, dat){
             if(NS <= 5){                                             # get one range.
               ranges <- paste0("(",round(min(samp@data$mdcaty),0),",",round(max(samp@data$mdcaty),0),"]")
               points(samp,pch=15,cex=1.5,col='blue')
-              legend("bottomleft",ranges,pch=19,col='blue')
+              legend("bottomleft",ranges,pch=19,col='blue', cex=0.75)
             } else if(NS >= 6 & NS <= 25){                           # get three ranges.    
               ranges <- cut(samp@data$mdcaty,3,dig.lab=0)
               unequal.ind <- as.numeric(ranges)
@@ -87,16 +87,17 @@ plotSample <- function(button, dat){
               for(h in unique(unequal.ind)){
                 points(samp[unequal.ind == h,],pch=h+14,cex=1.5,col=unequal.cols[h])
               }
-              legend("bottomleft",as.character(droplevels(unique(ranges))),pch=unequal.pch,col=unequal.cols, title="Ranges:")                            
+              legend("bottomleft",as.character(droplevels(unique(ranges))),pch=unequal.pch,col=unequal.cols, title="Ranges:", cex=0.75)                            
             } else {                                                 # get five ranges.  
               ranges <- cut(samp@data$mdcaty,5,dig.lab=0)
               unequal.ind <- as.numeric(ranges)
-              unequal.cols <- rainbow(5)
-              unequal.pch <- c(15,16,17,18,19)
-              for(h in unique(unequal.ind)){
-                points(samp[unequal.ind == h,],pch=h+14,cex=1.5,col=unequal.cols[h])
+              unequal.cols <- rainbow(length(unique(unequal.ind)))
+              unequal.pch <- c(15,16,17,18,19)[1:length(unique(unequal.ind))]
+              for(h in 1:length(unique(unequal.ind))){
+                hh <- unique(unequal.ind)[h]
+                points(samp[unequal.ind == hh,],pch=h+14,cex=1.5,col=unequal.cols[h])
               }
-              legend("bottomleft",as.character(droplevels(unique(ranges))),pch=unequal.pch,col=unequal.cols, title="Ranges:")  
+              legend("bottomleft",as.character(droplevels(unique(ranges))),pch=unequal.pch,col=unequal.cols, title="Ranges:", cex=0.75)  
             }
           }
         } else if( has.oversamp ){
@@ -104,11 +105,11 @@ plotSample <- function(button, dat){
           samp.ind <- data.frame(samp)[,"pointType"]
           points( samp[samp.ind=="Sample",], pch=16 )
           points( samp[samp.ind=="OverSample",], pch=1 )
-          legend("bottomleft", legend=paste(stype, c("sample", "over sample")), pch=c(16,1))
+          legend("bottomleft", legend=paste(stype, c("sample", "over sample")), pch=c(16,1), cex=0.75)
         } else {
           #   No oversample
           points( samp, pch=16 )
-          legend("bottomleft", legend=paste(stype, "sample points"), pch=c(16))
+          legend("bottomleft", legend=paste(stype, "sample points"), pch=c(16), cex=0.75)
         }
 
     }

@@ -6,8 +6,9 @@ analysis.GUI <- function()   {
   
   #   ---- Define the main window
   win <- gtkWindowNew("toplevel")
+  win$setSizeRequest(750,525)  # width height
   win$setBorderWidth(8) 
-  win$setTitle("S-Draw : Continuous variable analysis interface")
+  win$setTitle("SDrawNPS : Continuous variable analysis interface")
 
   vbox1 <- gtkVBoxNew(FALSE, 8)
   vbox1$setBorderWidth(8)
@@ -43,8 +44,8 @@ analysis.GUI <- function()   {
 # req.frame <- gtkFrameNew("Required Inputs")
 # vbox1$packStart(req.frame)
 
-hbox1 <- gtkVBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
-hbox1$setBorderWidth(8)
+hbox1 <- gtkVBoxNew(FALSE, 1) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
+hbox1$setBorderWidth(1)
 req.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically   
 
 
@@ -89,8 +90,8 @@ out.r.entry <- gtkEntry()
 out.r.entry$setText("")#paste("sdraw.", format(Sys.time(), "%Y.%m.%d.%H%M%S"), sep=""))
 out.r.label <- gtkLabel("Output File:")
 
-gtkTableAttach(tbl,out.r.label, 0, 1, 3, 4, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,out.r.entry, 1, 2, 3, 4, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,out.r.label, 0, 1, 3, 4, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,out.r.entry, 1, 2, 3, 4, xpadding=5, ypadding=0)
 
   
   
@@ -108,8 +109,8 @@ gtkTableAttach(tbl,out.r.entry, 1, 2, 3, 4, xpadding=5, ypadding=5)
   shape.file.box$packEnd(browse.b)
   shape.file.box$packStart(shape.in.entry)
   
-  gtkTableAttach(tbl,shape.file.label, 0, 1, 1, 2, xpadding=5, ypadding=5)
-  gtkTableAttach(tbl,shape.file.box, 1, 2, 1, 2, xpadding=5, ypadding=5)
+  gtkTableAttach(tbl,shape.file.label, 0, 1, 1, 2, xpadding=5, ypadding=0)
+  gtkTableAttach(tbl,shape.file.box, 1, 2, 1, 2, xpadding=5, ypadding=0)
  
   # ---- needed analysis variables
 
@@ -117,58 +118,58 @@ gtkTableAttach(tbl,out.r.entry, 1, 2, 3, 4, xpadding=5, ypadding=5)
 siteID.entry <- gtkEntryNew()
 siteID.entry$setText( "siteID" )
 siteID.label <- gtkLabel("Site-ID Variable:")
-gtkTableAttach(tbl,siteID.label, 0, 1, 5, 6, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,siteID.entry, 1, 2, 5, 6, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,siteID.label, 0, 1, 5, 6, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,siteID.entry, 1, 2, 5, 6, xpadding=5, ypadding=0)
 
 # EvalStatus
 evalStatus.entry <- gtkEntryNew()
 evalStatus.entry$setText( "EvalStatus" )
 evalStatus.label <- gtkLabel("Evaluation Status Variable:")
-gtkTableAttach(tbl,evalStatus.label, 0, 1, 7, 8, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,evalStatus.entry, 1, 2, 7, 8, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,evalStatus.label, 0, 1, 7, 8, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,evalStatus.entry, 1, 2, 7, 8, xpadding=5, ypadding=0)
 
 # Target_Sampled
 evalStatusYes.entry <- gtkEntryNew()
 evalStatusYes.entry$setText( "Target - Surveyed" )
 evalStatusYes.label <- gtkLabel("Inclusion Identifier:")
 #evalStatusYes.label$setMarkup("<span color='red'>Inclusion Identifier:</span>")
-gtkTableAttach(tbl,evalStatusYes.label, 0, 1, 9, 10, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,evalStatusYes.entry, 1, 2, 9, 10, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,evalStatusYes.label, 0, 1, 9, 10, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,evalStatusYes.entry, 1, 2, 9, 10, xpadding=5, ypadding=0)
 
 # (sub)Population 2 -- recall population 1 is all elements together
 pop2.entry <- gtkEntryNew()
 pop2.entry$setText( "" )
 pop2.label <- gtkLabel("Stratum / Subpopulation 1:")
-gtkTableAttach(tbl,pop2.label, 0, 1, 11, 12, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,pop2.entry, 1, 2, 11, 12, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,pop2.label, 0, 1, 11, 12, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,pop2.entry, 1, 2, 11, 12, xpadding=5, ypadding=0)
 
 # (sub)Population 3 -- recall population 1 is all elements together
 pop3.entry <- gtkEntryNew()
 pop3.entry$setText( "" )
 pop3.label <- gtkLabel("Stratum / Subpopulation 2:")
-gtkTableAttach(tbl,pop3.label, 0, 1, 13, 14, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,pop3.entry, 1, 2, 13, 14, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,pop3.label, 0, 1, 13, 14, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,pop3.entry, 1, 2, 13, 14, xpadding=5, ypadding=0)
 
 # wgt
 wgt.entry <- gtkEntryNew()
 wgt.entry$setText( "wgt" )
 wgt.label <- gtkLabel("Weight Variable:")
-gtkTableAttach(tbl,wgt.label, 0, 1, 15, 16, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,wgt.entry, 1, 2, 15, 16, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,wgt.label, 0, 1, 15, 16, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,wgt.entry, 1, 2, 15, 16, xpadding=5, ypadding=0)
 
 # xcoord
 xcoord.entry <- gtkEntryNew()
 xcoord.entry$setText( "xcoord" )
 xcoord.label <- gtkLabel("X-Coordinate:")
-gtkTableAttach(tbl,xcoord.label, 0, 1, 17, 18, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,xcoord.entry, 1, 2, 17, 18, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,xcoord.label, 0, 1, 17, 18, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,xcoord.entry, 1, 2, 17, 18, xpadding=5, ypadding=0)
 
 # ycoord
 ycoord.entry <- gtkEntryNew()
 ycoord.entry$setText( "ycoord" )
 ycoord.label <- gtkLabel("Y-Coordinate:")
-gtkTableAttach(tbl,ycoord.label, 0, 1, 19, 20, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,ycoord.entry, 1, 2, 19, 20, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,ycoord.label, 0, 1, 19, 20, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,ycoord.entry, 1, 2, 19, 20, xpadding=5, ypadding=0)
 
 # continuous analysis variable
 # cont.var.entry <- gtkEntryNew()
@@ -181,9 +182,15 @@ gtkTableAttach(tbl,ycoord.entry, 1, 2, 19, 20, xpadding=5, ypadding=5)
 vars.entry <- gtkEntryNew()
 vars.entry$setText( "variable1, variable2, variable3, ..." )
 vars.label <- gtkLabel("Outcome(s):")
-gtkTableAttach(tbl,vars.label, 0, 1, 21, 22, xpadding=5, ypadding=5)
-gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=5)
+gtkTableAttach(tbl,vars.label, 0, 1, 21, 22, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,vars.entry, 1, 2, 21, 22, xpadding=5, ypadding=0)
 
+# confidence level variable(s)
+conf.entry <- gtkEntryNew()
+conf.entry$setText(95)
+conf.label <- gtkLabel("Confidence Level:")
+gtkTableAttach(tbl,conf.label, 0, 1, 23, 24, xpadding=5, ypadding=0)
+gtkTableAttach(tbl,conf.entry, 1, 2, 23, 24, xpadding=5, ypadding=0)
 
 # ============================ Sample Weights frame ===========
 #   ---- Separator
@@ -203,8 +210,8 @@ vbox1$packStart(samp.frame)
 
 
 
-hbox1 <- gtkHBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
-hbox1$setBorderWidth(8)
+hbox1 <- gtkHBoxNew(FALSE, 1) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
+hbox1$setBorderWidth(1)
 samp.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically
 
 
@@ -214,15 +221,15 @@ samp.weight.frame <- gtkFrameNew("Adjust Weights?")
 hbox1$add(samp.weight.frame)  # alloc
 
 #  Radio Buttons to Specify Sample Weights
-stype.box <- gtkHBoxNew(TRUE, 2)
-stype.box$setBorderWidth(8)
+stype.box <- gtkHBoxNew(TRUE, 0)
+stype.box$setBorderWidth(0)
 samp.weight.frame$add( stype.box )
 
 n.rb <- gtkRadioButtonNewWithLabel(label="No")  # prop.rb
 y.rb <- gtkRadioButtonNewWithLabelFromWidget(n.rb,"Yes") #const.rb
 
-stype.box$packStart(y.rb, TRUE, TRUE, 2)
-stype.box$packStart(n.rb, TRUE, TRUE, 2)
+stype.box$packStart(y.rb, TRUE, TRUE, 0)
+stype.box$packStart(n.rb, TRUE, TRUE, 0)
 
 
 
@@ -230,16 +237,16 @@ popn.weight.frame <- gtkFrameNew("Population Inference")
 hbox1$add(popn.weight.frame)  # alloc
 
 #  Radio Buttons to Specify popn Parameter in Adj Wgt Function
-ttype.box <- gtkHBoxNew(TRUE, 2)
-ttype.box$setBorderWidth(8)
+ttype.box <- gtkHBoxNew(TRUE, 0)
+ttype.box$setBorderWidth(0)
 popn.weight.frame$add( ttype.box )
 
-S.rb <- gtkRadioButtonNewWithLabel(label="Sampled") #popn="Sampled"
-T.rb <- gtkRadioButtonNewWithLabelFromWidget(S.rb,label="Target")  # popn="Target"
 
+T.rb <- gtkRadioButtonNewWithLabel(label="Target")  # popn="Target"
+S.rb <- gtkRadioButtonNewWithLabelFromWidget(T.rb,label="Sampled") #popn="Sampled"
 
-ttype.box$packStart(T.rb, TRUE, TRUE, 2)
-ttype.box$packStart(S.rb, TRUE, TRUE, 2)
+ttype.box$packStart(T.rb, TRUE, TRUE, 0)
+ttype.box$packStart(S.rb, TRUE, TRUE, 0)
 
 
 
@@ -350,7 +357,7 @@ ttype.box$packStart(S.rb, TRUE, TRUE, 2)
   
   
   #   ---- Separator
-  vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
+  #vbox1$packStart(gtkHSeparatorNew(), expand=FALSE)
   
   
   #   ---- Define box for row of buttons at bottom
@@ -392,7 +399,8 @@ ttype.box$packStart(S.rb, TRUE, TRUE, 2)
     y.rb=y.rb,
     n.rb=n.rb,
     S.rb=S.rb,
-    T.rb=T.rb
+    T.rb=T.rb,
+    conf.entry=conf.entry
   )
   ) 
   bbox$packEnd(run.b, expand=FALSE)
@@ -414,13 +422,13 @@ ttype.box$packStart(S.rb, TRUE, TRUE, 2)
   
   
   
-  #   ---- Write to csv button
-  write.csv.b <- gtkButton("Export")
-  gSignalConnect(write.csv.b, "clicked", my.write.csv, data=list(
-    out.r.entry = out.r.entry, 
-    parent.window = win            
-  ))
-  bbox$packEnd( write.csv.b, expand=FALSE)
+#   #   ---- Write to csv button
+#   write.csv.b <- gtkButton("Export")
+#   gSignalConnect(write.csv.b, "clicked", my.write.csv, data=list(
+#     out.r.entry = out.r.entry, 
+#     parent.window = win            
+#   ))
+#   bbox$packEnd( write.csv.b, expand=FALSE)
   
   
   #   ---- Done button
@@ -435,7 +443,7 @@ ttype.box$packStart(S.rb, TRUE, TRUE, 2)
   #   ---- Pack the rows of buttons into the vertical box
   vbox1$packEnd( bbox, expand=FALSE)
   
-  gtkWindowResize(win,678,705)
+  gtkWindowResize(win,678,525)
   
   #   ---- Finally, show the window
   win$Show()

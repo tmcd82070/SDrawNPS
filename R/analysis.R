@@ -1,22 +1,23 @@
 analysis <- function(button, dat){
   
   
-#   dat <- read.csv('//LAR-FILE-SRV/Data/NPS/GRTSUsersManual/SDrawGUI/data/JOTR_IntUp_GRTS_sample.csv')
+#   dat <- read.csv('//LAR-FILE-SRV/Data/NPS/GRTSUsersManual/Jason Trash/VegdataTesting.csv')
 #   df <- dat
 #   outobj <- 'hey'
 #   theSiteID <- 'siteID'
 #   evalStatus <- 'EvalStatus'
 #   evalStatusYes <- 'Target - Surveyed'
-#   pop2 <- 'Park'
-#   pop3 <- 'LandType'
+#   pop2 <- 'cut1'
+#   pop3 <- 'cut2'
 #   wgt <- 'wgt'
 #   xcoord <- 'xcoord'
 #   ycoord <- 'ycoord'
 #   vars <- "Mean.Percent.Cover,Mean.Canopy.Gap.Percent"              # be sure to put in '.'s. 
 #   doWgt <- "Yes"
 #   popn <- "Sampled"
-#   fn <- 'JOTR_IntUp_GRTS_sample.csv'
-#   dir <- '//LAR-FILE-SRV/Data/NPS/GRTSUsersManual/SDrawGUI/data'
+#   fn <- 'VegdataTesting.csv'
+#   dir <- '//LAR-FILE-SRV/Data/NPS/GRTSUsersManual/Jason Trash'
+#   conf <- 95
   
   # -------------------------------------------------------------------------------------------------
   fn <- dat$shape.in.entry$getText()
@@ -32,10 +33,19 @@ analysis <- function(button, dat){
   xcoord <- dat$xcoord.entry$getText()
   ycoord <- dat$ycoord.entry$getText()
   vars <- dat$vars.entry$getText()
+  conf <- as.numeric(dat$conf.entry$getText())
   
   
   df <- getDataFrame( fn, dir )
   the.siteID.o <- df[,theSiteID]  
+  
+  
+  #000000000000000000000 --  Check input parameters -- 0000000000000000000000000000000000000000000000000000000000000000000000
+  if( conf > 100 | conf < 0 | conf %% 1 != 0 ){
+    error.message("Confidence level must be an integer between zero and one hundred.")
+    return()
+  }
+  #000000000000000000000 --  Check input parameters -- 0000000000000000000000000000000000000000000000000000000000000000000000
   
   #111111111111111111111 -- do some stuff in regard to weighting -- 1111111111111111111111111111111111111111111111111111111111111
   EvalCheck <- 0
@@ -83,7 +93,7 @@ analysis <- function(button, dat){
   }
   
   # adjust weights by calling fn and using read-in var names specific to datarun
-  if(doWgt == "YES"){
+  if(doWgt == "Yes"){
     adjwgt <- Adjwgt_FrameNR(dat=df, popn=popn , evalstatus=evalStatus, wgt=wgt)  
     oldwgt <- df[,wgt]
     wgtN   <- adjwgt
@@ -132,14 +142,15 @@ analysis <- function(button, dat){
   #222222222222222222222222222 -- end make subpop -- 2222222222222222222222222222222222222222222222222222222222222222
 
 #   # make design df -- need to add strata if necessary
-#   if(nStrata > 1){
-#     the.designYStrat <- data.frame(siteID=the.siteID.o,wgt=df[,wgt],xcoord=df[,xcoord],ycoord=df[,ycoord],stratum=df[,stratum])
-#   } 
-#   the.designNStrat <- data.frame(siteID=the.siteID.o,wgt=df[,wgt],xcoord=df[,xcoord],ycoord=df[,ycoord])
-  the.design <- data.frame(siteID=the.siteID.o,wgt=df[,wgt],xcoord=df[,xcoord],ycoord=df[,ycoord])
+  if(doWgt == 'Yes'){
+    the.design <- data.frame(siteID=the.siteID.o,wgt=wgtN,xcoord=df[,xcoord],ycoord=df[,ycoord])
+  } else {
+    the.design <- data.frame(siteID=the.siteID.o,wgt=df[,wgt],xcoord=df[,xcoord],ycoord=df[,ycoord])
+  }
   
   # make var(s) df
-  vars.vec <- strsplit(vars,',')[[1]]
+  trim <- function (x) gsub("^\\s+|\\s+$", "", x) # http://stackoverflow.com/questions/2261079/how-to-trim-leading-and-trailing-whitespace-in-r
+  vars.vec <- trim(strsplit(vars,',',fixed=TRUE)[[1]])
   if(length(vars.vec) == 1){
     typ <- class(df[,vars.vec])
   } else {
@@ -159,7 +170,7 @@ analysis <- function(button, dat){
       } else if(i > 1){
         the.data.cont <- data.frame(the.data.cont,temp=df[,vars.vec.n[i]])
       }
-      colnames(the.data.cont)[1 + i] <- paste0('Cont',i)
+      colnames(the.data.cont)[1 + i] <- vars.vec.n[i]  #paste0('Cont',i)
     }
     outobj.cont <- paste0(outobj,".cont")
   }
@@ -172,7 +183,7 @@ analysis <- function(button, dat){
       } else if(i > 1){
         the.data.cat <- data.frame(the.data.cat,temp=df[,vars.vec.f[i]])
       }
-      colnames(the.data.cat)[1 + i] <- paste0('Cat',i)
+      colnames(the.data.cat)[1 + i] <- vars.vec.f[i]   #paste0('Cat',i)
     }
     outobj.cat <- paste0(outobj,".cat")
   }
@@ -191,13 +202,16 @@ analysis <- function(button, dat){
   cdfPage.pretty <- cdfPage
   doWgt.pretty <- doWgt
   popn.pretty <- popn
-  the.pretty <- c(siteID.pretty,evalStatus.pretty,evalStatusYes,pop2.pretty,pop3.pretty,wgt.pretty,xcoord.pretty,ycoord.pretty,cdfPage.pretty,evalStatus.pretty2,wgt.pretty2,doWgt.pretty,popn.pretty)
-                #             1,                2,            3,          4,          5,         6,            7,            8,             9,                10,         11,          12,         13
+  pop2.pretty2 <- pop2
+  pop3.pretty2 <- pop3
+  conf.pretty <- conf
+  the.pretty <- c(siteID.pretty,evalStatus.pretty,evalStatusYes,pop2.pretty,pop3.pretty,wgt.pretty,xcoord.pretty,ycoord.pretty,cdfPage.pretty,evalStatus.pretty2,wgt.pretty2,doWgt.pretty,popn.pretty,pop2.pretty2,pop3.pretty2,conf.pretty)
+                #             1,                2,            3,          4,          5,         6,            7,            8,             9,                10,         11,          12,         13,          14,          15,         16
   the.pretty.cont <- NULL
   if(Nvars.n > 0){
     the.pretty.cont <- c(paste0("siteID=",siteID.pretty),rep(NA,Nvars.n))
     for(i in 1:Nvars.n){
-      the.pretty.cont[i + 1] <- paste0("Cont",i,"=df$",vars.vec.n[i])
+      the.pretty.cont[i + 1] <- paste0(vars.vec.n[i],"=df$",vars.vec.n[i])
     }
   }
   the.pretty.cont <- paste0("the.data.cont <- data.frame(",paste(the.pretty.cont,collapse=', '),")")
@@ -206,7 +220,7 @@ analysis <- function(button, dat){
   if(Nvars.f > 0){
     the.pretty.cat <- c(paste0("siteID=",siteID.pretty),rep(NA,Nvars.f))
     for(i in 1:Nvars.f){
-      the.pretty.cat[i + 1] <- paste0("Cat",i,"=df$",vars.vec.f[i])
+      the.pretty.cat[i + 1] <- paste0(vars.vec.f[i],"=df$",vars.vec.f[i])
     }
   }
   the.pretty.cat <- paste0("the.data.cat <- data.frame(",paste(the.pretty.cat,collapse=', '),")")
@@ -283,13 +297,15 @@ the.pretty.cat,"\n",sep="")
                        subpop=the.subpop,
                        design=the.design,
                        data.cont=the.data.cont,
-                       total=TRUE)\n\n")
+                       total=TRUE,
+                       conf=",conf,")\n\n")
   }
   if(Nvars.f > 0){
   cat("ans.cat <- cat.analysis(sites=the.sites,
                        subpop=the.subpop,
                        design=the.design,
-                       data.cat=the.data.cat)\n\n")
+                       data.cat=the.data.cat,
+                       conf=",conf,")\n\n")
   } 
   
   # do the analysis
@@ -298,21 +314,31 @@ the.pretty.cat,"\n",sep="")
                        subpop=the.subpop,
                        design=the.design,
                        data.cont=the.data.cont,
-                       total=TRUE),pos=.GlobalEnv)
+                       total=TRUE,
+                       conf=conf),pos=.GlobalEnv)
   }
   if(Nvars.f > 0){
     ans.cat <- assign(outobj.cat,cat.analysis(sites=the.sites,
                       subpop=the.subpop,
                       design=the.design,
-                      data.cat=the.data.cat),pos=.GlobalEnv)   
+                      data.cat=the.data.cat,
+                      conf=conf),pos=.GlobalEnv)   
   }
   
+  # print to console the actual weights used.  helpful for checking.
+  cat("You may find it useful to check that the weights you intended were used in the analysis.
+The weights below are the ones used in the analysis.  Check these against your original datafile.\n")
+  print(head(the.design[,1:2]))
+
+
   if(Nvars.n > 0){
-    cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - CDF Plots.pdf"),ans.cont$CDF,cdf.page=cdfPage)
+    cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - ",outobj," - CDF Plots.pdf"),ans.cont$CDF,cdf.page=cdfPage)
   }
-  makeAnalysisLog(fn,dir,the.pretty,the.pretty.cont,the.pretty.cat)
+  makeAnalysisLog(fn,dir,outobj,the.pretty,the.pretty.cont,the.pretty.cat)
   options(useFancyQuotes = TRUE)
 
+  my.write.csv.nonWidget(outobj,dir)
+  
   dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", "Analysis successful.")
   dialog$run()
   dialog$destroy()

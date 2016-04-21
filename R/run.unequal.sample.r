@@ -4,15 +4,15 @@ run.unequal.sample <- function(button, dat){
   #   Query the entry fields
   
   # testing
-#   n <- "48,24,32"
-#   fn <- "SRI_Watersheds_shapefile_J"
-#   dir <- "//LAR-FILE-SRV/Data/NPS/GitHub/2015.06.11/inst/doc/Shapefiles"
-#   unequal.var <- "Category"
-#   outobj <- "sdraw.2015.06.11.160942"
-#   over.n <- 2
-#   seed <- 1234
+#   n <- "30"
+#   fn <- "SRI_Stream_Derived_Lengths_shapefile"
+#   dir <- "//LAR-FILE-SRV/Data/NPS/GRTSUsersManual/SDrawGUI/inst/doc/Shapefiles"
+#   unequal.var <- "Stratum" #"Inv_Leng"
+#   outobj <- "jason1"
+#   over.n <- "10,30"
+#   seed <- 314
 #   stype <- "GRTS"
-#   alloc.type <- "uneqproportion"
+#   alloc.type <- "continuous"
 #   shp <- readOGR(dir,fn)      # shpfile object for testing.
   
   
@@ -34,9 +34,11 @@ run.unequal.sample <- function(button, dat){
   #   Set seed if there is a number present
   if( nchar(seed) > 0 ){
     seed <- as.numeric( seed )
-    set.seed( seed )
-    assign( "seed", seed, pos=.GlobalEnv )
+  } else {
+    seed <- sample(2^31,1)
   }
+  set.seed(seed)
+  assign( "seed", seed, pos=.GlobalEnv )
   
   #   Get sample allocation information from radio buttons
   if( dat$cont.rb$getActive() ){
@@ -92,7 +94,6 @@ run.unequal.sample <- function(button, dat){
   #         cat( paste( "Old version of", outobj, "copied to", paste(outobj, ".previous", sep=""), "\n"))
   #     }
   
-  
   #   fix up the sample sizes
   # n <- as.numeric(as.vector( n ))
   # over.n <- as.numeric(as.vector(over.n))
@@ -105,7 +106,7 @@ run.unequal.sample <- function(button, dat){
     warning("Oversample set to 0.")
     over.n <- 0
   }
-  
+
   #   Actually draw the sample
   #   Remember that fn is the text string name of the shapefile, without .shp, and without path.
   

@@ -12,6 +12,10 @@ Adjwgt_FrameNR<-function(dat, popn, evalstatus="EvalStatus", wgt="wgt") {
   #
   # lahs 8.20.12 updated 9.30.15
   #
+  # dat <- df
+  # popn <- popn
+  # evalstatus <- "EvalStatus"
+  # wgt <- "wgt"
 
   # error checking -- standardize EvalStatus inputs
   dat[,evalstatus]                                                                          <- as.character(dat[,evalstatus])

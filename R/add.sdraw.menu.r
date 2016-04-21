@@ -7,12 +7,12 @@ sys <-  Sys.info()["sysname"]
 rstudio <-  Sys.getenv("RSTUDIO") == "1"
 
 if( sys == "Windows" & interactive() & !rstudio){
-  winMenuAdd("SDrawGUI")
-	winMenuAddItem("SDrawGUI/Sample Draws", "Equi-Probable...", "equi.GUI()")
-	winMenuAddItem("SDrawGUI/Sample Draws", "Stratified...", "stratified.GUI()")
-  winMenuAddItem("SDrawGUI/Sample Draws", "Unequal...", "unequal.GUI()")
-	#winMenuAddItem("SDrawGUI/Sample Draws", "Variable Probable...", "advanced.GUI()")
-	winMenuAddItem("SDrawGUI/Analysis", "CDF", "none")
+  winMenuAdd("SDrawNPS")
+	winMenuAddItem("SDrawNPS/Sample Draws", "Equi-Probable...", "equi.GUI()")
+	winMenuAddItem("SDrawNPS/Sample Draws", "Stratified...", "stratified.GUI()")
+  winMenuAddItem("SDrawNPS/Sample Draws", "Unequal...", "unequal.GUI()")
+	#winMenuAddItem("SDrawNPS/Sample Draws", "Variable Probable...", "advanced.GUI()")
+	winMenuAddItem("SDrawNPS/Analysis", "Analysis...", "analysis.GUI()")
 } else if(!rstudio){
   cat("This is a non-menu environment, but provided RGtk2 can be loaded.\n")
   cat("you can still use the dialogs.  To use the dialogs, call one of the following:\n")
@@ -22,7 +22,7 @@ if( sys == "Windows" & interactive() & !rstudio){
   cat("\t analysis.GUI() -> Analysis of continuous or categorical variables.")
   #cat("\t advanced.GUI() -> Interface to draw advanced samples.\n")
 } else {
-  cat("You are running in RStudio where an SDrawGUI menu cannot be created.\n")
+  cat("You are running in RStudio where an SDrawNPS menu cannot be created.\n")
   cat("To use the dialogs, execute one of the following in the Console window:\n")
   cat("  equi.GUI() -> Equi-probable samples.\n")
   cat("  stratified.GUI() -> Stratified samples.\n")

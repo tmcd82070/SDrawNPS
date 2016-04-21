@@ -119,11 +119,7 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
 
 
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------
-if(!is.null(seed)){
-cat("# You specified a seed.\n
-    set.seed(",seed,")\n\n",sep="")
-}
-  
+cat(paste0("The seed utilized was ",seed,".\n\n"))
 cat("# Draw the sample via the grts function in package spsurvey.\n
     Unequalsites <- grts(design=Unequaldsgn,
     DesignID=",dQuote(get("IDHelper")),",

@@ -11,21 +11,21 @@ run.sample <- function(button, dat){
     stype <- dat$samp.type.combo$getActiveText()
     stype <- substring(stype, 1, 4)
 
+#     #   Get random seed information from radio buttons
+#     if( dat$seedy.rb$getActive() ){
+#       seed.type <- "yes"
+#     } else {
+#       seed.type <- "no"
+#     }
+    
     #   Set seed if there is a number present
     if( nchar(seed) > 0 ){
-        seed <- as.numeric( seed )
-        set.seed( seed )
+      seed <- as.numeric( seed )
+    } else {
+      seed <- sample(2^31,1)
     }
-
-#    #   Get frame type 
-#    if( dat$area.rb$getActive() ){
-#        sframe.type <- "area"
-#    } else if ( dat$line.rb$getActive() ){
-#        sframe.type <- "linear"
-#    } else {
-#        sframe.type <- "finite"
-#    }
-
+    set.seed(seed)
+    assign( "seed", seed, pos=.GlobalEnv )
     
     #   Check input parameters
     if( length(n) == 0 | (n <= 0) ){

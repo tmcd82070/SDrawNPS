@@ -1,4 +1,5 @@
 #exportPattern("^[[:alpha:]]+")
+export(Adjwgt_FrameNR)
 export(analysis.GUI)
 export(bas)
 export(bas.polygon)

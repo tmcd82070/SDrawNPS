@@ -23,7 +23,9 @@ grts.equi <- function( n, over.n, shp, fn, dir, outobj ){
       sframe.type = "area"
   }
 
-# ------------- PRINT TO CONSOLE ----------------------------------------------------------------    
+  
+# ------------- PRINT TO CONSOLE ----------------------------------------------------------------   
+  cat(paste0("The seed utilized was ",seed,".\n\n"))
   cat("# Draw the sample via the grts function in package spsurvey.\n
        Equalsites <- grts(design=Equaldsgn,
                      DesignID='Site',
@@ -41,6 +43,7 @@ grts.equi <- function( n, over.n, shp, fn, dir, outobj ){
           shapefile=FALSE)
 
   cat("Success.\n")
+
 
   #   Toss some variables that are not important for equal probability designs
   #Equalsites <- Equalsites[,!(names(Equalsites) %in% c("mdcaty","wgt","stratum","panel"))]

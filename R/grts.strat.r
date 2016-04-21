@@ -83,6 +83,7 @@ cat("# Prepare the design of the sampling for use in the grts function.\n
 
 
 # ------------- PRINT TO CONSOLE ----------------------------------------------------------------
+cat(paste0("The seed utilized was ",seed,".\n\n"))
 cat("# Draw the sample via the grts function in package spsurvey.\n
       Stratsites <- grts(design=Stratdsgn,
       DesignID='STRAT',
