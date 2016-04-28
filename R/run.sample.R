@@ -85,8 +85,14 @@ run.sample <- function(button, dat){
     assign( outobj, samp, pos=.GlobalEnv )
 
     #   Tell user we are finished.
-    cat("First 10 sample locations:\n")
-    print(samp[1:10,])
+    sampN <- nrow(samp)
+    if (sampN >= 10){
+      cat("First 10 sample locations:\n")
+      print(samp[1:10,])
+    } else {
+      cat("Sampled locations:\n")
+      print(samp[1:sampN,])
+    }
 
     dialog <- gtkMessageDialogNew(NULL, c("modal"), "info", "ok", stype, "draw successful.", "\nCode file saved to", outobj, ".")
     dialog$run()

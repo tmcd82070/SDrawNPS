@@ -232,7 +232,7 @@ analysis <- function(button, dat){
   
   # define 'df' for the console window
   options(useFancyQuotes = FALSE)
-  cat("df <- ",dQuote(paste0(dir,"/",fn)),"\n")
+  cat("df <- read.csv(",dQuote(paste0(dir,"/",fn)),", header=TRUE)\n")
   cat("popn <- ",dQuote(popn),"\n")
 
   if(doWgt == "Yes"){

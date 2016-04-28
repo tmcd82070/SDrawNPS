@@ -9,7 +9,7 @@ equi.GUI <- function()   {
     win <- gtkWindowNew("toplevel")
     win$setSizeRequest(750,350)
     win$setBorderWidth(8)
-    win$setTitle("SDrawNPS : A sample drawing interface")
+    win$setTitle("SDrawNPS : Equiprobable sample drawing interface")
     #gtkWindowSetIconFromFile(win, filename = "s-draw.ico")  # need path to be correct here, or does not work, obviously
 
     vbox1 <- gtkVBoxNew(FALSE, 8)

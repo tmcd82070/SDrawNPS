@@ -6,6 +6,8 @@ grts.strat <- function( n, over.n, strat.var, shp, fn, dir, outobj ){
   # strat.var = string nameing strata variable IF shape contains points or lines
   # shp = the SpatialXDataFrame object (the frame)
 
+  options(useFancyQuotes = FALSE)
+  
   # Get strata level names from shape file
   strata.levels<-names(table(data.frame(shp)[,strat.var]))
   
@@ -125,8 +127,12 @@ cat("# Draw the sample via the grts function in package spsurvey.\n
     attr(Stratsites, "sp.object") <- deparse(substitute(shp))
     attr(Stratsites, "frame.type") <- sframe.type
     attr(Stratsites, "strata.var") <- "stratum"
+    
+    options(useFancyQuotes = TRUE)
 
     makeLog(strat.var=strat.var,strata.levels=strata.levels,unequal.var=NULL,alloc.type=NULL,category.levels=NULL,n,over.n,shp,fn,dir,outobj,sframe.type=sframe.type,selType=selType)
-
+    
+    seed = set.seed(NULL)       # make sure that if this var is set, it gets cleared out.
+    
     Stratsites
 }

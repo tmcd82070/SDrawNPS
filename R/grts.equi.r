@@ -1,5 +1,7 @@
 grts.equi <- function( n, over.n, shp, fn, dir, outobj ){
 
+  options(useFancyQuotes = FALSE)
+  
   Equaldsgn <- list(None = list(panel = c(Main = n),
                                 seltype = "Equal",
                                 over = over.n))
@@ -61,7 +63,12 @@ grts.equi <- function( n, over.n, shp, fn, dir, outobj ){
   attr(Equalsites, "sp.object") <- deparse(substitute(shp))
   attr(Equalsites, "frame.type") <- sframe.type
   
+  options(useFancyQuotes = TRUE)
+  
   makeLog(strat.var=NULL,strata.levels=NULL,unequal.var=NULL,alloc.type=NULL,category.levels=NULL,n,over.n,shp,fn,dir,outobj,sframe.type=sframe.type,selType=NULL)
   
+  seed = set.seed(NULL)       # make sure that if this var is set, it gets cleared out.
+  
   Equalsites
+  
 }

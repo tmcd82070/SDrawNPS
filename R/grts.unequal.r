@@ -6,6 +6,8 @@ grts.unequal <- function( n, over.n, unequal.var, shp, alloc.type, fn, dir, outo
   # unequal.var = string nameing category variable IF shape contains points or lines
   # shp = the SpatialXDataFrame object (the frame)
     
+  options(useFancyQuotes = FALSE)
+  
   # Get category level names from shape file
   category.levels <- names(table(data.frame(shp)[,unequal.var]))
   # For debuggin
@@ -161,6 +163,8 @@ cat("# Draw the sample via the grts function in package spsurvey.\n
   attr(Unequalsites, "unequal.var") <- unequal.var
   attr(Unequalsites, "alloc.type") <- selType
 
+  options(useFancyQuotes = TRUE)
+  
   makeLog(strat.var=NULL,strata.levels=NULL,unequal.var=unequal.var,alloc.type=alloc.type,category.levels=category.levels,n,over.n,shp,fn,dir,outobj,sframe.type=sframe.type,selType=selType)
 
   seed = set.seed(NULL)       # make sure that if this var is set, it gets cleared out.

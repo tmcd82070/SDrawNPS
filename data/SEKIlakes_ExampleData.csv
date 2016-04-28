@@ -1,33 +1,33 @@
-theID,xcoord,ycoord,mdcaty,wgt,stratum,panel,EvalStatus,EvalReason,Park,Cost_cat,Inverse_Cost,pH
-SEKI_Lake-001,366639.8,4025318.68,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,3,0.099,5.56
-SEKI_Lake-002,368462.11,4059892.23,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,5,0.077,6.89
-SEKI_Lake-003,373759.22,4054266.43,Equal,13.96,None,Panel_1,Non-target,Shallow lake,SEQUOIA,5,0.07,
-SEKI_Lake-004,356067.07,4101476.32,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,5,0.079,7.85
-SEKI_Lake-005,373504.91,4072863.76,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,3,0.121,7.26
-SEKI_Lake-006,353896.44,4050821.66,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,2,0.161,7.13
-SEKI_Lake-007,357000.38,4079125.78,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,2,0.157,8
-SEKI_Lake-008,374427.53,4086389.17,Equal,13.96,None,Panel_1,Target - Not sampled,Inaccessible,KINGS_CANYON,4,0.089,
-SEKI_Lake-009,372732.24,4061582.78,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,5,0.079,5.53
-SEKI_Lake-010,371835.46,4046316.72,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,6,0.058,5.8
-SEKI_Lake-011,350623.89,4116861.02,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,2,0.171,7.37
-SEKI_Lake-012,367979.87,4102455.45,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,4,0.087,6.85
-SEKI_Lake-013,369915.88,4077990.14,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,3,0.098,6.72
-SEKI_Lake-014,363596.4,4031827.54,Equal,13.96,None,Panel_1,Non-target,Shallow lake,SEQUOIA,2,0.153,
-SEKI_Lake-015,345620.01,4108700.29,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,4,0.086,6.76
-SEKI_Lake-016,371340.27,4096539.11,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,3,0.104,6.56
-SEKI_Lake-017,356637.67,4028715.27,Equal,13.96,None,Panel_1,Non-target,Shallow lake,SEQUOIA,1,0.208,
-SEKI_Lake-018,371107.17,4065444.34,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,3,0.123,6.84
-SEKI_Lake-019,380373.53,4055017.96,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,5,0.068,8.36
-SEKI_Lake-020,351443.21,4107176.2,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,5,0.078,8.49
-SEKI_Lake-021,376653.07,4080456.72,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,4,0.085,6.75
-SEKI_Lake-022,360666.32,4055717.53,Equal,13.96,None,Panel_1,Target - Not sampled,Inaccessible,KINGS_CANYON,4,0.087,
-SEKI_Lake-023,348113.58,4083253.25,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,3,0.114,8.49
-SEKI_Lake-024,372575.69,4089665.32,Equal,13.96,None,Panel_1,Target - Not sampled,Inaccessible,KINGS_CANYON,3,0.108,
-SEKI_Lake-025,377765.16,4062486.02,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,3,0.108,8.43
-SEKI_Lake-026,367711.36,4049888.03,Equal,13.96,None,Panel_1,Target - Sampled,,SEQUOIA,6,0.061,5.78
-SEKI_Lake-027,348773.94,4116650.78,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,2,0.15,7.35
-SEKI_Lake-028,362944.48,4099394.41,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,5,0.075,7.46
-SEKI_Lake-029,366111.53,4085260.27,Equal,13.96,None,Panel_1,Target - Sampled,,KINGS_CANYON,3,0.116,7.33
+siteID,xcoord,ycoord,mdcaty,wgt,stratum,panel,EvalStatus,EvalReason,Park,Cost_cat,Inverse_Cost,pH
+SEKI_Lake-001,366639.8,4025318.68,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,3,0.099,5.56
+SEKI_Lake-002,368462.11,4059892.23,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,5,0.077,6.89
+SEKI_Lake-003,373759.22,4054266.43,Equal,13.96,None,Panel_1,Non-Target,Shallow lake,SEQUOIA,5,0.07,
+SEKI_Lake-004,356067.07,4101476.32,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,5,0.079,7.85
+SEKI_Lake-005,373504.91,4072863.76,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,3,0.121,7.26
+SEKI_Lake-006,353896.44,4050821.66,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,2,0.161,7.13
+SEKI_Lake-007,357000.38,4079125.78,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,2,0.157,8
+SEKI_Lake-008,374427.53,4086389.17,Equal,13.96,None,Panel_1,Target - Not Surveyed,Inaccessible,KINGS_CANYON,4,0.089,
+SEKI_Lake-009,372732.24,4061582.78,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,5,0.079,5.53
+SEKI_Lake-010,371835.46,4046316.72,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,6,0.058,5.8
+SEKI_Lake-011,350623.89,4116861.02,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,2,0.171,7.37
+SEKI_Lake-012,367979.87,4102455.45,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,4,0.087,6.85
+SEKI_Lake-013,369915.88,4077990.14,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,3,0.098,6.72
+SEKI_Lake-014,363596.4,4031827.54,Equal,13.96,None,Panel_1,Non-Target,Shallow lake,SEQUOIA,2,0.153,
+SEKI_Lake-015,345620.01,4108700.29,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,4,0.086,6.76
+SEKI_Lake-016,371340.27,4096539.11,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,3,0.104,6.56
+SEKI_Lake-017,356637.67,4028715.27,Equal,13.96,None,Panel_1,Non-Target,Shallow lake,SEQUOIA,1,0.208,
+SEKI_Lake-018,371107.17,4065444.34,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,3,0.123,6.84
+SEKI_Lake-019,380373.53,4055017.96,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,5,0.068,8.36
+SEKI_Lake-020,351443.21,4107176.2,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,5,0.078,8.49
+SEKI_Lake-021,376653.07,4080456.72,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,4,0.085,6.75
+SEKI_Lake-022,360666.32,4055717.53,Equal,13.96,None,Panel_1,Target - Not Surveyed,Inaccessible,KINGS_CANYON,4,0.087,
+SEKI_Lake-023,348113.58,4083253.25,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,3,0.114,8.49
+SEKI_Lake-024,372575.69,4089665.32,Equal,13.96,None,Panel_1,Target - Not Surveyed,Inaccessible,KINGS_CANYON,3,0.108,
+SEKI_Lake-025,377765.16,4062486.02,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,3,0.108,8.43
+SEKI_Lake-026,367711.36,4049888.03,Equal,13.96,None,Panel_1,Target - Surveyed,,SEQUOIA,6,0.061,5.78
+SEKI_Lake-027,348773.94,4116650.78,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,2,0.15,7.35
+SEKI_Lake-028,362944.48,4099394.41,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,5,0.075,7.46
+SEKI_Lake-029,366111.53,4085260.27,Equal,13.96,None,Panel_1,Target - Surveyed,,KINGS_CANYON,3,0.116,7.33
 SEKI_Lake-030,360321.76,4044132.82,Equal,13.96,None,Panel_1,NotEval,,SEQUOIA,3,0.096,
 SEKI_Lake-031,347653.07,4104230.68,Equal,13.96,None,Panel_1,NotEval,,KINGS_CANYON,6,0.065,
 SEKI_Lake-032,362872.34,4087897.82,Equal,13.96,None,Panel_1,NotEval,,KINGS_CANYON,4,0.092,

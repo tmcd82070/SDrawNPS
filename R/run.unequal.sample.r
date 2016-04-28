@@ -121,8 +121,14 @@ run.unequal.sample <- function(button, dat){
   assign( outobj, samp, pos=.GlobalEnv )
   
   #   Tell user we are finished.
-  cat("First 10 sample locations:\n")
-  print(samp[1:10,])
+  sampN <- nrow(samp)
+  if (sampN >= 10){
+    cat("First 10 sample locations:\n")
+    print(samp[1:10,])
+  } else {
+    cat("Sampled locations:\n")
+    print(samp[1:sampN,])
+  }
   
   # reset R Shape name to blank
   #dat$out.r.entry$setText("")   
