@@ -40,6 +40,13 @@ draw.strat.grts <- function(n, over.n, strat.var, alloc.type, fn, dir, outobj){
         strata.sizes <- table(data.frame(shp)[,strat.var])
       }
       n <- round(as.numeric(n[1]) * strata.sizes / sum(strata.sizes))
+
+      # check to make sure all entries are greater than zero. otherwise, 
+      # a group will have a sample of zero, which leads to an error below.
+      nZeros <- sum(tapply(n,list(names(n)),function(x){x <= 0}))
+      if(nZeros > 0){
+        warning("At least one stratum sample size is 0. Use the user-specified sample size option to sample all strata.")
+      }
     } else if( alloc.type=="constant"){
         n <- rep(as.numeric(n[1]),n.strata)
     } else if( alloc.type=="user"){
