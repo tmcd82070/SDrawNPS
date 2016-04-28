@@ -29,7 +29,7 @@ stratified.GUI <- function()   {
         samp.type.combo$appendText( i )
     }
 
-    samp.type.combo$setActive(0)
+    samp.type.combo$setActive(2)
 
     
 #    print(gtkComboBoxGetActive(samp.type.combo))
