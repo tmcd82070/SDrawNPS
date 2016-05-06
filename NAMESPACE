@@ -2,3 +2,4 @@
 
 export(equi.GUI)
 export(stratified.GUI)
+export(unequal.GUI)

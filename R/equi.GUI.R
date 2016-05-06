@@ -2,96 +2,149 @@
 #'   
 #' @title Graphic User Interface (GUI) for selection of equi-probable samples.
 #'   
-#' @description Initiates a dialog box which provides a GUI to selection of
-#'   equi-probable samples from 2-D resources.
-#' 
-#' @return Nothing is returned by the function.  The sample object will be stored in the 
-#' current workspace, and any export files will be on the hard drive. Any maps 
-#' drawn during the life of the dialog will remain afte the dialog closes. 
-#' 
-#' @details This routine is intended to be called from the 'SDraw' menu, but it can also 
-#'   be called from the command line. This routine uses the RGtk2 package windowing 
-#'   capabilities to construct a dialog box which pops up on the screen. In the 
-#'   dialog box, users specify input parameters to other routines, 
-#'   then press 'Run' to draw the sample.  
+#' @description Initiates a dialog box via a GUI to select equi-probable samples
+#'   from 2-D resources.
 #'   
-#'   The minimum requirements to drawn an equal probability 
-#'   sample using the dialog are as follows:
-#'     \enumerate{
-#'       \item Select the 'Sampling Type' (BAS, GRTS, or SSS) in the top drop down list.
-#'       \item Specify sample size in 'Sample Size (n)' box
-#'       \item Click 'Browse' button beside the 'Shape file' box to browse for 
-#'       a shapefile containing one or more 2-D polygons outlining the study area.  The 
-#'       name of a shape file (without the .shp extention) can also be 
-#'       typed into the 'Shape file' box, provided the shape file resides 
-#'       in the current directory (i.e., the one returned by \code{getwd()}). 
-#'       Once the shapefile is specified and before other parameters are specified, 
-#'       the user can click the 'Map' button
-#'       to display the shape file. This is a good way to check the study area
-#'       boundary.
-#'       \item Specify the output object's name in the 'Sample's R name' box. This
-#'       output object is a 'SpatialPointsDataFrame' (from the 'sp' package)
-#'       containing the selected sample points in BAS or GRTS order.
-#'       \item Hit 'Run'
-#'     } 
+#' @return  A \code{SpatialDesign} (see the \code{spsurvey} package) object with
+#'   the name specified by the user in the GUI\'s \code{Sample\'s R name} box. 
+#'   This object contains the sampling design specifications, the selected 
+#'   sample points in GRTS order, coordinates, and projection information. 
+#'   Sample objects are stored in the current workspace, while any export files,
+#'   including a \code{txt} log of the commands utilized to generate the sample,
+#'   are saved to the file directory specified via \code{getwd}.
 #'   
-#'   Optional parameters are the number of points in the 'Over sample', and the
-#'   'Random number seed'.  
+#'   Any maps drawn during the sampling process must be saved before R is 
+#'   closed. See \code{dev.copy}, \code{jpg}, and other graphics device 
+#'   functions.
 #'   
-#'   Over sample points are listed at the bottom of the output
-#'   object and can be identified using (output$pointType == "OverSample"), where 'output'
-#'   is the sample's R name.  
+#' @details This routine is intended to be called from the \code{SDrawNPS} menu,
+#'   but it can also be called from the command line in non-interactive 
+#'   environments, such as RStudio. This routine uses the \code{RGtk2} package 
+#'   windowing capabilities to construct a pop-up dialog box, or GUI. In the 
+#'   dialog box, users specify at least the required input parameters, then 
+#'   press the \sQuote{Run} button to draw the sample.
 #'   
-#'   If a random number seed is specified, the same sample 
-#'   is output every time the 'Run' button is pressed.  In some cases, it may be 
-#'   important to replicate the sample draw exactly, and this is accomplished by 
-#'   specifying the same random number seed.   Any integer value is accpetable 
-#'   as the random number seed. 
+#'   On submission, the GUI internally packages its inputs, processes the 
+#'   necessary shapefile, and executes the \code{spsurvey}-package \code{grts} 
+#'   function. All \code{SDrawNPS} GUI submissions utilizing the GRTS sampling
+#'   methodology lead to the creation of a text-based log file, which records
+#'   all code utilized. The log file thus serves as a historical record
+#'   containing sampling information, including the random seed utilized.  It
+#'   also serves as a tool for enhancing methodological understanding.
 #'   
-#'   The 'Run' button: After all required and optional inputs are specified, the 'Run'
-#'   Button actually draws the sample and places it in the output 'SpatialPointsDataFrame' 
-#'   object.
+#'   See \sQuote{References} for additional resources.
 #'   
-#'   The 'Map' button: After the shapefile is specified, pressing the 'Map' button
-#'   displays a plot of the shape file. After the sample has been drawn, 
-#'   the 'Map' button displays a plot of the study area as well as locations 
-#'   of the sample and over-sample (if present) points. 
+#' @section Required Inputs:
 #'   
-#'   The 'View Sample' button: After the sample has been drawn, the 'View Sample' 
-#'   button displays the sample points in a separate spreadsheet-like window.  
-#'   No editing is allowed. 
+#'   \enumerate{
 #'   
-#'   The 'Export' button: After the sample has been drawn, the 'Export' button 
-#'   brings up a save file dialog box which allows the user to specify the name
-#'   of a file to contain the sample.  From this dialog box, the sample can be 
-#'   exported in the following formats: ArcGIS shapefile (.SHP); Comma Separated (.CSV); 
-#'   Google Earth (.KML); and Garmin format (.GPX). Shapefiles actually consist 
-#'   of 3 or 4 files.  
-#'   When exporting to a shapefile, 
-#'   do not include the .SHP extension in the 'Name' field because the  
-#'   associated files have different extensions. 
+#'   \item Select \code{GRTS} as the \code{Sample Type} in the top drop-down 
+#'   list. The other sampling types are not currently available.
 #'   
-#'   The 'Done' button: Dismisses the dialog box, leaving the sample object in the 
-#'   .GlobalEnv workspace. 
-#' 
-#' @author Trent McDonald (tmcdonald@west-inc.com)
+#'   \item Specify sample size in the 'Sample Size (n)' box.
 #'   
-#' @seealso \code{\link{bas}}, \code{\link{bas.polygon}},
-#'   \code{\link{bas.line}}, \code{\link{bas.point}}, \code{\link{sss.polygon}},
-#'   \code{\link{halton}}
+#'   \item Specify the shapefile or \code{SpatialPoints*}, \code{SpatialLines*},
+#'   or \code{SpatialPolygons*} package-\code{sp} object that constitutes the 
+#'   sample frame in the \code{Shapefile} box, or click \sQuote{Browse} to 
+#'   browse for a shapefile with a \code{.shp} extension. When specifying the 
+#'   name of a shapefile via use of the input box, do not include the 
+#'   \code{.shp} extension and recognize that all files associated with the 
+#'   shapefile must reside in the current working directory, i.e., the one 
+#'   returned by \code{getwd}. Following selection of a spatial object or 
+#'   shapefile, click the \sQuote{Inspect Frame} button to plot it and list 
+#'   variables associated with its attribute data.  This is a good way to 
+#'   determine the study area boundary.
 #'   
-#' @references Robertson, B. L., J. A. Brown, T. L. McDonald, and P. Jakson
-#'   (2013). BAS: Balanced acceptance sampling of natural resources. Biometrics
-#'   69, 776-784.
+#'   \item Specify the sample\'s R object name. The output will be a 
+#'   \code{SpatialDesign} object created via the \code{spsurvey} package, and 
+#'   contains the sampling design specifications and selected sample points in 
+#'   GRTS order, along with spatial coordinates and projection information.
 #'   
-#'   Stevens, D. L. and A. R. Olsen (2004). Spatially balanced sampling of 
-#'   natural resources. Journal of the American Statistical Association 99,
+#'   }
+#'   
+#' @section Optional Inputs:
+#'   
+#'   \enumerate{
+#'   
+#'   \item The number of \sQuote{Over sample, each strata} points can be 
+#'   specified within each stratum. Oversample points are listed after the main 
+#'   sample points in the GRTS design file, i.e., the resulting sample R output 
+#'   object.  (does this mean they're in the attribute data?  i think maybe so. 
+#'   this is better shapefile language.  we will need to check.)
+#'   
+#'   True with equi.GUI??: They can also be identified in the \sQuote{panel} 
+#'   field (variable?) of the sample output. Apply caution when specifying 
+#'   oversample points, as large oversamples can cause samples to tend toward a 
+#'   proportional-to-size allocation even when other allocations are specified. 
+#'   (reference?)
+#'   
+#'   \item The \sQuote{Random number seed.} When specified, the seed may be
+#'   used to recreate the sample. When not specified, i.e., the box is left
+#'   blank, a random seed is selected against the current time.  See
+#'   \code{set.seed}. In both cases, the seed ultimately utilized is recorded in
+#'   both the resulting log text file and R Console. Recording the seed allows
+#'   for the easy redrawing of samples if lost, or if more sites are needed. 
+#'   Any integer value is accpetable as the random number seed.
+#'   
+#'   }
+#'   
+#' @section Dialog Buttons:
+#'   
+#'   \enumerate{
+#'   
+#'   \item \sQuote{Run.} After specifying all required and optional inputs, the 
+#'   \sQuote{Run} button draws the sample.  The \code{.GlobalEnv} workspace 
+#'   holds the resulting \code{SpatialPointsDataFrame} (sampledesign object? not
+#'   sure) with the name specified via the GUI \code{Sample\'s R name} box.  A 
+#'   confirmation dialog appears following completion of the draw. Large samples
+#'   may require several tens of minutes for completion.
+#'   
+#'   \item \sQuote{Plot Sample.} Following sampling, the \sQuote{Plot Sample} 
+#'   button displays the sampled points on the sampling frame.
+#'   
+#'   \item \sQuote{Tabulate Sample.} Following sampling, display the GRTS design
+#'   file in a tabular format.  The GRTS design file contains information on 
+#'   each sampled unit, such as coordinates, and design variables, e.g., stratum
+#'   or multi-density category.  It also contains design weights. true equi.gui?
+#'   
+#'   \item \sQuote{Export.} Following sampling, the \sQuote{Export} button 
+#'   prompts the user to save sampling results via a pop-up dialog box. The 
+#'   sample can be exported as an ArcGIS shapefile (\code{.SHP}); Comma 
+#'   Separated (\code{.CSV}); Google Earth (\code{.KML}); or Garmin format 
+#'   (\code{.GPX}) file.
+#'   
+#'   Shapefiles actually consist of several files with different 
+#'   extensions. Because of this, do not include the \code{.SHP} extension in 
+#'   the \code{Name} field of the pop-up when exporting to a shapefile.
+#'   
+#'   \item \sQuote{Done.} Dismisses the GUI dialog box, leaving any sample 
+#'   objects in the \code{.GlobalEnv} workspace.
+#'   
+#'   }
+#'   
+#'   Language here similar to stratified.GUI language that talks about using the 
+#'   \code{table} function?  
+#'   
+#' @author Trent McDonald (tmcdonald@@west-inc.com)
+#'   
+#' @seealso \code{\link{spsurvey::grts}}
+#'   
+#' @references Stevens, D. L. and A. R. Olsen (2004). Spatially balanced sampling of 
+#'   natural resources. Journal of the American Statistical Association 99, 
 #'   262-278.
-#' 
-#' @keywords design survey 
-#'
+#'  
+#'   Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed online May 6, 2016.  
+#'   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Area_Design.pdf}.
+#'   
+#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS
+#'   User\'s Manual for the SDrawNPS Package: A graphical user interface for
+#'   Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
+#'   National Park Service, U.S. Department of the Interior.  Natural Resource
+#'   Report NPS/XXXX/NRR—20XX/XXX.
+#'   
+#' @keywords design survey
+#'   
 #' @examples
-#' 
 #' # Open a GUI for equi-probable sampling.
 #' equi.GUI()
 #' 
@@ -182,7 +235,7 @@ equi.GUI <- function()   {
     #   ---- Input shape file and directory box
     shape.in.entry <- gtkEntry()
     shape.in.entry$setText( "" )
-    shape.file.label <- gtkLabel("Shape file OR 'sp' Object:")
+    shape.file.label <- gtkLabel("Shapefile OR 'sp' Object:")
     
     shape.in.dir <- gtkEntry()  # this entry box is hidden/not displayed
     shape.in.dir$setText( getwd() )
