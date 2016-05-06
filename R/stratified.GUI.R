@@ -1,3 +1,191 @@
+#' @export stratified.GUI
+#'   
+#' @title Graphic User Interface (GUI) for selection of stratified samples.
+#'   
+#' @description Initiates a dialog box which provides a GUI to selection of 
+#'   stratified samples from 2-D resources.
+#'   
+#' @return  A \code{SpatialDesign} (see the \code{spsurvey} package) XX this may
+#'   not be true. i recall doing something where i convert this to a 
+#'   spatialpoint object. we should check this XX object is written to the 
+#'   workspace and given the name specified by the user in the GUI's 
+#'   \code{Sample's R name} box. This object contains the sampling design 
+#'   specifications, the selected sample points in GRTS order, coordinates, and 
+#'   projection information. The sample object will be stored in the current 
+#'   workspace, and any export files, including a log of the commands utilized 
+#'   to generate the sample, will be on the hard drive.
+#'   
+#'   Any maps drawn during the sampling process must be saved before R is closed
+#'   (see \code{dev.copy}, \code{jpg}, and other graphics device functions).
+#'   
+#' @details This routine is intended to be called from the \code{SDrawNPS} menu,
+#'   but it can also be called from the command line in non-interactive 
+#'   environments, such as RStudio. This routine uses the \code{RGtk2} package 
+#'   windowing capabilities to construct a pop-up dialog box. In the dialog box,
+#'   users specify at least the required input parameters, then press the 'Run' 
+#'   button to draw the sample.
+#'   
+#'   
+#' @section {Required parameters}
+#' 
+#'   \itemize{
+#'   
+#'   \item Frame Information
+#'   
+#'   \enumerate{
+#'   
+#'   \item Select \code{GRTS} as the \code{Sample Type} in the top drop-down 
+#'   list. The other sampling types are not currently available.
+#'   
+#'   \item Specify the shapefile or \code{SpatialPoints*}, \code{SpatialLines*},
+#'   or \code{SpatialPolygons*} object that constitutes the sample frame in the 
+#'   \code{} box, or click 'Browse' to browse for a shapefile and select the 
+#'   main \code{.shp} file. When specifying the name of a shape file by actually
+#'   typing it in the box, do not include the \code{.shp} extention and 
+#'   recognize that all files associated with the shapefile must reside in the 
+#'   current working directory (see \code{getwd}, \code{setwd}). Following 
+#'   selection of a spatial object or shapefile, click the 'Inspect Frame' 
+#'   button to plot it and list variables associated with its attribute data.
+#'   
+#'   \item Specify the name of the stratification variable. This variable must 
+#'   be contained in the data attached to the spatial objects. For example, this
+#'   could be an elevational class associated with every point in the shapefile.
+#'   This name is case sensitive and must match that in the shapefile or 'sp' 
+#'   object exactly. Constant values of this variable define the strata.
+#'   
+#'   \item Specify the sample's R object name. This output object will be a 
+#'   'SpatialDesign'  (see the 'spsurvey' package) containing the sampling 
+#'   design specifications, the selected sample points in GRTS order, 
+#'   coordinates, and projection information.
+#'   
+#'   \item Specify the sample size allocation scheme. Available options are the 
+#'   following: 'proportional to size' relative to the size of each stratum in 
+#'   the population; 'constant' or the same number in all strata; and 
+#'   'user-specified' sample sizes within each stratum. Note that units in small
+#'   stratum will have lower probabilities of inclusion and may not be 
+#'   represented in small overall sample sizes.
+#'   
+#'   \item Specify the sample size as described above for the appropriate 
+#'   allocation scheme.
+#'   
+#'   }
+#'   
+#'   \item{Sample Allocation & Sample Size}
+#'   
+#'   \enumerate{
+#'   
+#'   \item If the allocation scheme is 'proportional', enter one number for 
+#'   sample size. This number of points will be distributed among strata based 
+#'   on the relative number of points, length of lines, or area of polygons in 
+#'   each stratum.
+#'   
+#'   \item If the allocation scheme is 'constant', enter one number for sample 
+#'   size. This number of points will be selected from each stratum. For 
+#'   example, if '50' is specified, 50 points will be selected from objects in 
+#'   each stratum.
+#'   
+#'   \item If the allocation scheme is 'user', enter a list of numbers separated
+#'   by commas. If there are H strata in the frame, specify H numbers (one 
+#'   number per stratum). Order of sample sizes should be same as the levels of 
+#'   the stratification variable, as with a factor. In fact, to match sample 
+#'   sizes to strata, SDrawNPS calls factor with the strata variable (and uses 
+#'   defaults values for other parameters of factor) and extracts the levels of 
+#'   this factor. The order of these levels is the order of samples sizes in the
+#'   list. For example, if the strata variable contains strings "low" and 
+#'   "high", converting this variable to a factor generally results in 
+#'   alphabetic ordering of levels, as in c("high", "low"). In this case, first 
+#'   number in the specified list should be sample size in the "high" stratum, 
+#'   second number should be number from the "low" stratum, etc. The default 
+#'   ordering of levels when vectors are converted to factors is alphabetic, 
+#'   unless global options have changed.
+#'   
+#'   }  # enumerate
+#'   
+#'   }  # itemize
+#'   
+#'   
+#'   
+#'   @section {Optional parameters / inputs}
+#'   
+#'   \enumerate{
+#'   
+#'   \item The random number seed. The random number seed. If the random number 
+#'   seed is specified, it may be used to recreate the sample if needed. 
+#'   Archiving the random seed may be useful the sample must be redrawn because 
+#'   the original design files were lost or if more sites are needed.
+#'   
+#'   \item The number of 'over sample points' can be specified within each 
+#'   stratum. Oversample points are listed after the main sample points in the 
+#'   GRTS design file (the sample R output object) and can be identified in the 
+#'   "panel" field of the sample output. Caution should be applied when 
+#'   specifying oversample points because large oversamples can cause samples to
+#'   tend toward a proportional-to-size allocation even when other allocations 
+#'   are specified.
+#'   
+#'   }
+#'   
+#' @section {Dialog Buttons}
+#'   
+#'   \enumerate{
+#'   
+#'   \item 'Inspect Frame:' After specifying the shapefile or \code{sp} object 
+#'   name, pressing the 'Inspect Frame' button displays a plot of the shapefile.
+#'   It also lists any variables in the shapefile's attribute data.  Once a 
+#'   sample has been drawn, the 'Inspect Frame' button displays a plot of the 
+#'   study area as well as the locations of the sampled points.
+#'   
+#'   \item 'Run:' After specifying all required and optional inputs, the 'Run' 
+#'   button draws the sample.  The resulting \code{SpatialPointsDataFrame} 
+#'   object will be placed in the \code{.GlobalEnv} workspace with the name
+#'   specified via the GUI \code{Sample's R name} box.  A confirmation dialog
+#'   appears following completion of the draw. Large samples may require several
+#'   tens of minutes for completion.
+#'   
+#'   \item 'Plot Sample:' Following sampling, the 'Plot Sample' button displays
+#'   the sampled points on the sampling frame.
+#'   
+#'   \item 'Tabulate Sample:' Following sampling, display the GRTS design file 
+#'   in a tabular format.  The GRTS design file contains information on each 
+#'   sampled unit, such as coordinates, and design variables, e.g., stratum or 
+#'   multi-density category.  It also contains design weights.
+#'   
+#'   \item 'Export:' Following sampling, the 'Export' button prompts the user to
+#'   save sampling results via a pop-up dialog box. The sample can be exported 
+#'   as ArcGIS shapefile (\code{.SHP}); Comma Separated (\code{.CSV}); Google 
+#'   Earth (\code{.KML}); or Garmin format (\code{.GPX}).
+#'   
+#'   Shapefiles actually consist of 3 or 4 files with different extensions. 
+#'   Because of this, do not include the \code{.SHP} extension in the 
+#'   \code{Name} field of the pop-up when exporting to a shapefile.
+#'   
+#'   \item 'Done' Dismisses the GUI dialog box, leaving any sample objects in
+#'   the \code{.GlobalEnv} workspace.
+#'   
+#'   }
+#'   
+#'   After the sample draw, one can check allocation sample sizes in each
+#'   stratum using the table function. For example, if the output R name is
+#'   'samp', one can check sample sizes with table(samp$stratum). One can plot
+#'   the study area and sample points with plot(frame); points(samp), assuming
+#'   frame is the 'sp' object containing the frame.
+#'   
+#'   
+#' @author Trent McDonald (tmcdonald@west-inc.com) and Jason Mitchell 
+#'   (jmitchell@west-inc.com)
+#'   
+#' @seealso \code{\link{grts.equi}}, \code{\link{spsurvey::grts}}
+#'   
+#' @references Stevens, D. L. and A. R. Olsen (2004). Spatially balanced
+#'   sampling of natural resources. Journal of the American Statistical
+#'   Association 99, 262-278.
+#'   
+#' @keywords design survey
+#'   
+#' @examples
+#' 
+#' # Open a GUI for stratified sampling.
+#' stratified.GUI()
+#'       
 stratified.GUI <- function()   {
 #
 #   Setup and run a GUI to take a BAS sample 
