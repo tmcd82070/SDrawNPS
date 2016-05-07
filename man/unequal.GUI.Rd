@@ -92,7 +92,7 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   button leads to a \sQuote{Continous Variable} label in the \sQuote{Frame
   Information} section of the GUI.  Similarly, a \sQuote{Categorical
   Variable} label appears on selection of \sQuote{Constant} or
-  \sQuote{Unequal proportion}.
+  \sQuote{Unequal proportion.}
   
   \item Specify the sample size as described above for the appropriate 
   allocation scheme.

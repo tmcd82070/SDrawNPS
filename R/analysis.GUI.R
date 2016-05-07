@@ -1,3 +1,172 @@
+#' @export analysis.GUI
+#'   
+#' @title Graphic User Interface (GUI) to analyze samples obtained via
+#'   consideration of a categorical or continuous variable.
+#'   
+#' @description Initiates a dialog box via a GUI to analyze samples 
+#'   from 2-D resources.
+#'   
+#' @return  A data frame with the name specified by the user in the GUI\'s 
+#'   \code{Output File} box. This data frame contains the sampling analysis 
+#'   specifications, along with coordinates and projection information. Analysis
+#'   data frames are stored in the current workspace, while any export files, 
+#'   including a \code{txt} log of the commands utilized to generate the sample,
+#'   as well as plots of empirical distribution functions and a \code{csv} of 
+#'   their underlying data, are saved to the file directory specified via 
+#'   \code{getwd}.
+#'   
+#' @details This routine is intended to be called from the \code{SDrawNPS} menu,
+#'   but it can also be called from the command line in non-interactive 
+#'   environments, such as RStudio. This routine uses the \code{RGtk2} package 
+#'   windowing capabilities to construct a pop-up dialog box, or GUI. In the 
+#'   dialog box, users specify at least the required input parameters, then 
+#'   press the \sQuote{Run} button to analyze the sample.
+#'   
+#'   On submission, the GUI internally packages its inputs, processes the 
+#'   necessary data, and executes the \code{spsurvey}-package 
+#'   \code{cat.analysis} function for the analysis of categorical variables and 
+#'   \code{cont.analysis} function for the same with respect to numeric 
+#'   variables. All \code{SDrawNPS} GUI submissions utilizing the 
+#'   \code{spsurvey} package analysis methodologies lead to the creation of a 
+#'   text-based log file, which records all code utilized. The log file thus 
+#'   serves as a historical record containing analysis information.  It also 
+#'   serves as a tool for enhancing methodological understanding.
+#'   
+#'   See \sQuote{References} for additional resources.
+#'   
+#' @section Required Inputs:
+#'   
+#'   \enumerate{
+#'   
+#'   \item \sQuote{CSV file OR data.frame object} -- Specify the data frame or 
+#'   \code{csv} containing the data for which analysis is required, or click 
+#'   \sQuote{Browse} to browse for a data file with a \code{.csv} extension. 
+#'   When specifying the name of a data file via use of the input box, do not 
+#'   include the \code{.csv} extension.  Following identification of the data, 
+#'   click the \sQuote{Inspect Sample} button to list its variables.
+#'   
+#'   \item \sQuote{Output File} -- Specify the sample\'s R object name to which 
+#'   all analysis results will be assigned. The output will be a data frame 
+#'   containing analysis results.
+#'   
+#'   \item \sQuote{Site-ID Variable} -- The case-sensitive variable in the input
+#'   data frame or \code{csv} identifying unique site identifiers.
+#'   
+#'   \item \sQuote{Evaluation Status Variable} -- The case-sensitive variable in
+#'   the input data frame or \code{csv} identifying which sites consitute the 
+#'   surveyed targets.  See \sQuote{Inclusion Identifier.}
+#'   
+#'   \item \sQuote{Inclusion Identifier} -- The case-sensitive text string that 
+#'   identifies surveyed targets of sites in the variable identified via the 
+#'   \sQuote{Evaluation Status Variable} box.
+#'   
+#'   \item \sQuote{Stratum / Subpopulation 1} -- The case-sensitive variable in 
+#'   the input data frame or \code{csv} containing a stratification variable. 
+#'   For example, this could be an elevational class associated with every point
+#'   in the shapefile. Constant values of this variable define the strata.  This
+#'   box can be left blank if analysis requires no consideration of any strata.
+#'   
+#'   \item \sQuote{Stratum / Subpopulation 2} -- Same as \sQuote{Stratum / 
+#'   Subpopuation 1}.
+#'   
+#'   \item \sQuote{Weight Variable} -- The case-sensitive variable in the input 
+#'   data frame or \code{csv} containing the design weights of included sites. 
+#'   Adjustment of included design weights, if appropriate, occurs via the 
+#'   \sQuote{Adjust Weights?} and \sQuote{Population Inference} sections of the 
+#'   GUI.  See \sQuote{Optional Weighting Inputs.}
+#'   
+#'   \item \sQuote{X-Coordinate} -- The case-sensitive variable in the input 
+#'   data frame or \code{csv} containing the \eqn{x}-coordinate of included 
+#'   sites.  Units do not matter.
+#'   
+#'   \item \sQuote{Y-Coordinate} -- The case-sensitive variable in the input 
+#'   data frame or \code{csv} containing the \eqn{y}-coordinate of included 
+#'   sites.  Units do not matter.
+#'   
+#'   \item \sQuote{Outcome(s)} -- The list of case-sensitive variables in the 
+#'   input data frame or \code{csv} for which analysis is required.  Enter 
+#'   multiple variables separated by commas and a space.
+#'   
+#'   \item \sQuote{Confidence Level} -- The confidence level to be utilized in 
+#'   the analysis.
+#'   
+#'   }
+#'   
+#' @section Optional Weighting Inputs:
+#'   
+#'   \enumerate{
+#'   
+#'   \item \sQuote{Adjust Weights?} -- When set to \sQuote{Yes}, design weights 
+#'   specified via the \sQuote{Weight Variable} box are adjusted for frame 
+#'   error. See function \code{Adjwgt_FrameNR}. No  adjustment occurs when set 
+#'   to \sQuote{No}.
+#'   
+#'   \item \sQuote{Population Inference} -- Assuming that the \sQuote{Adjust 
+#'   Weights?} radio button is set to \sQuote{Yes}, selection of the 
+#'   \sQuote{Population Inference} radio button specifies the value of the 
+#'   \code{popn} argument in function \code{Adjwgt_FrameNR}. Explicitly, 
+#'   selection of \sQuote{Target} specifies \code{popn="Target"} in 
+#'   \code{Adjwgt_FrameNR}, while selection of \sQuote{Sampled} specifies 
+#'   \code{popn="Sampled"}.
+#'   
+#'   }
+#'   
+#' @section Dialog Buttons:
+#'   
+#'   \enumerate{
+#'   
+#'   \item \sQuote{Inspect Sample.} After specifying the \code{csv} file or data
+#'   frame object name, pressing the \sQuote{Inspect Sample} button lists all of
+#'   its constituent variables and vector classes.
+#'   
+#'   \item \sQuote{Run.} After specifying all required and optional inputs, the 
+#'   \sQuote{Run} button analyzes the sample.  The \code{.GlobalEnv} workspace 
+#'   holds the resulting data frame entitled via the name specified in the GUI 
+#'   \sQuote{Output File} box.  A confirmation dialog appears following
+#'   completion of the analysis. Large samples may require several tens of
+#'   minutes for completion.
+#'   
+#'   \item \sQuote{Tabulate Sample.} Following analysis, display the GRTS 
+#'   analysis file in a tabular format.  The GRTS analysis file contains 
+#'   information on each sampled unit, such as coordinates, and design 
+#'   variables, e.g., stratum or multi-density category.  It also contains 
+#'   possibly adjusted design weights.
+#'   
+#'   \item \sQuote{Done.} Dismisses the GUI dialog box, leaving any analysis 
+#'   objects in the \code{.GlobalEnv} workspace.
+#'   
+#'   }
+#'   
+#'   Anything here about how one can check...something?
+#'   
+#' @author Jason Mitchell (jmitchell@@west-inc.com)
+#'   
+#' @seealso \code{\link{spsurvey::cat.analysis}}, \code{\link{spsurvey::cont.analysis}}
+#'   
+#' @references Kincaid, T. (2015). Analysis of a GRTS Survey Design for a Finite
+#'   Resource. Accessed online May 6, 2016. 
+#'   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Finite_Analysis.pdf}.
+#'   
+#'   Kincaid, T. (2015). Analysis of a GRTS Survey Design for an Area Resource. 
+#'   Accessed online May 6, 2016. 
+#'   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Area_Analysis.pdf}.
+#'   
+#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
+#'   User\'s Manual for the SDrawNPS Package: A graphical user interface for 
+#'   Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
+#'   National Park Service, U.S. Department of the Interior.  Natural Resource 
+#'   Report NPS/XXXX/NRR—20XX/XXX.
+#'   
+#'   Stevens, D. L. and A. R. Olsen (2004). Spatially balanced sampling of
+#'   natural resources. Journal of the American Statistical Association 99,
+#'   262-278.
+#'   
+#' @keywords design survey analysis missing
+#'   
+#' @examples
+#' # Open a GUI for analysis of a GRTS-obtained sample.
+#' analysis.GUI()
+#'     
 analysis.GUI <- function()   {
   #
   #   Setup and run a GUI to take inputs for an analysis file.
@@ -22,16 +191,6 @@ analysis.GUI <- function()   {
 #   hbox1 <- gtkVBoxNew(FALSE, 8) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
 #   hbox1$setBorderWidth(8)
 #   req.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
 
   req.frame <- gtkFrameNew("Required Inputs")
   req.frame$setBorderWidth(8)
@@ -48,13 +207,6 @@ analysis.GUI <- function()   {
 hbox1 <- gtkVBoxNew(FALSE, 1) #sets up middle horizontal box, FALSE means things not evenly spaced, 8 is for 8 pixels between things
 hbox1$setBorderWidth(1)
 req.frame$add(hbox1) #this adds the new horizontal box to the frame which is in the overall vertical box.  we are building the window vertically   
-
-
-
-
-
-
-
 
 # ================= Required Inputs frame ============================
 frame.frame <- gtkFrameNew("Sample Information")

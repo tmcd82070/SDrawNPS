@@ -1,8 +1,8 @@
 #' @export stratified.GUI
 #'   
-#' @title Graphic User Interface (GUI) for selection of stratified samples.
+#' @title Graphic User Interface (GUI) for analysis of stratified (correct?) samples.
 #'   
-#' @description Initiates a dialog box via a GUI to select stratified samples 
+#' @description Initiates a dialog box via a GUI to analyze stratified samples 
 #'   from 2-D resources.
 #'   
 #' @return  A \code{SpatialDesign} (see the \code{spsurvey} package) object with
@@ -26,10 +26,10 @@
 #'   
 #'   On submission, the GUI internally packages its inputs, processes the 
 #'   necessary shapefile, and executes the \code{spsurvey}-package \code{grts} 
-#'   function. All \code{SDrawNPS} GUI submissions utilizing the GRTS sampling
-#'   methodology lead to the creation of a text-based log file, which records
-#'   all code utilized. The log file thus serves as a historical record
-#'   containing sampling information, including the random seed utilized.  It
+#'   function. All \code{SDrawNPS} GUI submissions utilizing the GRTS sampling 
+#'   methodology lead to the creation of a text-based log file, which records 
+#'   all code utilized. The log file thus serves as a historical record 
+#'   containing sampling information, including the random seed utilized.  It 
 #'   also serves as a tool for enhancing methodological understanding.
 #'   
 #'   See \sQuote{References} for additional resources.
@@ -58,10 +58,10 @@
 #'   determine the study area boundary.
 #'   
 #'   \item Specify the name of the stratification variable. This variable must 
-#'   be contained in the attribute data of the spatial object specified in the
-#'   \code{Shapefile} box. For example, this could be an elevational class
-#'   associated with every point in the shapefile. This name is case sensitive
-#'   and must match that in the shapefile or \code{sp} object exactly. Constant
+#'   be contained in the attribute data of the spatial object specified in the 
+#'   \code{Shapefile} box. For example, this could be an elevational class 
+#'   associated with every point in the shapefile. This name is case sensitive 
+#'   and must match that in the shapefile or \code{sp} object exactly. Constant 
 #'   values of this variable define the strata.
 #'   
 #'   \item Specify the sample\'s R object name. The output will be a 
@@ -69,9 +69,9 @@
 #'   contains the sampling design specifications and selected sample points in 
 #'   GRTS order, along with spatial coordinates and projection information.
 #'   
-#'   \item Specify the \sQuote{Sample Allocation} scheme. Available options include 
-#'   \sQuote{Proportional to Size} relative to the size of each stratum in the 
-#'   population; \sQuote{Constant} or the same number in all strata; and 
+#'   \item Specify the \sQuote{Sample Allocation} scheme. Available options
+#'   include \sQuote{Proportional to Size} relative to the size of each stratum
+#'   in the population; \sQuote{Constant} or the same number in all strata; and 
 #'   \sQuote{User-specified} sample sizes within each stratum. Note that units 
 #'   in small strata will have lower probabilities of inclusion and may not be 
 #'   represented in small overall sample sizes.
@@ -86,28 +86,28 @@
 #'   \enumerate{
 #'   
 #'   \item If the allocation scheme is \sQuote{Proportional to Size,} enter one 
-#'   number for \sQuote{Sample Size.} This number will be distributed among
-#'   strata based on the relative number of points, length of lines, or area of
+#'   number for \sQuote{Sample Size.} This number will be distributed among 
+#'   strata based on the relative number of points, length of lines, or area of 
 #'   polygons in each stratum.
 #'   
 #'   \item If the allocation scheme is \sQuote{Constant,} enter one number for 
-#'   \sQuote{Sample Size.} This number will be selected from each stratum. For
+#'   \sQuote{Sample Size.} This number will be selected from each stratum. For 
 #'   example, if \code{50} is specified, 50 points will be selected from objects
 #'   in each stratum.
 #'   
 #'   \item If the allocation scheme is \sQuote{User-specified,} enter a list of 
-#'   numbers separated by commas for \sQuote{Sample Size.} If there are \eqn{H}
+#'   numbers separated by commas for \sQuote{Sample Size.} If there are \eqn{H} 
 #'   strata in the frame, specify \eqn{H} numbers, i.e., one number per stratum.
-#'   Order of sample sizes should be the same as the levels of the
-#'   stratification variable, as with a factor. In fact, to match sample sizes
-#'   to strata, SDrawNPS calls function \code{factor} to extract factor levels
-#'   of the strata variable. The order of these levels is the order of samples
-#'   sizes in the list. For example, if the strata variable contains strings
-#'   \code{"low"} and \code{"high"}, converting this variable to a factor
-#'   generally results in alphabetic ordering of levels, as in \code{c("high",
+#'   Order of sample sizes should be the same as the levels of the 
+#'   stratification variable, as with a factor. In fact, to match sample sizes 
+#'   to strata, SDrawNPS calls function \code{factor} to extract factor levels 
+#'   of the strata variable. The order of these levels is the order of samples 
+#'   sizes in the list. For example, if the strata variable contains strings 
+#'   \code{"low"} and \code{"high"}, converting this variable to a factor 
+#'   generally results in alphabetic ordering of levels, as in \code{c("high", 
 #'   "low")}. In this case, the first number in the specified list should be the
-#'   sample size in the \code{"high"} stratum. The default ordering of levels
-#'   when vectors are converted to factors is alphabetic, unless global options
+#'   sample size in the \code{"high"} stratum. The default ordering of levels 
+#'   when vectors are converted to factors is alphabetic, unless global options 
 #'   have changed.
 #'   
 #'   }
@@ -169,8 +169,8 @@
 #'   Separated (\code{.CSV}); Google Earth (\code{.KML}); or Garmin format 
 #'   (\code{.GPX}) file.
 #'   
-#'   Shapefiles actually consist of several files with different extensions.
-#'   Because of this, do not include the \code{.SHP} extension in the
+#'   Shapefiles actually consist of several files with different extensions. 
+#'   Because of this, do not include the \code{.SHP} extension in the 
 #'   \code{Name} field of the pop-up when exporting to a shapefile.
 #'   
 #'   \item \sQuote{Done.} Dismisses the GUI dialog box, leaving any sample 
@@ -194,14 +194,15 @@
 #' @references Stevens, D. L. and A. R. Olsen (2004). Spatially balanced 
 #'   sampling of natural resources. Journal of the American Statistical 
 #'   Association 99, 262-278.
-#'  
-#'   Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed online May 6, 2016.  
+#'   
+#'   Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed
+#'   online May 6, 2016. 
 #'   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Area_Design.pdf}.
 #'   
-#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS
-#'   User\'s Manual for the SDrawNPS Package: A graphical user interface for
+#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
+#'   User\'s Manual for the SDrawNPS Package: A graphical user interface for 
 #'   Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
-#'   National Park Service, U.S. Department of the Interior.  Natural Resource
+#'   National Park Service, U.S. Department of the Interior.  Natural Resource 
 #'   Report NPS/XXXX/NRR—20XX/XXX.
 #'   
 #' @keywords design survey
