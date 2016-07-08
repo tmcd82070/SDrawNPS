@@ -7,9 +7,13 @@ makeAnalysisLog <- function(fn,dir,outobj,the.pretty,the.pretty.cont,the.pretty.
 #   fn <- 'JOTR_IntUp_GRTS_sample.csv'
 #   dir <- '//lar-file-srv/Data/NPS/GRTSUsersManual/SDrawNPS/data'
   
+  #  set the directory to be the working directory. 
+  oldDir <- dir
+  dir <- getwd()
+  
   # if file currently exists, delete it out.
   pasteString <- paste0(dir,"/Analysis of ",substr(fn,1,nchar(fn) - 4)," - ",outobj,".log")
-  pathfile <- paste0(dir,'/',fn)
+  pathfile <- paste0(oldDir,'/',fn)
   
   CDFString <- paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - ",outobj," - CDF Plots.pdf")
   
@@ -89,7 +93,7 @@ makeAnalysisLog <- function(fn,dir,outobj,the.pretty,the.pretty.cont,the.pretty.
                             conf=",the.pretty[16],")\n\n",sep="",append=TRUE,file=log_con)
   
     cat("# Plot the resulting empirical distribution functions.\n
-  cont.cdfplot(",dQuote(CDFString),",ans.cont$CDF,cdf.plot=",as.numeric(the.pretty[9]),")\n\n", sep="",append=TRUE,file=log_con)
+  cont.cdfplot(",dQuote(CDFString),",ans.cont$CDF,cdf.page=",as.numeric(the.pretty[9]),")\n\n", sep="",append=TRUE,file=log_con)
   }
   
   if(the.pretty.cat != "the.data.cat <- data.frame()"){

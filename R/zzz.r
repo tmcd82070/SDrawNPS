@@ -4,11 +4,10 @@
 
     v <- packageVersion("SDrawNPS")
 
-    packageStartupMessage( paste("SDraw - Sample Draws (vers ", v ,")", sep=""))
-#   packageStartupMessage("\nWEST Inc. (tmcdonald@west-inc.com)")
-
     packageStartupMessage( paste("SDrawNPS - Sample Draws (vers ", v ,")", sep=""))
 #   packageStartupMessage("\nWEST Inc. (tmcdonald@west-inc.com)")
+    
+    cat("For PDF package documentation on a Windows machine, navigate to C:\\Users\\USERNAME\\Documents\\R\\win-library\\RVERSION\\SDrawNPS\\doc.\n\n")
 
 #    cat("\nSee docs/GTK2_Runtime_install_instructions.pdf for help installing the GTK+\n")
 #    cat("runtime library required for R vesion >= 2.11.0 on Windows machines.\n")

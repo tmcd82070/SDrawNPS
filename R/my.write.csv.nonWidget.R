@@ -15,7 +15,11 @@ my.write.csv.nonWidget <- function(outobj,dir){
       samp.nm.cat <- gsub(".", "_",paste0(outobj,".cat"), fixed=TRUE )
     }
 
-    path.n.filename <- paste0(dir,'/',outobj)
+    #path.n.filename <- paste0(dir,'/',outobj)
+    #path.n.filename <- extractPathFilename(path.n.filename)
+    
+    #  redefine to be getwd. 
+    path.n.filename <- paste0(getwd(),'/',outobj)
     path.n.filename <- extractPathFilename(path.n.filename)
     
     if( exists( paste0( outobj,".cont"), envir=.GlobalEnv) ){

@@ -11,12 +11,12 @@ License: GNU General Public License
 BugReports: https://github.com/tmcd82070/SDrawNPS/issues
 Imports:
     RGtk2,
-    spsurvey,
     utils,
-    rgdal,
     rgeos
 Depends:
-    sp
+    sp,
+    rgdal,
+    spsurvey
 NeedsCompilation: no
 Packaged: 2016-04-13 15:06:31 UTC; jmitchell
 RoxygenNote: 5.0.1

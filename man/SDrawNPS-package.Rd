@@ -18,7 +18,7 @@ Type: \tab Package\cr
 License: \tab GNU General Public License\cr
 Dependencies: \tab RGtk2, sp, spsurvey, utils, rgdal\cr 
 }
-When SDrawNPS is attached (via \code{library(SDrawNPS)}, a new menu item appears in the (Windows) R interface.  This menu ('SDrawNPS') contains items which call dialog boxes, or Graphical User Interfaces (GUIs) that implement the interface to functions that actually do the work of drawing and analyzing samples.   
+When SDrawNPS is attached (via \code{library(SDrawNPS)}), a new menu item appears in the (Windows) R interface.  This menu ('SDrawNPS') contains items which call dialog boxes, or Graphical User Interfaces (GUIs) that implement the interface to functions that actually do the work of drawing and analyzing samples.   
 
 The function that actually draws the samples is \code{grts} (for GRTS samples), while the functions that analyzes samples are \code{cat.analysis} and \code{cont.analysis}.  All three are taken straight from package \code{spsurvey}.  The main purpose of SDrawNPS is to provide a simple-to-use interface to these routines.  These routines, however, could be called directly in code if needed.  
 
@@ -55,7 +55,7 @@ McDonald, T. L. (2015) Sampling Designs for Environmental Monitoring. In B. F. J
 
 Robertson, B.L., J. A. Brown,  T. L. McDonald, and P. Jaksons (2013) "BAS: Balanced Acceptance Sampling of Natural Resources", Biometrics, v69, p. 776-784.
 
-Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS User\'s Manual for the SDrawNPS Package: A graphical user interface for Generalized Random Tessellation Stratified (GRTS) sampling and estimation. National Park Service, U.S. Department of the Interior.  Natural Resource Report NPS/XXXX/NRR—20XX/XXX.
+Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS User\eqn{'}s Manual for the SDrawNPS Package: A graphical user interface for Generalized Random Tessellation Stratified (GRTS) sampling and estimation. National Park Service, U.S. Department of the Interior.  Natural Resource Report NPS/XXXX/NRR—20XX/XXX.
 
 Stevens, D. L., Jr. and A. R. Olsen (2004) "Spatially balanced sampling of natural resources." Journal of the American Statistical Association 99, 262-278.
 }
@@ -68,8 +68,8 @@ Documentation for package \code{spsurvey}, available at \code{https://cran.r-pro
 \examples{
 equi.GUI()        # Start the equi-probable interface
 stratified.GUI()  # Start the stratified interface
-unequal.GUI()     # Start the unstratified interface
-analysis.GUI()    # Start the anlaysis interface
+unequal.GUI()     # Start the unequal probability interface
+analysis.GUI()    # Start the analysis interface
 }
 
 \keyword{ package }

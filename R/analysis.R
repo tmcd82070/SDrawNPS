@@ -332,7 +332,17 @@ The weights below are the ones used in the analysis.  Check these against your o
 
 
   if(Nvars.n > 0){
+    
+    #  set the directory to be the working directory. late in the game we decided to put output in the 
+    #  getwd directory.  so make this happen.  
+    oldDir <- dir
+    dir <- getwd()
+    
     cont.cdfplot(paste0(dir,"/",substr(fn,1,nchar(fn) - 4)," - ",outobj," - CDF Plots.pdf"),ans.cont$CDF,cdf.page=cdfPage)
+    
+    #  function makeAnalysisLog expects variable dir to be the original directory housing the data.  so  
+    #  make sure it receives what it's expected.
+    dir <- oldDir 
   }
   makeAnalysisLog(fn,dir,outobj,the.pretty,the.pretty.cont,the.pretty.cat)
   options(useFancyQuotes = TRUE)

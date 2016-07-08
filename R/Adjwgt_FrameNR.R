@@ -2,95 +2,93 @@
 #'   
 #' @title Adjust design weights for frame error.
 #'   
-#' @description Takes data for a single survey year (why does a year matter) and
-#'   calculates site-specific design weights after accounting for frame error and
-#'   nonresponse, while assuming missing-completely-at-random missingness.
+#' @description Takes data for a single survey year and calculates site-specific
+#'   design weights after accounting for frame error and nonresponse, while 
+#'   assuming missing-completely-at-random missingness.
 #'   
 #' @param dat A GRTS-design \code{csv} file generated from a GRTS sample draw, 
-#' with individual sites forming its rows.  
+#'   with individual sites forming its rows.
 #'   
 #' @param popn A text string identifying the type of membership of a site.  Use 
 #'   \code{popn="Target"} if the site is not needed, or \code{popn="Sampled"} 
-#'   for scope of inference.  (what does this mean?)
+#'   for scope of inference.
 #'   
 #' @param evalstatus  A text string identifying the variable within \code{dat} 
-#'   describing the evaluation status of sites in \code{dat}.  See
-#'   \sQuote{Variable \code{evalstatus} Specifications.}
+#'   describing the evaluation status of sites in \code{dat}.  See 
+#'   \sQuote{\code{evalstatus} Variable Specifications.}
 #'   
 #' @param wgt  A text string identifying the variable within \code{dat} 
 #'   containing site-specific design weights.
 #'   
 #' @return  A numeric vector \code{adj.wt} of length equal to the number-of-site
-#'   rows originally contained in \code{dat}.  Right???
+#'   rows originally contained in \code{dat}.
 #'   
 #' @details This routine is called by the sampling analysis Graphical User 
-#'   Interface (GUI), i.e., function \code{analysis.GUI}, when its
-#'   \sQuote{Optional Weight Inputs} \sQuote{Adjust Weights?} radio button is
-#'   set to \sQuote{Yes.}  See \code{analysis.GUI}. Generally, this function is
+#'   Interface (GUI), i.e., function \code{analysis.GUI}, when its 
+#'   \sQuote{Optional Weight Inputs} \sQuote{Adjust Weights?} radio button is 
+#'   set to \sQuote{Yes.}  See \code{analysis.GUI}. Generally, this function is 
 #'   not intended to be called directly by the user.
 #'   
-#'   When the \code{analysis.GUI} requests adjustment of weights, function 
-#'   \code{Adjwgt_FrameNR} modifies the included weights \code{wgt} in 
+#'   When the \code{analysis.GUI} routine requests adjustment of weights,
+#'   function \code{Adjwgt_FrameNR} modifies the included weights \code{wgt} in 
 #'   \code{dat} for frame error and nonresponse.  The methodology assumes any 
-#'   missing (sites??? -- should these be set to evalstatus="something"??) are
-#'   missing completely at random.
+#'   missing sites are missing completely at random.  Weighting adjustment is
+#'   appropriate for a single survey period (e.g. season or year) and does not
+#'   accommodate weighting for summary statistics of more than one survey
+#'   period.
 #'   
-#'   What happens if the data cover more than a year?  Does the code break?  Should 
-#'   the user manipulate the data somehow to account for this?  Does the function
-#'   assume non-temporal variability?  
-#'   
-#' @section Variable \code{evalstatus} Specifications:
+#' @section \code{evalstatus} Variable Specifications:
 #'   
 #'   Each row of \code{dat} represents a randomly selected site from the GRTS 
 #'   sample draw. Generally, \code{dat} contains additional variables for data 
 #'   collected during the survey. Essentially however, \code{dat} must contain a
 #'   field \code{evalstatus} that describes the sampling nature of all sampled 
-#'   sites.  Valid values include: (what happens if a value is not one of these
-#'   4???)
+#'   sites.  An error is returned if the \code{evalstatus} variable is not 
+#'   formatted to be one of the following four values:
 #'   
 #'   \enumerate{
 #'   
-#'   \item \code{"Target - Sampled"} -- The site is a member of the target
+#'   \item \code{"Target - Sampled"} -- The site is a member of the target 
 #'   population and data were successfully collected.
 #'   
-#'   \item \code{"Target - Not Sampled"} -- The site is a member of the target
+#'   \item \code{"Target - Not Sampled"} -- The site is a member of the target 
 #'   population, but data were not collected, e.g., due to innaccessibility, 
 #'   landowner denial, etc.
 #'   
-#'   \item{"Not Evaluated"} -- The site was not assessed by observer crews.
+#'   \item \code{"Not Evaluated"} -- The site was not assessed by observer
+#'   crews.
 #'   
-#'   \item{"Non-Target"} -- The site is not a member of the target population.
+#'   \item \code{"Non-Target"} -- The site is not a member of the target
+#'   population.
 #'   
 #'   }
 #'   
-#' @author Leigh Ann Starcevich (lstarcevish@@west-inc.com) 
+#' @author Leigh Ann Starcevich (lstarcevish@@west-inc.com)
 #'   
 #' @seealso \code{\link{analysis.GUI}}
 #'   
-#' @references 
-#'   Little, J. A. R., and Rubin, D. B. (2002). Statistical analysis with missing
-#'   data, 2nd edition. John Wiley and Sons, Inc., New Jersey
-#'   
-#'   Lessler, J. T. and Kalsbeek, W. D. (1992). Nonsampling errors in surveys.
-#'   John Wiley and Sons, New York.
-#'   
-#'   Oh, H. L. and Scheuren, F. J. (1983). Weighting adjustment for unit
-#'   nonresponse. Pages 143-184 in W. G. Madow, I. Olkin, and D. B. Rubin,
-#'   editors. Incomplete data and in sample surveys. (Vol. 2). Academic Press,
-#'   New York.
-#'   
-#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
-#'   User\'s Manual for the SDrawNPS Package: A graphical user interface for 
-#'   Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
-#'   National Park Service, U.S. Department of the Interior.  Natural Resource 
-#'   Report NPS/XXXX/NRR—20XX/XXX.
-#'   
+#' @references Little, J. A. R., and Rubin, D. B. (2002). Statistical analysis
+#' with missing data, 2nd edition. John Wiley and Sons, Inc., New Jersey
+#' 
+#' Lessler, J. T. and Kalsbeek, W. D. (1992). Nonsampling errors in surveys. 
+#' John Wiley and Sons, New York.
+#' 
+#' Oh, H. L. and Scheuren, F. J. (1983). Weighting adjustment for unit 
+#' nonresponse. Pages 143-184 in W. G. Madow, I. Olkin, and D. B. Rubin, 
+#' editors. Incomplete data and in sample surveys. (Vol. 2). Academic Press, New
+#' York.
+#' 
+#' Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
+#' User\eqn{'}s Manual for the SDrawNPS Package: A graphical user interface for 
+#' Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
+#' National Park Service, U.S. Department of the Interior.  Natural Resource 
+#' Report NPS/XXXX/NRR—20XX/XXX.
+#' 
 #' @keywords design survey sampling missing
 #'   
 #' @examples
-#' # Do we want to put anything here?  If so, what might it be?  It should use 
-#' # a dat from a csv included in the package.
-#' stratified.GUI() # change me change me change me
+#' # Adjust design weights for frame error
+#' Adjwgt_FrameNR(dat=sampData,popn="Target - Surveyed",evalstatus="EvalStatus",wgt="wgt"))
 #'   
 Adjwgt_FrameNR<-function(dat, popn, evalstatus="EvalStatus", wgt="wgt") {
 

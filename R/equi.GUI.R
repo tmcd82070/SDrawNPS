@@ -1,17 +1,19 @@
 #' @export equi.GUI
 #'   
-#' @title Graphic User Interface (GUI) for selection of equi-probable samples.
+#' @title Graphic User Interface (GUI) for selection of equi-probable GRTS
+#'   samples.
 #'   
 #' @description Initiates a dialog box via a GUI to select equi-probable samples
 #'   from 2-D resources.
 #'   
 #' @return  A \code{SpatialDesign} (see the \code{spsurvey} package) object with
-#'   the name specified by the user in the GUI\'s \code{Sample\'s R name} box. 
-#'   This object contains the sampling design specifications, the selected 
-#'   sample points in GRTS order, coordinates, and projection information. 
-#'   Sample objects are stored in the current workspace, while any export files,
-#'   including a \code{txt} log of the commands utilized to generate the sample,
-#'   are saved to the file directory specified via \code{getwd}.
+#'   the name specified by the user in the GUI\eqn{'}s \code{Sample\eqn{'}s R
+#'   name} box. This object contains the sampling design specifications, the
+#'   selected sample points in GRTS order, coordinates, and projection
+#'   information. Sample objects are stored in the current workspace, while any
+#'   export files, including a \code{txt} log of the commands utilized to
+#'   generate the sample, are saved to the file directory specified via
+#'   \code{getwd}.
 #'   
 #'   Any maps drawn during the sampling process must be saved before R is 
 #'   closed. See \code{dev.copy}, \code{jpg}, and other graphics device 
@@ -26,10 +28,10 @@
 #'   
 #'   On submission, the GUI internally packages its inputs, processes the 
 #'   necessary shapefile, and executes the \code{spsurvey}-package \code{grts} 
-#'   function. All \code{SDrawNPS} GUI submissions utilizing the GRTS sampling
-#'   methodology lead to the creation of a text-based log file, which records
-#'   all code utilized. The log file thus serves as a historical record
-#'   containing sampling information, including the random seed utilized.  It
+#'   function. All \code{SDrawNPS} GUI submissions utilizing the GRTS sampling 
+#'   methodology lead to the creation of a text-based log file, which records 
+#'   all code utilized. The log file thus serves as a historical record 
+#'   containing sampling information, including the random seed utilized.  It 
 #'   also serves as a tool for enhancing methodological understanding.
 #'   
 #'   See \sQuote{References} for additional resources.
@@ -41,7 +43,7 @@
 #'   \item Select \code{GRTS} as the \code{Sample Type} in the top drop-down 
 #'   list. The other sampling types are not currently available.
 #'   
-#'   \item Specify sample size in the 'Sample Size (n)' box.
+#'   \item Specify sample size in the \sQuote{Sample Size (n)} box.
 #'   
 #'   \item Specify the shapefile or \code{SpatialPoints*}, \code{SpatialLines*},
 #'   or \code{SpatialPolygons*} package-\code{sp} object that constitutes the 
@@ -55,7 +57,7 @@
 #'   variables associated with its attribute data.  This is a good way to 
 #'   determine the study area boundary.
 #'   
-#'   \item Specify the sample\'s R object name. The output will be a 
+#'   \item Specify the sample\eqn{'}s R object name. The output will be a 
 #'   \code{SpatialDesign} object created via the \code{spsurvey} package, and 
 #'   contains the sampling design specifications and selected sample points in 
 #'   GRTS order, along with spatial coordinates and projection information.
@@ -66,25 +68,22 @@
 #'   
 #'   \enumerate{
 #'   
-#'   \item The number of \sQuote{Over sample, each strata} points can be 
-#'   specified within each stratum. Oversample points are listed after the main 
-#'   sample points in the GRTS design file, i.e., the resulting sample R output 
-#'   object.  (does this mean they're in the attribute data?  i think maybe so. 
-#'   this is better shapefile language.  we will need to check.)
+#'   \item The number of oversample points, as encompassed via the \sQuote{Over 
+#'   sample, each strata} box, can be specified within each stratum. Oversample 
+#'   points are listed after the main sample points in the GRTS design file, 
+#'   i.e., the resulting sample R output object.  They can also be identified in
+#'   the \sQuote{panel} variable of the sample output. Apply caution when
+#'   specifying oversample points, as large oversamples can cause samples to
+#'   tend toward a proportional-to-size allocation even when other allocations
+#'   are specified.
 #'   
-#'   True with equi.GUI??: They can also be identified in the \sQuote{panel} 
-#'   field (variable?) of the sample output. Apply caution when specifying 
-#'   oversample points, as large oversamples can cause samples to tend toward a 
-#'   proportional-to-size allocation even when other allocations are specified. 
-#'   (reference?)
-#'   
-#'   \item The \sQuote{Random number seed.} When specified, the seed may be
-#'   used to recreate the sample. When not specified, i.e., the box is left
-#'   blank, a random seed is selected against the current time.  See
-#'   \code{set.seed}. In both cases, the seed ultimately utilized is recorded in
-#'   both the resulting log text file and R Console. Recording the seed allows
-#'   for the easy redrawing of samples if lost, or if more sites are needed. 
-#'   Any integer value is accpetable as the random number seed.
+#'   \item The \sQuote{Random number seed.} When specified, the seed may be used
+#'   to recreate the sample. When not specified, i.e., the box is left blank, a
+#'   random seed is selected against the current time.  See \code{set.seed}. In
+#'   both cases, the seed ultimately utilized is recorded in both the resulting
+#'   log text file and R Console. Recording the seed allows for the easy
+#'   redrawing of samples if lost, or if more sites are needed. Any integer
+#'   value is acceptable as the random number seed.
 #'   
 #'   }
 #'   
@@ -94,10 +93,10 @@
 #'   
 #'   \item \sQuote{Run.} After specifying all required and optional inputs, the 
 #'   \sQuote{Run} button draws the sample.  The \code{.GlobalEnv} workspace 
-#'   holds the resulting \code{SpatialPointsDataFrame} (sampledesign object? not
-#'   sure) with the name specified via the GUI \code{Sample\'s R name} box.  A 
-#'   confirmation dialog appears following completion of the draw. Large samples
-#'   may require several tens of minutes for completion.
+#'   holds the resulting \code{SpatialDesign} object with the name specified via
+#'   the GUI \code{Sample\eqn{'}s R name} box.  A confirmation dialog appears 
+#'   following completion of the draw. Large samples may require several tens of
+#'   minutes for completion.
 #'   
 #'   \item \sQuote{Plot Sample.} Following sampling, the \sQuote{Plot Sample} 
 #'   button displays the sampled points on the sampling frame.
@@ -105,7 +104,7 @@
 #'   \item \sQuote{Tabulate Sample.} Following sampling, display the GRTS design
 #'   file in a tabular format.  The GRTS design file contains information on 
 #'   each sampled unit, such as coordinates, and design variables, e.g., stratum
-#'   or multi-density category.  It also contains design weights. true equi.gui?
+#'   or multi-density category.  It also contains design weights.
 #'   
 #'   \item \sQuote{Export.} Following sampling, the \sQuote{Export} button 
 #'   prompts the user to save sampling results via a pop-up dialog box. The 
@@ -113,39 +112,38 @@
 #'   Separated (\code{.CSV}); Google Earth (\code{.KML}); or Garmin format 
 #'   (\code{.GPX}) file.
 #'   
-#'   Shapefiles actually consist of several files with different 
-#'   extensions. Because of this, do not include the \code{.SHP} extension in 
-#'   the \code{Name} field of the pop-up when exporting to a shapefile.
+#'   Shapefiles actually consist of several files with different extensions.
+#'   Because of this, do not include the \code{.SHP} extension in the
+#'   \code{Name} field of the pop-up when exporting to a shapefile.
 #'   
 #'   \item \sQuote{Done.} Dismisses the GUI dialog box, leaving any sample 
 #'   objects in the \code{.GlobalEnv} workspace.
 #'   
 #'   }
 #'   
-#'   Language here similar to stratified.GUI language that talks about using the 
-#'   \code{table} function?  
-#'   
 #' @author Trent McDonald (tmcdonald@@west-inc.com)
 #'   
 #' @seealso \code{\link{spsurvey::grts}}
 #'   
-#' @references Stevens, D. L. and A. R. Olsen (2004). Spatially balanced sampling of 
-#'   natural resources. Journal of the American Statistical Association 99, 
-#'   262-278.
-#'  
-#'   Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed online May 6, 2016.  
+#' @references Stevens, D. L. and A. R. Olsen (2004). Spatially balanced
+#'   sampling of natural resources. Journal of the American Statistical
+#'   Association 99, 262-278.
+#'   
+#'   Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed
+#'   online May 6, 2016. 
 #'   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Area_Design.pdf}.
 #'   
-#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS
-#'   User\'s Manual for the SDrawNPS Package: A graphical user interface for
-#'   Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
-#'   National Park Service, U.S. Department of the Interior.  Natural Resource
-#'   Report NPS/XXXX/NRR—20XX/XXX.
+#'   
+#'   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
+#'   User\eqn{'}s Manual for the SDrawNPS Package: A graphical user interface
+#'   for Generalized Random Tessellation Stratified (GRTS) sampling and
+#'   estimation. National Park Service, U.S. Department of the Interior. 
+#'   Natural Resource Report NPS/XXXX/NRR—20XX/XXX.
 #'   
 #' @keywords design survey
 #'   
 #' @examples
-#' # Open a GUI for equi-probable sampling.
+#' # Open a GUI for equi-probable GRTS sampling.
 #' equi.GUI()
 #' 
 equi.GUI <- function()   {

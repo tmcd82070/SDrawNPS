@@ -2,25 +2,26 @@
 % Please edit documentation in R/stratified.GUI.R
 \name{stratified.GUI}
 \alias{stratified.GUI}
-\title{Graphic User Interface (GUI) for analysis of stratified (correct?) samples.}
+\title{Graphic User Interface (GUI) for selection of stratified GRTS samples.}
 \usage{
 stratified.GUI()
 }
 \value{
 A \code{SpatialDesign} (see the \code{spsurvey} package) object with
-  the name specified by the user in the GUI\'s \code{Sample\'s R name} box. 
-  This object contains the sampling design specifications, the selected 
-  sample points in GRTS order, coordinates, and projection information. 
-  Sample objects are stored in the current workspace, while any export files,
-  including a \code{txt} log of the commands utilized to generate the sample,
-  are saved to the file directory specified via \code{getwd}.
+  the name specified by the user in the GUI\eqn{'}s \code{Sample\eqn{'}s R
+  name} box. This object contains the sampling design specifications, the
+  selected sample points in GRTS order, coordinates, and projection
+  information. Sample objects are stored in the current workspace, while any
+  export files, including a \code{txt} log of the commands utilized to
+  generate the sample, are saved to the file directory specified via
+  \code{getwd}.
   
   Any maps drawn during the sampling process must be saved before R is 
   closed. See \code{dev.copy}, \code{jpg}, and other graphics device 
   functions.
 }
 \description{
-Initiates a dialog box via a GUI to analyze stratified samples 
+Initiates a dialog box via a GUI to select stratified samples 
   from 2-D resources.
 }
 \details{
@@ -72,13 +73,13 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   and must match that in the shapefile or \code{sp} object exactly. Constant 
   values of this variable define the strata.
   
-  \item Specify the sample\'s R object name. The output will be a 
+  \item Specify the sample\eqn{'}s R object name. The output will be a 
   \code{SpatialDesign} object created via the \code{spsurvey} package, and 
   contains the sampling design specifications and selected sample points in 
   GRTS order, along with spatial coordinates and projection information.
   
-  \item Specify the \sQuote{Sample Allocation} scheme. Available options
-  include \sQuote{Proportional to Size} relative to the size of each stratum
+  \item Specify the \sQuote{Sample Allocation} scheme. Available options 
+  include \sQuote{Proportional to Size} relative to the size of each stratum 
   in the population; \sQuote{Constant} or the same number in all strata; and 
   \sQuote{User-specified} sample sizes within each stratum. Note that units 
   in small strata will have lower probabilities of inclusion and may not be 
@@ -108,15 +109,15 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   strata in the frame, specify \eqn{H} numbers, i.e., one number per stratum.
   Order of sample sizes should be the same as the levels of the 
   stratification variable, as with a factor. In fact, to match sample sizes 
-  to strata, SDrawNPS calls function \code{factor} to extract factor levels 
-  of the strata variable. The order of these levels is the order of samples 
-  sizes in the list. For example, if the strata variable contains strings 
-  \code{"low"} and \code{"high"}, converting this variable to a factor 
-  generally results in alphabetic ordering of levels, as in \code{c("high", 
-  "low")}. In this case, the first number in the specified list should be the
-  sample size in the \code{"high"} stratum. The default ordering of levels 
-  when vectors are converted to factors is alphabetic, unless global options 
-  have changed.
+  to strata, \code{SDrawNPS} calls function \code{factor} to extract factor
+  levels of the strata variable. The order of these levels is the order of
+  samples sizes in the list. For example, if the strata variable contains
+  strings \code{"low"} and \code{"high"}, converting this variable to a
+  factor generally results in alphabetic ordering of levels, as in
+  \code{c("high", "low")}. In this case, the first number in the specified
+  list should be the sample size in the \code{"high"} stratum. The default
+  ordering of levels when vectors are converted to factors is alphabetic,
+  unless global options have changed.
   
   }
   
@@ -134,17 +135,16 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   both cases, the seed ultimately utilized is recorded in both the resulting 
   log text file and R Console. Recording the seed allows for the easy 
   redrawing of samples if lost, or if more sites are needed. Any integer 
-  value is accpetable as the random number seed.
+  value is acceptable as the random number seed.
   
-  \item The number of \sQuote{Over sample, each strata} points can be 
-  specified within each stratum. Oversample points are listed after the main 
-  sample points in the GRTS design file, i.e., the resulting sample R output 
-  object.  (does this mean they're in the attribute data?  i think maybe so. 
-  this is better shapefile language.  we will need to check.) They can also 
-  be identified in the \sQuote{panel} field (variable?) of the sample output.
-  Apply caution when specifying oversample points, as large oversamples can 
-  cause samples to tend toward a proportional-to-size allocation even when 
-  other allocations are specified.  (reference?)
+  \item The number of oversample points, as encompassed via the \sQuote{Over 
+  sample, each strata} box, can be specified within each stratum. Oversample 
+  points are listed after the main sample points in the GRTS design file, 
+  i.e., the resulting sample R output object. They can also be identified in 
+  the \sQuote{panel} variable of the sample output. Apply caution when
+  specifying oversample points, as large oversamples can cause samples to
+  tend toward a proportional-to-size allocation even when other allocations
+  are specified.
   
   }
 }
@@ -156,16 +156,17 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   
   \item \sQuote{Inspect Frame.} After specifying the shapefile or \code{sp} 
   object name, pressing the \sQuote{Inspect Frame} button plots the 
-  shapefile. It also lists the variables and their class in the shapefile\'s 
-  attribute data.  After drawing a sample, the \sQuote{Inspect Frame} button 
-  plots of the study area, along with sampled points.
+  shapefile. It also lists the variables and their class in the
+  shapefile\eqn{'}s attribute data.  After drawing a sample, the
+  \sQuote{Inspect Frame} button plots the study area, along with sampled
+  points.
   
   \item \sQuote{Run.} After specifying all required and optional inputs, the 
   \sQuote{Run} button draws the sample.  The \code{.GlobalEnv} workspace 
-  holds the resulting \code{SpatialPointsDataFrame} (sampledesign object? not
-  sure) with the name specified via the GUI \code{Sample\'s R name} box.  A 
-  confirmation dialog appears following completion of the draw. Large samples
-  may require several tens of minutes for completion.
+  holds the resulting \code{SpatialDesign} object with the name specified via
+  the GUI \code{Sample\eqn{'}s R name} box.  A confirmation dialog appears 
+  following completion of the draw. Large samples may require several tens of
+  minutes for completion.
   
   \item \sQuote{Plot Sample.} Following sampling, the \sQuote{Plot Sample} 
   button displays the sampled points on the sampling frame.
@@ -189,17 +190,9 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   objects in the \code{.GlobalEnv} workspace.
   
   }
-  
-  After the sample draw, one can check allocation sample sizes in each 
-  stratum using the \code{table} function. For example, if the output R name 
-  is \code{samp}, one can check sample sizes with \code{table(samp$stratum)}.
-  One can plot the study area and sample points with \code{plot(frame); 
-  points(samp)}, assuming \code{frame} is the \code{sp} object containing the
-  frame.  (this how-to-do-it stuff should really be in the examples but 
-  having to use the GUI to get results makes it weird.)
 }
 \examples{
-# Open a GUI for stratified sampling.
+# Open a GUI for stratified GRTS sampling.
 stratified.GUI()
     
 }
@@ -212,15 +205,18 @@ Stevens, D. L. and A. R. Olsen (2004). Spatially balanced
   sampling of natural resources. Journal of the American Statistical 
   Association 99, 262-278.
   
-  Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed
+  Kincaid, T. (2015). GRTS Survey Designs for an Area Resource. Accessed 
   online May 6, 2016. 
   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Area_Design.pdf}.
   
+  
+  
+  
   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
-  User\'s Manual for the SDrawNPS Package: A graphical user interface for 
-  Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
-  National Park Service, U.S. Department of the Interior.  Natural Resource 
-  Report NPS/XXXX/NRR—20XX/XXX.
+  User\eqn{'}s Manual for the SDrawNPS Package: A graphical user interface
+  for Generalized Random Tessellation Stratified (GRTS) sampling and
+  estimation. National Park Service, U.S. Department of the Interior. 
+  Natural Resource Report NPS/XXXX/NRR—20XX/XXX.
 }
 \seealso{
 \code{\link{spsurvey::grts}}

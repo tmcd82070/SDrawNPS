@@ -2,13 +2,13 @@
 % Please edit documentation in R/analysis.GUI.R
 \name{analysis.GUI}
 \alias{analysis.GUI}
-\title{Graphic User Interface (GUI) to analyze samples obtained via
-  consideration of a categorical or continuous variable.}
+\title{Graphic User Interface (GUI) to analyze the status of categorical
+or continuous variables collected via GRTS samples.}
 \usage{
 analysis.GUI()
 }
 \value{
-A data frame with the name specified by the user in the GUI\'s 
+A data frame with the name specified by the user in the GUI\eqn{'}s 
   \code{Output File} box. This data frame contains the sampling analysis 
   specifications, along with coordinates and projection information. Analysis
   data frames are stored in the current workspace, while any export files, 
@@ -53,7 +53,7 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   include the \code{.csv} extension.  Following identification of the data, 
   click the \sQuote{Inspect Sample} button to list its variables.
   
-  \item \sQuote{Output File} -- Specify the sample\'s R object name to which 
+  \item \sQuote{Output File} -- Specify the sample\eqn{'}s R object name to which 
   all analysis results will be assigned. The output will be a data frame 
   containing analysis results.
   
@@ -135,8 +135,7 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   \sQuote{Run} button analyzes the sample.  The \code{.GlobalEnv} workspace 
   holds the resulting data frame entitled via the name specified in the GUI 
   \sQuote{Output File} box.  A confirmation dialog appears following
-  completion of the analysis. Large samples may require several tens of
-  minutes for completion.
+  completion of the analysis. 
   
   \item \sQuote{Tabulate Sample.} Following analysis, display the GRTS 
   analysis file in a tabular format.  The GRTS analysis file contains 
@@ -148,8 +147,6 @@ This routine is intended to be called from the \code{SDrawNPS} menu,
   objects in the \code{.GlobalEnv} workspace.
   
   }
-  
-  Anything here about how one can check...something?
 }
 \examples{
 # Open a GUI for analysis of a GRTS-obtained sample.
@@ -169,7 +166,7 @@ Kincaid, T. (2015). Analysis of a GRTS Survey Design for a Finite
   \code{https://cran.r-project.org/web/packages/spsurvey/vignettes/Area_Analysis.pdf}.
   
   Starcevich L. A., DiDonato G., McDonald T., Mitchell, J. (2016). A GRTS 
-  User\'s Manual for the SDrawNPS Package: A graphical user interface for 
+  User\eqn{'}s Manual for the SDrawNPS Package: A graphical user interface for 
   Generalized Random Tessellation Stratified (GRTS) sampling and estimation. 
   National Park Service, U.S. Department of the Interior.  Natural Resource 
   Report NPS/XXXX/NRR—20XX/XXX.

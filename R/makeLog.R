@@ -2,6 +2,10 @@ makeLog <- function(strat.var=NULL,strata.levels=NULL,unequal.var=NULL,alloc.typ
   #                 strat vars                       ,unequal vars                                    ,ubiquitous vars           , in unequal and strat
   
   
+  #  set the directory to be the working directory.  Preserve the shpfile directory.
+  shpDir <- dir
+  dir <- getwd()
+  
   # if file currently exists, delete it out.
   if (file.exists(paste0(dir,"/",outobj,".log"))) file.remove(paste0(dir,"/",outobj,".log"))
   
@@ -50,7 +54,7 @@ if(!is.null(strata.levels)){
   lapply(pkgList, library, character.only=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   cat("# Read in the shapefile of interest from which sampling occurs.\n
-  shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
+  shp <- readOGR( ",dQuote(shpDir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
 
   cat("# Prepare the design of the sampling for use in the grts function.\n
   n <- ",nstring,"\n
@@ -100,7 +104,7 @@ if(!is.null(strata.levels)){
       lapply(pkgList, library, character.only=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   cat("# Read in the shapefile of interest from which sampling occurs.\n
-shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
+shp <- readOGR( ",dQuote(shpDir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
   close(log_con)
   
   if(alloc.type == "constant"){
@@ -221,7 +225,7 @@ shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
       lapply(pkgList, library, character.only=TRUE)\n\n", sep="", append = TRUE, file = log_con)
   
   cat("# Read in the shapefile of interest from which sampling occurs.\n
-      shp <- readOGR( ",dQuote(dir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
+      shp <- readOGR( ",dQuote(shpDir),", ",dQuote(fn)," ) \n\n",sep="",file=log_con)
 
   cat("# Prepare the design of the sampling for use in the grts function.\n
         Equaldsgn <- list(None=list(panel=c(Main=(",sum(get("n")),")),
